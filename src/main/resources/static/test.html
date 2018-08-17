@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test ajax</title>
+    <link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+
+</head>
+<body>
+    <button id="btn">向页面发送 HTTP GET 请求，然后获得返回的结果</button>
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.min.js?v=3.4.0"></script>
+    <script>
+        $(document).ready(function(){
+            $("#btn").click(function(){
+                $.get("http://localhost:8080/delete",function(data){
+                    debugger;
+                    alert("数据：" + data);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
