@@ -5,9 +5,8 @@ import com.sjcl.zrsy.domain.Registration;
 import com.sjcl.zrsy.domain.User;
 
 public interface IPigService {
-    void insertpig(Pig_Birth newpig);
 
-    void registration(Registration registration);
+    String registration(Registration registration);//角色注册服务
 
 
 }

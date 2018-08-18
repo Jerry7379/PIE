@@ -7,8 +7,7 @@ public class PigService {
      private PigDao pigDao = new PigDao();
 
     public void insert(Zuoye pigBir){
-        //Zuoye zuoye = (Zuoye)pigBir;
-       //zuoyeDao.insertZuoye();
+
         pigDao.insertBirth(pigBir);
     }
 }

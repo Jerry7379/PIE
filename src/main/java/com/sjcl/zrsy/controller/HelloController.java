@@ -5,19 +5,12 @@ import com.sjcl.zrsy.domain.Registration;
 import com.sjcl.zrsy.service.IPigService;
 import com.sjcl.zrsy.domain.Pig_Birth;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class HelloController {
-
-//    @Autowired
-//    private JdbcTemplate jdbcTemplate;
-
     @Autowired
-    IPigService insertpig;
+    IPigService newPigService;
 
     @GetMapping("/hello")  //注解，只是访问此方法的url，在浏览器中输入http://localhost:8080/hello
     public String hello() {
@@ -25,14 +18,12 @@ public class HelloController {
     }
 
 
-
-
-    @PostMapping("/insertsamllpig")
-    public void insertsamllpig(@RequestBody Pig_Birth sm)
-    {
-         //return jdbcTemplate.update("insert into Pig_Birth (id,birthday,sort,sex,weight) values  (?,?,?,?,?)", sm.getId(),sm.getBirthday(),sm.getSort(),sm.getSex(),sm.getWeight());
-        insertpig.insertpig(sm);
-    }
+//    @PostMapping("/insertsamllpig")
+//    public void insertsamllpig(@RequestBody Pig_Birth sm)
+//    {
+//         //return jdbcTemplate.update("insert into Pig_Birth (id,birthday,sort,sex,weight) values  (?,?,?,?,?)", sm.getId(),sm.getBirthday(),sm.getSort(),sm.getSex(),sm.getWeight());
+//        insertpig.insertpig(sm);
+//    }
 
 //    @GetMapping("/getAll")
 //    public List<piglife> getAll() {
@@ -54,9 +45,11 @@ public class HelloController {
 //    public int delete() {
 //        return jdbcTemplate.update("delete from users where username = \"liweibo\"");
 //    }
-    @PostMapping("/test")
-    public void test(@RequestBody Registration test)
+
+    @PostMapping("/registration") //角色注册
+    @ResponseBody
+    public String registration(@RequestBody Registration test)
     {
-         insertpig.registration(test);
+         return newPigService.registration(test);
     }
 }

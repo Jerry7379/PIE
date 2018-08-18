@@ -12,7 +12,7 @@
     <link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
-    <link href="../static/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="css/style.css?v=2.2.0" rel="stylesheet">
 
 </head>
@@ -73,7 +73,7 @@
                 </div>
             </div>
 
-            <button type="submit" id="9" class="btn btn-primary block full-width m-b">注 册</button>
+            <button type="button" id="9" class="btn btn-primary block full-width m-b">注 册</button>
 
             <p class="text-muted text-center"><small>已经有账户了？</small><a href="login.html">点此登录</a>
             </p>
@@ -126,16 +126,17 @@
 
                     }
                     var Registration=JSON.stringify(registration)
+
                     $.post({
                         url: "http://localhost:8080/test",
                         headers: {
                             "content-Type": "application/json;charset=utf-8"
                         }
-                        },Registration
-                    )
-                    //alert(Pig)
-                    //alert(imgFile);
-                    // $("#imgContent").attr('src', imgFile);
+                        },Registration,function (data) {
+
+                            alert(data);
+                            location.reload();
+                        })
                 };
             })
         })
