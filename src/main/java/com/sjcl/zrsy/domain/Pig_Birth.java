@@ -1,18 +1,18 @@
 package com.sjcl.zrsy.domain;
 
 public class Pig_Birth {
-    private String id;
+    private String id;  //猪id 13位
     private String farm_id;
     private String date;
     private String breed;
     private String gender;
-    private double weight;
+    private String weight;
 
     public Pig_Birth(){
     }
 
 
-    public Pig_Birth(String id, String farm_id, String date, String breed, String gender, double weight) {
+    public Pig_Birth(String id, String farm_id, String date, String breed, String gender, String weight) {
         this.id = id;
         this.farm_id = farm_id;
         this.date = date;
@@ -42,7 +42,7 @@ public class Pig_Birth {
         return farm_id;
     }
 
-    public double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
@@ -66,7 +66,7 @@ public class Pig_Birth {
         this.farm_id = farm_id;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 }

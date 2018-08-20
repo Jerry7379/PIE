@@ -7,11 +7,11 @@ public class FarmOperation {
     private String operation;
     private String content;
     private String remark;
-    private Date time;
+    private String time;
 
     public FarmOperation() {}
 
-    public FarmOperation(String id, String operation, String content, String remark, Date time)
+    public FarmOperation(String id, String operation, String content, String remark, String time)
     {
         this.id=id;
         this.operation=operation;
@@ -52,11 +52,11 @@ public class FarmOperation {
         this.remark = remark;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }

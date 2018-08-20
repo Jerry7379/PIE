@@ -12,15 +12,15 @@ public class MysqlPigService implements IPigService {
     @Autowired
     PigDao pigDao;
     @Override
-    public void insertBirth(Pig_Birth pigBirth)
+    public String insertBirth(Pig_Birth pigBirth)
     {
-        pigDao.insertBirth(pigBirth);
+       return pigDao.insertBirth(pigBirth);
     }
 
     @Override
-    public void insertFPO(FarmOperation farmOperation)
+    public String insertFPO(FarmOperation farmOperation)
     {
-        pigDao.insertFPO(farmOperation);
+       return pigDao.insertFPO(farmOperation);
     }
 
 

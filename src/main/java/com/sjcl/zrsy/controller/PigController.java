@@ -6,6 +6,7 @@ import com.sjcl.zrsy.service.IPigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,15 +14,20 @@ public class PigController {
     @Autowired
     IPigService pigService;
 
-    @PostMapping("/FPB")
-    public void FPB(@RequestBody Pig_Birth pigBirth) {
 
-        pigService.insertBirth(pigBirth);
+    @PostMapping("/FPB")
+    @ResponseBody
+    public String FPB(@RequestBody Pig_Birth pigBirth) {
+
+        return pigService.insertBirth(pigBirth);
     }
 
     @PostMapping("/FPO")
-    public void FPO(@RequestBody FarmOperation farmOperation) {
+    //@RequestBody
+    public String FPO(@RequestBody FarmOperation farmOperation) {
 
-        pigService.insertFPO(farmOperation);
+        return pigService.insertFPO(farmOperation);
     }
-}
+
+
+    }

@@ -44,23 +44,24 @@
                
             <div class="middle-box text-center loginscreen   animated fadeInDown">
 				<div>
+                    <form id="form">
 					<div>
 
                 		<h3 class="">小猪出生</h3>
 
             		</div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="标号" required="" id="id">
+                        <input type="text" class="form-control" placeholder="请输入13位小猪标号" required="" id="id" name="pigId">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="养殖场ID" required="" id="Fid">
+                        <input type="text" class="form-control" placeholder="请输入6位养殖场ID" required="" id="Fid" name="fid">
                     </div>
                     <div class="form-group" >
-                        <input class="laydate-icon form-control layer-date" placeholder="出生日期" id="hello">
+                        <input class="laydate-icon form-control layer-date" placeholder="出生日期" id="hello" name="Hello">
                     </div>
                     <div class="form-group draggable">
                         <div class="">
-                            <select class="form-control" id="breed">
+                            <select class="form-control" id="breed" name="Breed">
                                 <option>品种1</option>
                                 <option>品种2</option>
                                 <option>品种3</option>
@@ -70,16 +71,16 @@
                     </div>
                     <div class="form-group draggable">
                         <div class="">
-                            <select class="form-control" id="gender">
+                            <select class="form-control" id="gender" name="Gender">
                                 <option>雌</option>
                                 <option>雄</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="出生体重" required="" id="weight">
+                        <input type="text" class="form-control" placeholder="出生体重（如：12.23）" required="" id="weight" name="Weight">
                     </div>
-                    <button id="btnpb" type="submit" class="btn btn-primary block full-width m-b">提交</button>
+                    <button id="btnpb" type="button" class="btn btn-primary block full-width m-b">提交</button>
                     </form>
                 </div>
 			</div>
@@ -160,12 +161,46 @@
                          headers: {
                              "Content-Type": "application/json; charset=utf-8"
                          }
-                     }, Pig);
+                     }, Pig,function (data){
+                         alert(data);
+                         location.reload();
+                     })
                  });
              });
          });
 
      </script>
+
+     <script src="js/plugins/validate/jquery.validate.min.js"></script>
+     <script src="js/plugins/validate/messages_zh.min.js"></script>
+
+     <script>
+         $(document).ready(function () {
+             $("#form").validate({
+                 rules:{
+                     pigId:{
+                         required:true,
+                         number:true,
+                         maxlength:13
+                     },
+                     fid:{
+                         required:true,
+                         number:true,
+                         maxlength:6
+                     },
+                     Hello:{
+                         required:true,
+                         maxlength:10
+                     },
+                     Weight:{
+                         required:true,
+                         number:true,
+                         maxlength:5
+                     }
+                 }
+             })
+         })
+    </script>
 
 </body>
 </html>
