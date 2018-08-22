@@ -1,181 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="renderer" content="webkit">
 
-    <title>PIE注册申请</title>
+    <title>PIE登录</title>
     <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
     <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
 
     <link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
-    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="css/style.css?v=2.2.0" rel="stylesheet">
-
 </head>
 
 <body class="gray-bg">
 
-<div class="middle-box text-center loginscreen   animated fadeInDown">
+<div class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
         <div>
-
             <h1 class="logo-name">PIE</h1>
-
         </div>
-        <h3>欢迎注册 PIE</h3>
-        <p>申请一个PIE新账户</p>
-        <form class="m-t" role="form" id="form">
+        <h3>欢迎使用 PIE</h3>
+        <form class="m-t" role="form" action="Farm_navigation.html">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="用户名" id="name" required="">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="密码" id="password" required="">
+            </div>
+            <button type="button" id="btn" class="btn btn-primary block full-width m-b">登 录</button>
 
-            <div class="form-group">
-                <input type="email" class="form-control" id="0"placeholder="请输入邮箱" required="">
-            </div>
-            <div class="form-group draggable">
-                <div class="">
-                    <select class="form-control" id="1" name="">
-                        <option>养殖场</option>
-                        <option>屠宰场</option>
-                        <option>物流</option>
-                        <option>超市</option>
-                    </select>
-                </div>
-            </div>
 
-            <div class="form-group draggable">
-                <label class="control-label">营业执照照片</label>
-                <div class="form-group">
-                    <input type="file" name="" id="2" class="form-control">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <input type="text" class="form-control" id="3"placeholder="注册号" name="zhuce"required="">
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" id="4"placeholder="名称" name="mingcheng" required="">
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" id="5" placeholder="地址" name="dizhi" required="">
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" id="6" placeholder="法人代表" name="faren"required="">
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" id="7" placeholder="注册资本" name="ziben"required="">
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label m-t-sm">成立日期</label>
-                <div class="col-sm-8 form-group">
-                    <input id="hello" type="text"  class="laydate-icon form-control layer-date">
-                </div>
-            </div>
-
-            <button type="button" id="9" class="btn btn-primary block full-width m-b">注 册</button>
-
-            <p class="text-muted text-center"><small>已经有账户了？</small><a href="login.html">点此登录</a>
+            <p class="text-muted text-center"><a href="register.html">申请成为PIE会员</a>
             </p>
 
         </form>
     </div>
 </div>
 
+<!-- Mainly scripts -->
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/bootstrap.min.js?v=3.4.0"></script>
 
-    <script src="js/jquery-3.3.1.js"></script>
-    <script src="js/bootstrap.min.js?v=3.4.0"></script>
-    <!-- layerDate plugin javascript -->
-    <script src="js/plugins/layer/laydate/laydate.js"></script>
-    <script>
-        $(document).ready(function()
-        {
-            $("#9").click(function()
-            {
-                //获取文件
-                var file = $("#form").find("input")[1].files[0];
-               // alert(file);
-
-                //创建读取文件的对象
-
-                var reader = new FileReader();
-
-                //创建文件读取相关的变量
-                var imgFile;
-
-                //正式读取文件
-                reader.readAsDataURL(file);
-
-                //为文件读取成功设置事件
-                reader.onload = function (e) {
-                    //alert('文件读取完成');
-                    imgFile = e.target.result;
-
-                    var registration={
-                        registrationId:$("#3").val(),
-                        type:$("#1").val(),
-                        email:$("#0").val(),
-                        picture:imgFile,
-                        name:$("#4").val(),
-                        location:$("#5").val(),
-                        legalRep:$("#6").val(),
-                        capital:$("#7").val(),
-                        destablishment:$("#hello").val(),
-                        account:"",
-                        password:""
-
-                    }
-                    var Registration=JSON.stringify(registration)
-
-                    $.post({
-                        url: "http://localhost:8080/test",
-                        headers: {
-                            "content-Type": "application/json;charset=utf-8"
-                        }
-                        },Registration,function (data) {
-
-                            alert(data);
-                            location.reload();
-                        })
-                };
-            })
-        })
-    </script>
-
-    <script src="js/plugins/validate/jquery.validate.min.js"></script>
-
-    <script src="js/plugins/validate/messages_zh.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#form").validate({
-                rules:{
-                    zhuce:{
-                        required:true,
-                        number:true,
-                        maxlength:6
-                    },
-                    mingcheng:{
-                        required:true,
-                        maxlength:15
-                    },
-                    dizhi:{
-                        required:true,
-                        maxlength:20
-                    },
-                    faren:{
-                        required:true,
-                        maxlength:5
-                    },
-                    ziben:{
-                        required:true,
-                        number:true,
-                        maxlength:10
-                    }
-
+<script>
+    $(document).ready(function () {
+        $("#btn").click(function () {
+            var date={
+                name:$("#name").val(),
+                password: $("#password").val()
+            }
+            var Date=JSON.stringify(date)
+            alert(Date);
+            $.post({
+                url: "http://localhost:8080/login",
+                headers: {
+                "content-Type": "application/json;charset=utf-8"
                 }
+                },Date,function (data) {
+                    alert(data);
+
             })
         })
-    </script>
+        })
+
+</script>
 
 </body>
+
 </html>

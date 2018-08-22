@@ -50,13 +50,13 @@
                     </div>
                     <form class="m-t" role="form" action="login.html">
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="猪ID" required="">
+                            <input type="text" class="form-control" id="pigId" placeholder="猪ID" required="">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="屠宰场ID" required="">
+                            <input type="text" class="form-control" id="slaughterId" placeholder="屠宰场ID" required="">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="检疫人ID" required="">
+                            <input type="text" class="form-control" id="checkerId" placeholder="检疫人ID" required="">
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">
@@ -66,15 +66,15 @@
                             <div class="col-sm-8">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" checked="" value="option1" id="optionsRadios1" name="optionsRadios">合格&nbsp;&nbsp;&nbsp;</label>
+                                        <input type="radio"  value="1" id="optionsRadios1" name="optionsRadios">合格&nbsp;&nbsp;&nbsp;</label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" value="option2" id="optionsRadios2" name="optionsRadios">不合格</label>
+                                        <input type="radio"  value="0" id="optionsRadios2" name="optionsRadios">不合格</label>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary block full-width m-b">提交</button>
+                        <button type="button" class="btn btn-primary block full-width m-b" id="btn">提交</button>
                         </p>
                     </form>
                 </div>
@@ -98,6 +98,36 @@
 <script src="js/jquery-3.3.1.js"></script>
 <script src="js/bootstrap.min.js?v=3.4.0"></script>
 
+<script>
+    $(document).ready(function(){
+        $("#btn").click(function(){
+            var checker={
+                pigid:$("#pigId").val(),
+                slaughterid:$("#slaughterId").val(),
+                checkerid:$("#checkerId").val(),
+                ischeck:$('input:radio:checked').val()
+            }
+            var Checker=JSON.stringify(checker);
+            $.post({
+                url: "http://localhost:8080/slaughterreceive",
+                headers: {
+                    "content-Type": "application/json;charset=utf-8"
+                }
+            },Checker,function (data) {
+                if(data=="请先登录")
+                {
+                    alert(data);
+                    location.assign("http://localhost:8080/test.html");
+                }
+                else {
+                    alert(data);
+                    location.reload();
+                }
+            })
+        })
+
+    })
+</script>
 </body>
 </html>
 

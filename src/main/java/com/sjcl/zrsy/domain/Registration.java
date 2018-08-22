@@ -16,9 +16,9 @@ public class Registration {    //注册模块
     private String destablishment;//成立日期 date
     private String account;//账号 255
     private String password;//密码 255
+    private String key;//钱包文件
 
-    public Registration()
-    {
+    public Registration(){
 
     }
 
@@ -70,12 +70,12 @@ public class Registration {    //注册模块
         this.location = location;
     }
 
-    public String getLegal_rep() {
+    public String getLegalrep() {
         return legalrep;
     }
 
-    public void setLegal_rep(String legal_rep) {
-        this.legalrep = legal_rep;
+    public void setLegalrep(String legalrep) {
+        this.legalrep = legalrep;
     }
 
     public String getCapital() {
@@ -108,5 +108,13 @@ public class Registration {    //注册模块
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

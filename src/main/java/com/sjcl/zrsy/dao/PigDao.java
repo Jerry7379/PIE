@@ -1,30 +1,24 @@
 package com.sjcl.zrsy.dao;
 
+import com.sjcl.zrsy.domain.PigSlaughterReceiver;
 import com.sjcl.zrsy.domain.Registration;
-import com.sjcl.zrsy.domain.Zuoye;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import sun.misc.BASE64Decoder;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
+
+
 
 @Component
 public class PigDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    public void insertBirth(Zuoye zuoye){
-
-    }
 
 
-    public String insertRegistration(Registration registration)
+    public String insertRegistration(Registration registration)//角色注册
     {
         //判断email属性的格式是否符这正确
         String email=registration.getEmail();
@@ -85,7 +79,7 @@ public class PigDao {
         }
 
         //判断legalrep的格式
-        if(registration.getLegal_rep().length()>5) {
+        if(registration.getLegalrep().length()>5) {
             //map.put("legalrep","false");
             return "法人代表长度有问题";
         }
@@ -98,11 +92,25 @@ public class PigDao {
         //数据格式判断完成，进行数据库操作
         try {
             jdbcTemplate.update("insert into registration (Registration_id,Types,Email,Picture,Name,Location,Legal_rep,Capital,DEstablishment) value(?,?,?,?,?,?,?,?,?)",
-                    registration.getRegistrationId(), registration.getType(), registration.getEmail(), registration.getPicture(), registration.getName(), registration.getLocation(), registration.getLegal_rep(), registration.getCapital(), registration.getDestablishment());
+                    registration.getRegistrationId(), registration.getType(), registration.getEmail(), registration.getPicture(), registration.getName(), registration.getLocation(), registration.getLegalrep(), registration.getCapital(), registration.getDestablishment());
             return "{注册成功，请等待审核，审核通过会以邮件的形式告知，请注意查收}";
         }catch(Exception e) {
             return "未知错误";
         }
+
+
+    }
+
+    public String slaughterreceive(PigSlaughterReceiver receiver)//屠宰场检疫（还没数据检查）
+    {
+            try {
+                jdbcTemplate.update("update pig_idcard set Slaughterhouse_id=?,Checker_id=?,Ischeck=? where Id=?", receiver.getSlaughterid(), receiver.getCheckerid(), receiver.getIscheck(), receiver.getPigid());
+                return "更新成功";
+            }catch (Exception e){
+                return e.toString();
+            }
+
+
 
     }
 }

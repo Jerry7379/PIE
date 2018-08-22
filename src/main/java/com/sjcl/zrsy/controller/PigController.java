@@ -1,16 +1,22 @@
 package com.sjcl.zrsy.controller;
 
 
+import com.sjcl.zrsy.domain.PigSlaughterReceiver;
 import com.sjcl.zrsy.domain.Registration;
+import com.sjcl.zrsy.domain.User;
 import com.sjcl.zrsy.service.IPigService;
-import com.sjcl.zrsy.domain.Pig_Birth;
+
+import com.sjcl.zrsy.service.implement.chainservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
-public class HelloController {
+public class PigController {
     @Autowired
     IPigService newPigService;
+
 
     @GetMapping("/hello")  //注解，只是访问此方法的url，在浏览器中输入http://localhost:8080/hello
     public String hello() {
@@ -51,5 +57,28 @@ public class HelloController {
     public String registration(@RequestBody Registration test)
     {
          return newPigService.registration(test);
+    }
+
+    @PostMapping("/slaughterreceive")//屠宰检查
+    @ResponseBody
+    public String  slaughterreceive(@RequestBody PigSlaughterReceiver checker){
+        return newPigService.slaughterreceiver(checker);
+    }
+
+    @PostMapping("/login")
+    @ResponseBody
+    public String test(@RequestBody User test, HttpSession session)  {
+
+        //return newPigService.test();
+        String info= newPigService.test(test);
+        String ib[]=info.split(";");
+        if(ib[0].equals("登录成功"))
+        {
+            session.setAttribute("userInfo", test.getName());
+            session.setAttribute("type", ib[1]);
+            return "登录成功";
+        }
+        else
+            return info;
     }
 }
