@@ -1,7 +1,5 @@
 package com.sjcl.zrsy.domain;
 
-import java.util.Date;
-
 public class FarmOperation {
     private String id;
     private String operation;
