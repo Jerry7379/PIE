@@ -1,5 +1,6 @@
 package com.sjcl.zrsy;
 
+import com.sjcl.zrsy.controller.PIEFilter;
 import com.sjcl.zrsy.controller.TestFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,11 +18,16 @@ public class FarmApplication {
     public FilterRegistrationBean testFilterRegistration() {
 
         FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new TestFilter());
-        registration.addUrlPatterns("/slaughterreceive");
-
+        registration.setFilter(new PIEFilter());
+        registration.addUrlPatterns("/Farm/*");
+        registration.addUrlPatterns("/Logistics/*");
+        registration.addUrlPatterns("/Market/*");
+        registration.addUrlPatterns("/Slaughter/*");
         registration.setName("testFilter");
-        registration.setOrder(1);//
+        registration.setOrder(1);
         return registration;
+
+
+
     }
 }
