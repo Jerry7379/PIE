@@ -1,16 +1,26 @@
 package com.sjcl.zrsy.domain;
 
-public class LogisticsReceive {
-    private String id;
-    private String logisticsid;//物流公司ID
-    private String carid;
-    private String driverid;
+import org.hibernate.validator.constraints.Length;
 
-    public LogisticsReceive(String id, String logisticsid, String carid, String driverid) {
+public class LogisticsReceive {
+    //猪id
+    @Length(min = 13,max = 13,message = "猪id长度为13位")
+    private String id;
+
+    @Length(min = 6,max = 6,message = "物流公司长度为6位")
+    private String logisticsId;//物流公司ID
+
+    @Length(min = 7,max = 7,message = "车牌号长度为6位")
+    private String carId;
+
+    @Length(min = 18,max = 18,message = "司机身份证号长度为18位")
+    private String driverId;
+
+    public LogisticsReceive(@Length(min = 13, max = 13, message = "猪id长度为13位") String id, @Length(min = 6, max = 6, message = "物流公司长度为6位") String logisticsId, @Length(min = 7, max = 7, message = "车牌号长度为6位") String carId, @Length(min = 18, max = 18, message = "司机身份证号长度为18位") String driverId) {
         this.id = id;
-        this.logisticsid = logisticsid;
-        this.carid = carid;
-        this.driverid = driverid;
+        this.logisticsId = logisticsId;
+        this.carId = carId;
+        this.driverId = driverId;
     }
 
     public LogisticsReceive() {
@@ -24,27 +34,27 @@ public class LogisticsReceive {
         this.id = id;
     }
 
-    public String getLogisticsid() {
-        return logisticsid;
+    public String getLogisticsId() {
+        return logisticsId;
     }
 
-    public void setLogisticsid(String logisticsid) {
-        this.logisticsid = logisticsid;
+    public void setLogisticsId(String logisticsId) {
+        this.logisticsId = logisticsId;
     }
 
-    public String getCarid() {
-        return carid;
+    public String getCarId() {
+        return carId;
     }
 
-    public void setCarid(String carid) {
-        this.carid = carid;
+    public void setCarId(String carId) {
+        this.carId = carId;
     }
 
-    public String getDriverid() {
-        return driverid;
+    public String getDriverId() {
+        return driverId;
     }
 
-    public void setDriverid(String driverid) {
-        this.driverid = driverid;
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
     }
 }

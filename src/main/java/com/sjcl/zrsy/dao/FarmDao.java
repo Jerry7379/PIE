@@ -11,7 +11,7 @@ public class FarmDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
     //插入养殖场相关操作
-    public boolean farmoperation(FarmOperation farmOperation) {
+    public boolean insertFarmoperation(FarmOperation farmOperation) {
         try {
             jdbcTemplate.update("insert into pig_operation(Id,Operation,Content,Remark,Time) values (?,?,?,?,?)",
                     farmOperation.getId(), farmOperation.getOperation(), farmOperation.getContent(), farmOperation.getRemark(), farmOperation.getTime());
@@ -21,10 +21,10 @@ public class FarmDao {
         }
     }
 
-    public boolean farmreception(FarmReception farmReception) {
+    public boolean insertFarmreception(FarmReception farmReception) {
         try {
             jdbcTemplate.update("insert into  pig_idcard(Id,Farm_id,Breeder_id, Birthday, Breed, Gender,BirthWeight) values  (?, ?, ?, ?, ?,?,?)",
-                   farmReception.getId(), farmReception.getFarm_id(),farmReception.getBreederId(), farmReception.getDate(), farmReception.getBreed(), farmReception.getGender(), farmReception.getWeight());
+                   farmReception.getId(), farmReception.getFarmId(),farmReception.getBreederId(), farmReception.getDate(), farmReception.getBreed(), farmReception.getGender(), farmReception.getWeight());
             return true;
         } catch (Exception e) {
             return false;

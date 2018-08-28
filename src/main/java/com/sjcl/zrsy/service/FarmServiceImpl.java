@@ -8,17 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FarmService implements IFarmService {
+public class FarmServiceImpl implements IFarmService {
     @Autowired
     FarmDao farmdao;
     //养殖场接受新猪
     @Override
     public boolean farmReception(FarmReception newpig){
-        return farmdao.farmreception(newpig);
+        return farmdao.insertFarmreception(newpig);
     };
     //养殖场操作
     @Override
     public boolean farmOperation(FarmOperation farmOperation) {
-        return farmdao.farmoperation(farmOperation);
+        return farmdao.insertFarmoperation(farmOperation);
     }
 }

@@ -1,19 +1,42 @@
 package com.sjcl.zrsy.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Past;
+import java.util.Date;
 
 public class RoleRegistration {    //注册模块
-    private String registrationId; //注册ID 6位
+    @Length(min = 6,max=6,message = "注册号为6位")
+    private String registrationId;
+
     private String type;//类型 5位
+
+    @Email(message = "邮箱地址格式有问题")
     private String email;//邮箱 30位
+
     private String picture;//营业执照照片地址；255位
+
+    @Length(min = 15,max = 15,message = "公司名称长度为15")
     private String name;//公司名称 15位
+
+    @Length(min = 20,max = 20,message = "公司地址长度为20")
     private String location;//公司地址 20位
+
     @JsonProperty(value="legalRep")
+    @Length(min = 5,max = 5,message = "法人代表名称长度为15")
     private String legalrep;//法人代表 5位
+
+    @Min(value = 0,message = "注册资本必须为大于0的整数")
     private String capital;//注册资本 10位
+
     @JsonProperty(value="destablishment")
-    private String destablishment;//成立日期 date
+    @Past(message = "成立日期必须为过去的日期")
+    private Date destablishment;//成立日期 date
+
     private String account;//账号 255
     private String password;//密码 255
 
@@ -86,11 +109,11 @@ public class RoleRegistration {    //注册模块
         this.capital = capital;
     }
 
-    public String getDestablishment() {
+    public Date getDestablishment() {
         return destablishment;
     }
 
-    public void setDestablishment(String destablishment) {
+    public void setDestablishment(Date destablishment) {
         this.destablishment = destablishment;
     }
 

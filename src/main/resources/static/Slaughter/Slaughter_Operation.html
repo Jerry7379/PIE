@@ -144,7 +144,7 @@
                 var PigMwork=JSON.stringify(pigMwork);
                 alert(PigMwork);
                 $.post({
-                    url: "http://localhost:8080/MW",
+                    url: "http://localhost:8080/slaughteroperation",
                     headers: {
                         "Content-Type": "application/json; charset=utf-8"
                     }
@@ -172,15 +172,14 @@
                 var pigAddacid = {
                     pigId: $("#pigId").val(),
                     pigOperation: $("#selectW").val(),
-                    pigPspid: $("#pspId").val(),
-                    pigIsacid: $("input[name='optionsRadios']:checked").val(),
+                    pigContent: $("#pspId").val()+";"+$("input[name='optionsRadios']:checked").val(),
                     pigRemark: $("#remark").val(),
                     pigTime: t
                 };
                 var PigAddacid=JSON.stringify(pigAddacid);
                 alert(PigAddacid);
                 $.post({
-                    url: "http://localhost:8080/MAC",
+                    url: "http://localhost:8080/slaughteroperation",
                     headers: {
                         "Content-Type": "application/json; charset=utf-8"
                     }

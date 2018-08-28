@@ -9,7 +9,7 @@ public interface IRoleService {
 
     boolean registration(RoleRegistration registration);
 
-    List<String> login(LoginUser user) ;
+    List<String> login(RoleLogin user) ;
 
     String picturechange(String id,String picturecode);
 }

@@ -1,7 +1,11 @@
 package com.sjcl.zrsy.domain;
+
+import org.hibernate.validator.constraints.Length;
+
 //运输数据
-public class LogisticsWork {
-    private String carid;
+public class LogisticsOperation {
+    @Length
+    private String carId;
     private String temperature;
     private String humidity;
     private String location;
@@ -9,8 +13,8 @@ public class LogisticsWork {
     private String co2;
     private String id;
 
-    public LogisticsWork(String carid, String temperature, String humidity, String location, String time, String co2, String id) {
-        this.carid = carid;
+    public LogisticsOperation(String carId, String temperature, String humidity, String location, String time, String co2, String id) {
+        this.carId = carId;
         this.temperature = temperature;
         this.humidity = humidity;
         this.location = location;
@@ -19,14 +23,14 @@ public class LogisticsWork {
         this.id = id;
     }
 
-    public LogisticsWork() { }
+    public LogisticsOperation() { }
 
-    public String getCarid() {
-        return carid;
+    public String getCarId() {
+        return carId;
     }
 
-    public void setCarid(String carid) {
-        this.carid = carid;
+    public void setCarId(String carId) {
+        this.carId = carId;
     }
 
     public String getTemperature() {

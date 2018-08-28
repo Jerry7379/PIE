@@ -1,9 +1,9 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.domain.PigSlaughterReceiver;
-import com.sjcl.zrsy.domain.SlaughterAcid;
+import com.sjcl.zrsy.domain.SlaughterReception;
+import com.sjcl.zrsy.domain.SlaughterOperation;
 
 public interface ISlaughterHouseService {
-    String slaughterreception(PigSlaughterReceiver receiver);//屠宰检查
-    String slaughteroperation(SlaughterAcid slaughterAcid);
+    boolean slaughterreception(SlaughterReception receiver);//屠宰检查
+    boolean slaughteroperation(SlaughterOperation slaughterAcid);
 }

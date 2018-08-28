@@ -80,13 +80,13 @@
         $(document).ready(function(){
             $("#Btn").click(function(){
                 var pig = {
-                    idArray: $("#message").val(),
+                    id: $("#message").val(),
                     marketId: $("#Marketid").val()
                 };
                 var Pig=JSON.stringify(pig);
                 alert(Pig);
                 $.post({
-                    url: "http://localhost:8080/MR",
+                    url: "http://localhost:8080/marketreception",
                     headers: {
                         "Content-Type": "application/json; charset=utf-8"
                     }

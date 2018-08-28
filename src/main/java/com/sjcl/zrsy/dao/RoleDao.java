@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.dao;
 
-import com.sjcl.zrsy.domain.LoginUser;
+import com.sjcl.zrsy.domain.RoleLogin;
 import com.sjcl.zrsy.domain.RoleRegistration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,9 +21,9 @@ public class RoleDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<String> login(LoginUser user){
+    public List<String> getLogin(RoleLogin roleLogin){
 
-        List<String> passwords=jdbcTemplate.query("select * from registration where Registration_id='"+user.getName()+"' ",new RowMapper<String>(){
+        List<String> passwords=jdbcTemplate.query("select * from registration where Registration_id="+roleLogin.getName(),new RowMapper<String>(){
             @Override
             public String mapRow(ResultSet resultSet, int i) throws SQLException {
                 String  u=resultSet.getString("Passwd")+";"+resultSet.getString("Types");
@@ -33,7 +33,7 @@ public class RoleDao {
         return passwords;
     }
 
-    public boolean registration(RoleRegistration registration){
+    public boolean insertRegistration(RoleRegistration registration){
 //        //判断email属性的格式是否符这正确
 //        String email=registration.getEmail();
 //        String regex="^[A-Za-z0-9]{1,40}@[A-Za-z0-9]{1,40}\\.[A-Za-z]{2,3}$";//email正则表达式
@@ -113,7 +113,7 @@ public class RoleDao {
         }
 
     }
-
+    //生成照片
     public String picturechange(String id ,String picture)
     {
         //        //照片生成

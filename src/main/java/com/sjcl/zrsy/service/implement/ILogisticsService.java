@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.service.implement;
 
+import com.sjcl.zrsy.domain.LogisticsOperation;
 import com.sjcl.zrsy.domain.LogisticsReceive;
-import com.sjcl.zrsy.domain.LogisticsWork;
 
 /**
  * 物流接口
@@ -9,7 +9,7 @@ import com.sjcl.zrsy.domain.LogisticsWork;
 
 public interface ILogisticsService {
     //物流接受货物
-    String logisticsreception(LogisticsReceive logisticsReceive);
+    boolean logisticsreception(LogisticsReceive logisticsReceive);
     //物流货物操作
-    String logisticsoperation(LogisticsWork logisticsWork);
+    boolean logisticsoperation(LogisticsOperation logisticsWork);
 }

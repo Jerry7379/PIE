@@ -1,24 +1,22 @@
 package com.sjcl.zrsy;
 
-import com.sjcl.zrsy.controller.PIEFilter;
-import com.sjcl.zrsy.controller.TestFilter;
+import com.sjcl.zrsy.controller.LoginFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class FarmApplication {
+public class PorkTraceabilityApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FarmApplication.class, args);
+        SpringApplication.run(PorkTraceabilityApplication.class, args);
     }
 
     @Bean
-    public FilterRegistrationBean testFilterRegistration() {
-
+    public FilterRegistrationBean LoginFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new PIEFilter());
+        registration.setFilter(new LoginFilter());
         registration.addUrlPatterns("/Farm/*");
         registration.addUrlPatterns("/Logistics/*");
         registration.addUrlPatterns("/Market/*");
@@ -26,8 +24,6 @@ public class FarmApplication {
         registration.setName("testFilter");
         registration.setOrder(1);
         return registration;
-
-
-
     }
+
 }

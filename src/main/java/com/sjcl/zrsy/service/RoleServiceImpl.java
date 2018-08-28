@@ -9,29 +9,29 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class RoleService implements IRoleService {
+public class RoleServiceImpl implements IRoleService {
 
     @Autowired
     private RoleDao roledao;
 
 
 //    @Override
-//    public String insertBirth(MarketREC marketRec){
+//    public String insertBirth(MarketReception marketRec){
 //        return pigDao.insertMR(marketRec);
 //    }
 
 //    @Override
-//    public String insertMarketWork(MarketWork marketWork){
+//    public String insertMarketWork(MarketOperation marketWork){
 //        return pigDao.insertMW(marketWork);
 //}
 
     @Override
     public boolean registration(RoleRegistration registration)
     {
-        return roledao.registration(registration);
+        return roledao.insertRegistration(registration);
     }
 
-//    public String insertSlwork(SlaughterAcid slaughterAcid){
+//    public String insertSlwork(SlaughterOperation slaughterAcid){
 //        return pigDao.insertMAC(slaughterAcid);
 //    }
 //
@@ -43,21 +43,21 @@ public class RoleService implements IRoleService {
 //    }
 //
 //    @Override
-//    public String insertLW(LogisticsWork logisticsWork)
+//    public String insertLW(LogisticsOperation logisticsWork)
 //    {
 //        return pigDao.insertLW(logisticsWork);
 //    }
 //
 //    @Override
-//    public String slaughterreceiver(PigSlaughterReceiver receiver)
+//    public String slaughterreceiver(SlaughterReception receiver)
 //    {
 //        return pigDao.slaughterreceive(receiver);
 //    }
 
     @Override
-    public List<String> login(LoginUser user)
+    public List<String> login(RoleLogin user)
     {
-        return roledao.login(user);
+        return roledao.getLogin(user);
     }
 
     @Override

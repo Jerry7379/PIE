@@ -1,10 +1,10 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.domain.MarketREC;
-import com.sjcl.zrsy.domain.MarketWork;
+import com.sjcl.zrsy.domain.MarketOperation;
+import com.sjcl.zrsy.domain.MarketReception;
 
 public interface IMarketService {
-    String marketreception(MarketREC market_rec);
+    boolean marketreception(MarketReception marketReception);
 
-    String marketoperation(MarketWork marketWork);
+    boolean marketoperation(MarketOperation marketOperation);
 }
