@@ -31,8 +31,8 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-top-links navbar-right">
-                        <li>
-                            <a href="../login/Login.html">
+                        <li id="logout">
+                            <a href="">
                                 <i class="fa fa-sign-out"></i> 退出
                             </a>
                         </li>
@@ -154,6 +154,11 @@
                 }
             }
         })
+    })
+</script>
+<script>
+    $("#logout").click(function(){
+        $.get("http://localhost:8080/logout")
     })
 </script>
 </body>

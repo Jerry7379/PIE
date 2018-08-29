@@ -13,7 +13,7 @@ public class FarmDao {
     //插入养殖场相关操作
     public boolean insertFarmoperation(FarmOperation farmOperation) {
         try {
-            jdbcTemplate.update("insert into pig_operation(Id,Operation,Content,Remark,Time) values (?,?,?,?,?)",
+            jdbcTemplate.update("insert into farm_operation(id,operation,content,remark,time) values (?,?,?,?,?)",
                     farmOperation.getId(), farmOperation.getOperation(), farmOperation.getContent(), farmOperation.getRemark(), farmOperation.getTime());
             return true;
         } catch (Exception e) {
@@ -23,7 +23,7 @@ public class FarmDao {
 
     public boolean insertFarmreception(FarmReception farmReception) {
         try {
-            jdbcTemplate.update("insert into  pig_idcard(Id,Farm_id,Breeder_id, Birthday, Breed, Gender,BirthWeight) values  (?, ?, ?, ?, ?,?,?)",
+            jdbcTemplate.update("insert into  traceability_idcard(id,farm_id,breeder_id, birthday, breed, gender,birthweight) values  (?, ?, ?, ?, ?,?,?)",
                    farmReception.getId(), farmReception.getFarmId(),farmReception.getBreederId(), farmReception.getDate(), farmReception.getBreed(), farmReception.getGender(), farmReception.getWeight());
             return true;
         } catch (Exception e) {

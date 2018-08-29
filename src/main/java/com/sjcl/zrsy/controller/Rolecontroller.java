@@ -4,10 +4,7 @@ import com.sjcl.zrsy.domain.RoleRegistration;
 import com.sjcl.zrsy.domain.RoleLogin;
 import com.sjcl.zrsy.service.implement.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -20,10 +17,10 @@ public class Rolecontroller {
     IRoleService roleService;
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
     @PostMapping("/registration") //角色注册
-    public String registration(@RequestBody RoleRegistration test)
+    public String registration(@RequestBody RoleRegistration roleRegistration)
     {
-        test.setPicture(roleService.picturechange(test.getRegistrationId(),test.getPicture()));
-        if(roleService.registration(test)){
+        roleRegistration.setPicture(roleService.picturechange(roleRegistration.getRegistrationId(),roleRegistration.getPicture()));
+        if(roleService.registration(roleRegistration)){
             //return "注册成功，请等候审核";
             return resourceBundle.getString("RegistrationSuccessful");
         }
@@ -55,4 +52,11 @@ public class Rolecontroller {
            }
        }
     }
+    @GetMapping("/logout")
+    public void logout(HttpSession session){
+        session.setAttribute("userInfo",null);
+        session.setAttribute("type",null);
+    }
+
+
 }

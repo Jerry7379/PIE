@@ -7,11 +7,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -23,10 +22,10 @@ public class RoleDao {
 
     public List<String> getLogin(RoleLogin roleLogin){
 
-        List<String> passwords=jdbcTemplate.query("select * from registration where Registration_id="+roleLogin.getName(),new RowMapper<String>(){
+        List<String> passwords=jdbcTemplate.query("select * from registration where registration_id="+roleLogin.getName(),new RowMapper<String>(){
             @Override
             public String mapRow(ResultSet resultSet, int i) throws SQLException {
-                String  u=resultSet.getString("Passwd")+";"+resultSet.getString("Types");
+                String  u=resultSet.getString("passwd")+";"+resultSet.getString("types");
                 return u;
             }
         });
@@ -105,7 +104,7 @@ public class RoleDao {
 //        }
         //数据格式判断完成，进行数据库操作
         try {
-            jdbcTemplate.update("insert into registration (Registration_id,Types,Email,Picture,Name,Location,Legal_rep,Capital,DEstablishment) value(?,?,?,?,?,?,?,?,?)",
+            jdbcTemplate.update("insert into registration (registration_id,types,email,picture,name,location,legal_rep,capital,date_establishment) value(?,?,?,?,?,?,?,?,?)",
                     roleRegistration.getRegistrationId(), roleRegistration.getType(), roleRegistration.getEmail(), roleRegistration.getPicture(), roleRegistration.getName(), roleRegistration.getLocation(), roleRegistration.getLegal_rep(), roleRegistration.getCapital(), roleRegistration.getDestablishment());
             return true;
         }catch(Exception e) {
@@ -123,7 +122,7 @@ public class RoleDao {
         BASE64Decoder decoder = new BASE64Decoder();
         try {
             // Base64解码
-           byte[] bytes = decoder.decodeBuffer(str64);
+            byte[] bytes = decoder.decodeBuffer(str64);
             for (int i = 0; i < bytes.length; ++i) {
                 if (bytes[i] < 0) {// 调整异常数据
                     bytes[i] += 256;
@@ -139,6 +138,31 @@ public class RoleDao {
            return "照片读取失败";
         }
 
+    }
+
+    public static String ImageToBase64ByLocal(String imgFile) {// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+
+
+        InputStream in = null;
+        byte[] data = null;
+
+        // 读取图片字节数组
+        try {
+            in = new FileInputStream(imgFile);
+
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 对字节数组Base64编码
+        BASE64Encoder encoder = new BASE64Encoder();
+
+        return encoder.encode(data);// 返回Base64编码过的字节数组字符串
+    }
+    public static void main(String[] args){
+        System.out.println(ImageToBase64ByLocal("C:\\Users\\可耳\\Desktop\\car1.jpg"));
     }
 
 }

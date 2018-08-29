@@ -12,7 +12,7 @@ public class MarketDao {
     JdbcTemplate jdbcTemplate;
     public boolean updateMarketReception(MarketReception marketReception){
         try {
-            if(jdbcTemplate.update("UPDATE pig_idcard SET Supermarket_id = ? WHERE Id = ?", marketReception.getMarketId(), marketReception.getId())==1)
+            if(jdbcTemplate.update("UPDATE traceability_idcard SET supermarket_id = ? WHERE Id = ?", marketReception.getMarketId(), marketReception.getId())==1)
                 return true;
             else
                 return false;
@@ -24,7 +24,7 @@ public class MarketDao {
 
     public boolean insertMarketOperation(MarketOperation marketOperation){
         try {
-            if (jdbcTemplate.update("INSERT INTO pig_operation (Id, Operation, Content, Remark, Time) VALUES (?, ?, ?, ?, ?)", marketOperation.getId(), marketOperation.getOperation(), marketOperation.getContent(), marketOperation.getRemark(), marketOperation.getTime()) == 1)
+            if (jdbcTemplate.update("INSERT INTO market_operation (id, operation, content, remark, time) VALUES (?, ?, ?, ?, ?)", marketOperation.getId(), marketOperation.getOperation(), marketOperation.getContent(), marketOperation.getRemark(), marketOperation.getTime()) == 1)
                 return true;
             else
                 return false;

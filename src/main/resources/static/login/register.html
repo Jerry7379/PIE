@@ -141,7 +141,8 @@
             //为文件读取成功设置事件
             reader.onload = function (e) {
                 //alert('文件读取完成');
-                imgFile = e.target.result;
+                //截取字符串base64
+                imgFile=reader.result.substring(reader.result.indexOf(",") + 1,reader.result.length);
 
                 var registration={
                     registrationId:$("#registerId").val(),

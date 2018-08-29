@@ -14,7 +14,7 @@ public class SlaughterHouseDao {
     public boolean updateSlaughterreception(SlaughterReception receiver)//屠宰场检疫（还没数据检查）
     {
         try {
-            if(jdbcTemplate.update("update pig_idcard set Slaughterhouse_id=?,Checker_id=?,Ischeck=? where Id=?", receiver.getSlaughterId(), receiver.getCheckerId(), receiver.getIsCheck(), receiver.getId())==1)
+            if(jdbcTemplate.update("update traceability_idcard set slaughterhouse_id=?,checker_id=?,ischeck=? where id=?", receiver.getSlaughterId(), receiver.getCheckerId(), receiver.getIsCheck(), receiver.getId())==1)
                 return true;
             else
                 return false;
@@ -25,7 +25,7 @@ public class SlaughterHouseDao {
 
     public boolean insertSlaughteroperartion(SlaughterOperation slaughterOperation){
         try {
-            int a = jdbcTemplate.update("INSERT INTO pig_operation (Id, Operation, Content,Remark ,Time) VALUES (?, ?, ?,?, ?)", slaughterOperation.getId(), slaughterOperation.getOperation(), slaughterOperation.getContent() + "+" + slaughterOperation.getIsAcid(), slaughterOperation.getRemark(), slaughterOperation.getTime());
+            int a = jdbcTemplate.update("INSERT INTO slaughter_operation (id, operation, content,remark ,time) VALUES (?, ?, ?,?, ?)", slaughterOperation.getId(), slaughterOperation.getOperation(), slaughterOperation.getContent() + "+" + slaughterOperation.getIsAcid(), slaughterOperation.getRemark(), slaughterOperation.getTime());
             int b;
             if(slaughterOperation.getIsAcid()!=null)
             {

@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <title>PIE</title>
-    <link href="../css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
-    <link href="../font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
-    <link href="../css/animate.css" rel="stylesheet">
-    <link href="../css/style.css?v=2.2.0" rel="stylesheet">
+    <link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=2.2.0" rel="stylesheet">
 
 </head>
 <body class="top-navigation">
@@ -32,7 +32,7 @@
                     </ul>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="Login.html">
+                            <a href="login.html">
                                 <i class="fa fa-sign-out"></i> 退出
                             </a>
                         </li>
@@ -42,252 +42,209 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content text-center p-md">
-                        <h2><span class="text-navy">PIE猪肉溯源平台</span></h2>
-                        <p>
-                            经营者及时间轴展示
-                        </p>
+                <div class="wrapper wrapper-content">
+                    <div class="text-center animated fadeInDown">
+                        <div>
+                            <div>
+                                <img src="img/logo.png"/>
+                            </div>
+                            <form class="mail-search center-block">
+                                <div class="input-group">
+                                    <input type="text" placeho lder="猪肉ID" name="search" class="form-control input-lg" id="searchId">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-lg btn-primary" type="button" id="btnS">搜索</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-4" style="padding-top: 25px">
-                <div class="ibox float-e-margins col-lg-12">
-                    <div class="ibox-title">
-                        <h5>🐖身份证</h5>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="ibox float-e-margins">
+        <div class="row wrapper wrapper-content animated fadeInLeft" id="main">
+            <div v-if="status === 200">
+                <div  class="col-lg-4"  style="padding-top: 25px">
+                    <div class="ibox float-e-margins col-lg-12">
                         <div class="ibox-title">
-                            <h5>小猪ID</h5>
+                            <h5>🐖身份证</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>小猪ID</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h4 class="no-margins">{{result.id}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>出生日期</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h4 class="no-margins">{{result.birthday}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>猪品种</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h4 class="no-margins">{{result.breed}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>性别</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h4 class="no-margins">{{result.gender}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>排酸情况</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h4 class="no-margins">{{result.isacid}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>检疫情况</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h4 class="no-margins">{{result.ischeck}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ibox float-e-margins col-lg-12">
+                        <div class="ibox-title">
+                            <h5>养殖场信息</h5>
                         </div>
                         <div class="ibox-content">
-                            <h3 class="no-margins">2948374854232</h3>
+                            <p><i class="fa fa-star"></i> 养殖场名称：
+                                <a href="#" target="_blank">{{result.farmName}}</a>
+                            </p>
+                            <p><i class="fa fa-home"></i> 养殖场地址：
+                                <a href="javascript:;">{{result.farmLocation}}</a>
+                            </p>
+                            <p><i class="fa fa-font"></i> 养殖场ID：
+                                <a href="javascript:;" class="">{{result.farmId}}</a>
+                            </p>
+                            <p><i class="fa fa-user"></i> 饲养员ID：
+                                <a href="javascript:;" class="">{{result.breederId}}</a>
+                            </p>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="ibox float-e-margins">
+                    <div class="ibox float-e-margins col-lg-12">
                         <div class="ibox-title">
-                            <h5>出生日期</h5>
+                            <h5>屠宰场信息</h5>
                         </div>
                         <div class="ibox-content">
-                            <h3 class="no-margins">2018-02-23</h3>
+                            <p><i class="fa fa-star"></i> 屠宰场名称：
+                                <a href="#" target="_blank">{{result.slaughterhouseName}}</a>
+                            </p>
+                            <p><i class="fa fa-home"></i> 屠宰场地址：
+                                <a href="javascript:;">{{result.slaughterhouseLocation}}</a>
+                            </p>
+                            <p><i class="fa fa-font"></i> 屠宰场ID：
+                                <a href="javascript:;" class="">{{result.slaughterhouseId}}</a>
+                            </p>
+                            <p><i class="fa fa-user"></i> 排酸人员ID：
+                                <a href="javascript:;" class="">{{result.aciderId}}</a>
+                            </p>
+                            <p><i class="fa fa-user"></i> 检疫人员ID：
+                                <a href="javascript:;" class="">{{result.checkerId}}</a>
+                            </p>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="ibox float-e-margins">
+                    <div class="ibox float-e-margins col-lg-12">
                         <div class="ibox-title">
-                            <h5>猪品种</h5>
+                            <h5>物流公司信息</h5>
                         </div>
                         <div class="ibox-content">
-                            <h3 class="no-margins">小香猪</h3>
+                            <p><i class="fa fa-star"></i> 物流公司名称：
+                                <a href="#" target="_blank">{{result.logisticsName}}</a>
+                            </p>
+                            <p><i class="fa fa-home"></i> 物流公司地址：
+                                <a href="javascript:;">{{result.logisticsLocation}}</a>
+                            </p>
+                            <p><i class="fa fa-font"></i> 物流公司ID：
+                                <a href="javascript:;" class="">{{result.logisticsId}}</a>
+                            </p>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="ibox float-e-margins">
+                    <div class="ibox float-e-margins col-lg-12">
                         <div class="ibox-title">
-                            <h5>性别</h5>
+                            <h5>超市信息</h5>
                         </div>
                         <div class="ibox-content">
-                            <h3 class="no-margins">雄</h3>
+                            <p><i class="fa fa-star"></i> 超市名称：
+                                <a href="#" target="_blank">{{result.supermarketName}}</a>
+                            </p>
+                            <p><i class="fa fa-home"></i> 超市地址：
+                                <a href="javascript:;">{{result.supermarketLocation}}</a>
+                            </p>
+                            <p><i class="fa fa-font"></i> 超市ID：
+                                <a href="javascript:;" class="">{{result.supermarketId}}</a>
+                            </p>
+                            <p><i class="fa fa-font"></i> 售货员ID：
+                                <a href="javascript:;" class="">{{result.salespersonId}}</a>
+                            </p>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>排酸情况</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <h3 class="no-margins">以排酸</h3>
-                        </div>
+                    <div class="col-lg-12 control-label" id="container" style="height: 300px">
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>检疫情况</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <h3 class="no-margins">检疫合格</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="ibox float-e-margins col-lg-12">
-                    <div class="ibox-title">
-                        <h5>养殖场信息</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <p><i class="fa fa-star"></i> 养殖场名称：
-                            <a href="#" target="_blank">xxxxx</a>
-                        </p>
-                        <p><i class="fa fa-home"></i> 养殖场地址：
-                            <a href="javascript:;">xxxxx</a>
-                        </p>
-                        <p><i class="fa fa-font"></i> 养殖场ID：
-                            <a href="javascript:;" class="">xxxxx</a>
-                        </p>
-                        <p><i class="fa fa-user"></i> 饲养员ID：
-                            <a href="javascript:;" class="">xxxxx</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="ibox float-e-margins col-lg-12">
-                    <div class="ibox-title">
-                        <h5>屠宰场信息</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <p><i class="fa fa-star"></i> 屠宰场名称：
-                            <a href="#" target="_blank">xxxxx</a>
-                        </p>
-                        <p><i class="fa fa-home"></i> 屠宰场地址：
-                            <a href="javascript:;">xxxxx</a>
-                        </p>
-                        <p><i class="fa fa-font"></i> 屠宰场ID：
-                            <a href="javascript:;" class="">xxxxx</a>
-                        </p>
-                        <p><i class="fa fa-user"></i> 排酸人员ID：
-                            <a href="javascript:;" class="">xxxxx</a>
-                        </p>
-                        <p><i class="fa fa-user"></i> 检疫人员ID：
-                            <a href="javascript:;" class="">xxxxx</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="ibox float-e-margins col-lg-12">
-                    <div class="ibox-title">
-                        <h5>物流公司信息</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <p><i class="fa fa-star"></i> 物流公司名称：
-                            <a href="#" target="_blank">xxxxx</a>
-                        </p>
-                        <p><i class="fa fa-home"></i> 物流公司地址：
-                            <a href="javascript:;">xxxxx</a>
-                        </p>
-                        <p><i class="fa fa-font"></i> 物流公司ID：
-                            <a href="javascript:;" class="">xxxxx</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="ibox float-e-margins col-lg-12">
-                    <div class="ibox-title">
-                        <h5>超市信息</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <p><i class="fa fa-star"></i> 超市名称：
-                            <a href="#" target="_blank">xxxxx</a>
-                        </p>
-                        <p><i class="fa fa-home"></i> 超市地址：
-                            <a href="javascript:;">xxxxx</a>
-                        </p>
-                        <p><i class="fa fa-font"></i> 超市ID：
-                            <a href="javascript:;" class="">xxxxx</a>
-                        </p>
-                        <p><i class="fa fa-font"></i> 售货员ID：
-                            <a href="javascript:;" class="">xxxxx</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-12" id="container" style="height: 300px">
-                </div>
-            </div>
-            <div class="col-lg-8">
-                <div class="col-lg-12">
-                    <div class="wrapper wrapper-content" style="padding-top: 0px">
-                        <div class="row animated fadeInRight">
-                            <div class="col-lg-12">
-                                <div class="ibox float-e-margins">
-                                    <div class="" id="ibox-content">
+                <div class="col-lg-8">
+                    <div class="col-lg-12">
+                        <div class="wrapper wrapper-content" style="padding-top: 0px">
+                            <div class="row animated fadeInRight">
+                                <div class="col-lg-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="" id="ibox-content">
+                                            <div id="vertical-timeline" class="vertical-container light-timeline">
+                                                <div class="vertical-timeline-block" v-for="site in result.operations">
+                                                    <div class="vertical-timeline-icon navy-bg">
+                                                        <i class="fa fa-briefcase"></i>
+                                                    </div>
 
-                                        <div id="vertical-timeline" class="vertical-container light-timeline">
-                                            <div class="vertical-timeline-block">
-                                                <div class="vertical-timeline-icon navy-bg">
-                                                    <i class="fa fa-briefcase"></i>
-                                                </div>
-
-                                                <div class="vertical-timeline-content">
-                                                    <h2>会议</h2>
-                                                    <p>上一年的销售业绩发布会。总结产品营销和销售趋势及销售的现状。</p>
-                                                    <a href="timeline_v2.html#" class="btn btn-sm btn-primary"> 更多信息</a>
-                                                    <span class="vertical-date">
-                                                        今天 <br>
-                                                        <small>2月3日</small>
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            <div class="vertical-timeline-block">
-                                                <div class="vertical-timeline-icon blue-bg">
-                                                    <i class="fa fa-file-text"></i>
-                                                </div>
-
-                                                <div class="vertical-timeline-content">
-                                                    <h2>给张三发送文档</h2>
-                                                    <p>发送上年度《销售业绩报告》</p>
-                                                    <a href="timeline_v2.html#" class="btn btn-sm btn-success"> 下载文档 </a>
-                                                    <span class="vertical-date">
-                                                        今天 <br>
-                                                        <small>2月3日</small>
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            <div class="vertical-timeline-block">
-                                                <div class="vertical-timeline-icon lazur-bg">
-                                                    <i class="fa fa-coffee"></i>
-                                                </div>
-
-                                                <div class="vertical-timeline-content">
-                                                    <h2>喝咖啡休息</h2>
-                                                    <p>喝咖啡啦，啦啦啦~~</p>
-                                                    <a href="timeline_v2.html#" class="btn btn-sm btn-info">更多</a>
-                                                    <span class="vertical-date"> 昨天 <br><small>2月2日</small></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="vertical-timeline-block">
-                                                <div class="vertical-timeline-icon yellow-bg">
-                                                    <i class="fa fa-phone"></i>
-                                                </div>
-
-                                                <div class="vertical-timeline-content">
-                                                    <h2>给李四打电话</h2>
-                                                    <p>给李四打电话分配本月工作任务</p>
-                                                    <span class="vertical-date">昨天 <br><small>2月2日</small></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="vertical-timeline-block">
-                                                <div class="vertical-timeline-icon lazur-bg">
-                                                    <i class="fa fa-user-md"></i>
-                                                </div>
-
-                                                <div class="vertical-timeline-content">
-                                                    <h2>公司年会</h2>
-                                                    <p>发年终奖啦，啦啦啦~~</p>
-                                                    <span class="vertical-date">前天 <br><small>2月1日</small></span>
+                                                    <div class="vertical-timeline-content">
+                                                        <h2>{{site.operation}}</h2>
+                                                        <h3>内容：{{site.content}}</h3>
+                                                        <h4>备注：{{site.remark}}</h4>
+                                                        <span class="vertical-date">
+                                                            <br>
+                                                            <small>{{site.time}}</small>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
+            <div class="h3" v-else>
+                {{msg}}
+            </div>
+
         </div>
-
-
         <div class="footer">
             <div class="pull-right">
                 By：<a href="http://www.zi-han.net" target="_blank">zihan's blog</a>
@@ -296,19 +253,13 @@
                 <strong>Copyright</strong> H+ &copy; 2014
             </div>
         </div>
-
     </div>
 </div>
 <!-- Mainly scripts -->
-<script src="../js/jquery-3.3.1.js"></script>
-<script src="../js/bootstrap.min.js?v=3.4.0"></script>
-<script src="../js/echarts.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/bootstrap.min.js?v=3.4.0"></script>
+<script src="js/vue.js"></script>
+<script src="js/echarts.js"></script>
 <script type="text/javascript">
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
@@ -369,13 +320,6 @@
         myChart.setOption(option, true);
     }
 </script>
+<script src="js/search.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-

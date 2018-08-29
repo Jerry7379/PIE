@@ -17,9 +17,11 @@ public class FarmController {
     @Autowired
     IFarmService farmService;
     //国际化
-    ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
+    ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.getDefault());
     @PostMapping("/farmreception")
     public String farmreception(@RequestBody FarmReception pigBirth) {
+
+
         if(farmService.farmReception(pigBirth)){
             //return "操作成功";
             return resourceBundle.getString("SuccessfulOperation");
@@ -41,8 +43,9 @@ public class FarmController {
         }
     }
 
-    @GetMapping("/")
-    public String index() {
-        return "index";
+    public static void main(String[] args){
+        ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.getDefault());
+        System.out.println(resourceBundle.getString("hello"));
     }
+
 }
