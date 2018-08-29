@@ -1,26 +1,25 @@
 package com.sjcl.zrsy.dao;
 
-import com.sjcl.zrsy.domain.Registration;
+
 import com.sjcl.zrsy.generated.Greeter;
 import org.springframework.stereotype.Component;
-import org.web3j.crypto.CipherException;
+
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.WalletUtils;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
-import org.web3j.protocol.exceptions.TransactionException;
+
 import org.web3j.protocol.http.HttpService;
-import org.web3j.tx.Contract;
-import org.web3j.tx.ManagedTransaction;
+
 import org.web3j.tx.Transfer;
 import org.web3j.utils.Convert;
 import org.web3j.utils.Numeric;
 
-import java.io.IOException;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import static java.math.BigInteger.ONE;
+
 
 @Component
 public class ChainDao {

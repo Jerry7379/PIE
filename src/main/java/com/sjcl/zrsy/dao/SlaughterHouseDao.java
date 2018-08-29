@@ -23,13 +23,13 @@ public class SlaughterHouseDao {
         }
     }
 
-    public boolean insertSlaughteroperartion(SlaughterOperation slaughterAcid){
+    public boolean insertSlaughteroperartion(SlaughterOperation slaughterOperation){
         try {
-            int a = jdbcTemplate.update("INSERT INTO pig_operation (Id, Operation, Content,Remark ,Time) VALUES (?, ?, ?,?, ?)", slaughterAcid.getId(), slaughterAcid.getOperation(), slaughterAcid.getContent() + "+" + slaughterAcid.getIsAcid(), slaughterAcid.getRemark(), slaughterAcid.getTime());
+            int a = jdbcTemplate.update("INSERT INTO pig_operation (Id, Operation, Content,Remark ,Time) VALUES (?, ?, ?,?, ?)", slaughterOperation.getId(), slaughterOperation.getOperation(), slaughterOperation.getContent() + "+" + slaughterOperation.getIsAcid(), slaughterOperation.getRemark(), slaughterOperation.getTime());
             int b;
-            if(slaughterAcid.getIsAcid()!=null)
+            if(slaughterOperation.getIsAcid()!=null)
             {
-                b = jdbcTemplate.update("UPDATE pig_idcard SET Acider_id = ?, Isacid = ? WHERE Id= ?", slaughterAcid.getContent(), slaughterAcid.getIsAcid(), slaughterAcid.getId());
+                b = jdbcTemplate.update("UPDATE pig_idcard SET Acider_id = ?, Isacid = ? WHERE Id= ?", slaughterOperation.getContent(), slaughterOperation.getIsAcid(), slaughterOperation.getId());
             }
             else
                 b=1;

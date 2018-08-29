@@ -10,6 +10,9 @@ public class FarmReception {
     //public static final int male=0;
    // public static final int female=1;
 
+//    enum Gender {
+//
+//    }
     @Length(min = 13,max=13,message = "猪id为13位")
     private String id;
     @Length(min = 6,max=6,message = "养殖场id为6位")

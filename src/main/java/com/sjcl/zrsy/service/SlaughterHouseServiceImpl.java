@@ -12,12 +12,12 @@ public class SlaughterHouseServiceImpl implements ISlaughterHouseService {
     @Autowired
     SlaughterHouseDao slaughterHouseDao;
     @Override
-    public boolean slaughterreception(SlaughterReception receiver) {
-        return slaughterHouseDao.updateSlaughterreception(receiver);
+    public boolean slaughterreception(SlaughterReception slaughterReception) {
+        return slaughterHouseDao.updateSlaughterreception(slaughterReception);
     }
 
     @Override
-    public boolean slaughteroperation(SlaughterOperation slaughterAcid){
-        return slaughterHouseDao.insertSlaughteroperartion(slaughterAcid);
+    public boolean slaughteroperation(SlaughterOperation slaughterOperation){
+        return slaughterHouseDao.insertSlaughteroperartion(slaughterOperation);
     }
 }

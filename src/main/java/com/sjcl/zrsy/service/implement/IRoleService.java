@@ -7,9 +7,9 @@ import java.util.List;
 public interface IRoleService {
 
 
-    boolean registration(RoleRegistration registration);
+    boolean registration(RoleRegistration roleRegistration);
 
-    List<String> login(RoleLogin user) ;
+    List<String> login(RoleLogin roleLogin) ;
 
     String picturechange(String id,String picturecode);
 }

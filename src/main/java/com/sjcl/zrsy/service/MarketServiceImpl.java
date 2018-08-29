@@ -12,8 +12,8 @@ public class MarketServiceImpl implements IMarketService {
     @Autowired
     MarketDao marketdao;
     @Override
-    public boolean marketreception(MarketReception market_rec){
-        return marketdao.updateMarketReception(market_rec);
+    public boolean marketreception(MarketReception marketReception){
+        return marketdao.updateMarketReception(marketReception);
     }
     @Override
     public boolean marketoperation(MarketOperation marketOperation){

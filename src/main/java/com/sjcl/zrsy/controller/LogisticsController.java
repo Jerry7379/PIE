@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.controller;
 
-import com.sjcl.zrsy.domain.LogisticsReceive;
+import com.sjcl.zrsy.domain.LogisticsReception;
 import com.sjcl.zrsy.domain.LogisticsOperation;
 import com.sjcl.zrsy.service.implement.ILogisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +8,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 @RestController
 public class LogisticsController {
     @Autowired
     ILogisticsService logisticsService;
-
+    ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
     @PostMapping("/logisticsoperation")
-    public String  slaughterhouseoperation(@RequestBody LogisticsOperation logisticsOperation){
+    public String  logisticsoperation(@RequestBody LogisticsOperation logisticsOperation){
         String info[]=logisticsOperation.getId().split(";");
         int i;
         for(i=0;i<info.length;)
@@ -25,17 +28,25 @@ public class LogisticsController {
             else
                 break;
         }
-        if(i==info.length)
-            return "操作成功";
-        else
-            return "操作失败";
+        if(i==info.length){
+            //return "操作成功";
+            return resourceBundle.getString("SuccessfulOperation");
+        }
+        else {
+            //return "操作失败,重新输入";
+            return resourceBundle.getString("OperationFailed,re-enter");
+        }
     }
 
     @PostMapping("/logisticsreception")
-    public String  slaughterreception(@RequestBody LogisticsReceive logisticsReceive){
-        if( logisticsService.logisticsreception(logisticsReceive))
-            return "操作成功";
-        else
-            return "操作失败";
+    public String  logisticsreception(@RequestBody LogisticsReception logisticsReception){
+        if( logisticsService.logisticsreception(logisticsReception)) {
+            //return "操作成功";
+            return resourceBundle.getString("SuccessfulOperation");
+        }
+        else {
+            //return "操作失败,重新输入";
+            return resourceBundle.getString("OperationFailed,re-enter");
+        }
     }
 }

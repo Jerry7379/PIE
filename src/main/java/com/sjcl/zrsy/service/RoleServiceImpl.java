@@ -14,50 +14,16 @@ public class RoleServiceImpl implements IRoleService {
     @Autowired
     private RoleDao roledao;
 
-
-//    @Override
-//    public String insertBirth(MarketReception marketRec){
-//        return pigDao.insertMR(marketRec);
-//    }
-
-//    @Override
-//    public String insertMarketWork(MarketOperation marketWork){
-//        return pigDao.insertMW(marketWork);
-//}
-
     @Override
-    public boolean registration(RoleRegistration registration)
+    public boolean registration(RoleRegistration roleRegistration)
     {
-        return roledao.insertRegistration(registration);
+        return roledao.insertRegistration(roleRegistration);
     }
 
-//    public String insertSlwork(SlaughterOperation slaughterAcid){
-//        return pigDao.insertMAC(slaughterAcid);
-//    }
-//
-//
-//    @Override
-//    public String insertLR(LogisticsReceive logisticsReceive)
-//    {
-//        return pigDao.insertLR(logisticsReceive);
-//    }
-//
-//    @Override
-//    public String insertLW(LogisticsOperation logisticsWork)
-//    {
-//        return pigDao.insertLW(logisticsWork);
-//    }
-//
-//    @Override
-//    public String slaughterreceiver(SlaughterReception receiver)
-//    {
-//        return pigDao.slaughterreceive(receiver);
-//    }
-
     @Override
-    public List<String> login(RoleLogin user)
+    public List<String> login(RoleLogin roleLogin)
     {
-        return roledao.getLogin(user);
+        return roledao.getLogin(roleLogin);
     }
 
     @Override

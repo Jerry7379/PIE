@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class LoginFilter implements Filter {
-
+    ResourceBundle resourceBundle=ResourceBundle.getBundle("messages",Locale.US);
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<>(
             Arrays.asList("http://localhost:8080/search","http://localhost:8080/register","http://localhost:8080/Login.html")));
 
@@ -32,13 +32,12 @@ public class LoginFilter implements Filter {
         }
         //可删
         else {
-                if(req.getSession().getAttribute("userInfo")==null)
-                {
+                if(req.getSession().getAttribute("userInfo")==null) {
                     resp.getOutputStream().write("请先登录".getBytes());
+                    //resp.getOutputStream().write(resourceBundle.getString("PleaseLogInFirst").getBytes());//国际化
                     resp.sendRedirect("http://localhost:8080/login/Login.html");
                 }
-                else
-                {
+                else {
                     filterChain.doFilter(servletRequest, servletResponse);
                 }
             }

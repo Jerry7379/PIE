@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.service;
 
 import com.sjcl.zrsy.dao.LogisticsDao;
-import com.sjcl.zrsy.domain.LogisticsReceive;
+import com.sjcl.zrsy.domain.LogisticsReception;
 import com.sjcl.zrsy.domain.LogisticsOperation;
 import com.sjcl.zrsy.service.implement.ILogisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +13,15 @@ public class LogisticsserviceImpl implements ILogisticsService {
     LogisticsDao logisticsDao;
     //物流接受货物
     @Override
-    public boolean logisticsreception(LogisticsReceive logisticsReceive) {
-        return logisticsDao.updateLogisticsReception(logisticsReceive);
+    public boolean logisticsreception(LogisticsReception logisticsReception) {
+        return logisticsDao.updateLogisticsReception(logisticsReception);
     }
 
 
     //物流货物操作
     @Override
-    public boolean logisticsoperation(LogisticsOperation logisticsWork){
-        return logisticsDao.insertLogisticsoperarion(logisticsWork);
+    public boolean logisticsoperation(LogisticsOperation logisticsOperation){
+        return logisticsDao.insertLogisticsoperarion(logisticsOperation);
 
     }
 }

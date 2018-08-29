@@ -2,7 +2,7 @@ package com.sjcl.zrsy.domain;
 
 import org.hibernate.validator.constraints.Length;
 
-public class LogisticsReceive {
+public class LogisticsReception {
     //猪id
     @Length(min = 13,max = 13,message = "猪id长度为13位")
     private String id;
@@ -16,14 +16,14 @@ public class LogisticsReceive {
     @Length(min = 18,max = 18,message = "司机身份证号长度为18位")
     private String driverId;
 
-    public LogisticsReceive(@Length(min = 13, max = 13, message = "猪id长度为13位") String id, @Length(min = 6, max = 6, message = "物流公司长度为6位") String logisticsId, @Length(min = 7, max = 7, message = "车牌号长度为6位") String carId, @Length(min = 18, max = 18, message = "司机身份证号长度为18位") String driverId) {
+    public LogisticsReception(@Length(min = 13, max = 13, message = "猪id长度为13位") String id, @Length(min = 6, max = 6, message = "物流公司长度为6位") String logisticsId, @Length(min = 7, max = 7, message = "车牌号长度为6位") String carId, @Length(min = 18, max = 18, message = "司机身份证号长度为18位") String driverId) {
         this.id = id;
         this.logisticsId = logisticsId;
         this.carId = carId;
         this.driverId = driverId;
     }
 
-    public LogisticsReceive() {
+    public LogisticsReception() {
     }
 
     public String getId() {

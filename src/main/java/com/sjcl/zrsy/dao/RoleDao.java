@@ -33,7 +33,7 @@ public class RoleDao {
         return passwords;
     }
 
-    public boolean insertRegistration(RoleRegistration registration){
+    public boolean insertRegistration(RoleRegistration roleRegistration){
 //        //判断email属性的格式是否符这正确
 //        String email=registration.getEmail();
 //        String regex="^[A-Za-z0-9]{1,40}@[A-Za-z0-9]{1,40}\\.[A-Za-z]{2,3}$";//email正则表达式
@@ -106,7 +106,7 @@ public class RoleDao {
         //数据格式判断完成，进行数据库操作
         try {
             jdbcTemplate.update("insert into registration (Registration_id,Types,Email,Picture,Name,Location,Legal_rep,Capital,DEstablishment) value(?,?,?,?,?,?,?,?,?)",
-                    registration.getRegistrationId(), registration.getType(), registration.getEmail(), registration.getPicture(), registration.getName(), registration.getLocation(), registration.getLegal_rep(), registration.getCapital(), registration.getDestablishment());
+                    roleRegistration.getRegistrationId(), roleRegistration.getType(), roleRegistration.getEmail(), roleRegistration.getPicture(), roleRegistration.getName(), roleRegistration.getLocation(), roleRegistration.getLegal_rep(), roleRegistration.getCapital(), roleRegistration.getDestablishment());
             return true;
         }catch(Exception e) {
             return false;
