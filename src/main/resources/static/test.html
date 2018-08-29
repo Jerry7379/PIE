@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>test ajax</title>
-    <link href="css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
-
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>玩转spring boot——国际化</title>
 </head>
 <body>
-    <button id="btn">向页面发送 HTTP GET 请求，然后获得返回的结果</button>
+<h1>玩转spring boot——国际化</h1>
+<h4>
+    <a href="http://www.cnblogs.com/GoodHelper/">from 刘冬的博客</a>
+</h4>
+<br />
+<br />
+<a href="/?lang=en_US">English(US)</a>
+<a href="/?lang=zh_CN">简体中文</a>
+<br />
 
-    <!-- Mainly scripts -->
-    <script src="js/jquery-3.3.1.js"></script>
-    <script src="js/bootstrap.min.js?v=3.4.0"></script>
-    <script>
-        $(document).ready(function(){
-            $("#btn").click(function(){
-                $.get("http://localhost:8080/delete",function(data){
-                    debugger;
-                    alert("数据：" + data);
-                });
-            });
-        });
-    </script>
+<h3 th:text="#{hello}"></h3>
+<br />
+<br />
+<a href="http://www.cnblogs.com/GoodHelper/">点击访问原版博客(www.cnblogs.com/GoodHelper)</a>
 </body>
 </html>

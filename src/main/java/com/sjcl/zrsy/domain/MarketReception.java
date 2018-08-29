@@ -1,10 +1,12 @@
 package com.sjcl.zrsy.domain;
 
-/**
- *
- */
+
+import org.hibernate.validator.constraints.Length;
+
 public class MarketReception {
+    @Length(min = 13,max = 13,message ="猪ID长度为13")
     private String id;
+    @Length(min = 6,max = 6,message = "超市ID长度为6")
     private String marketId;
 
     public MarketReception(String id, String marketId) {

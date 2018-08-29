@@ -4,6 +4,7 @@ import com.sjcl.zrsy.domain.FarmOperation;
 import com.sjcl.zrsy.domain.FarmReception;
 import com.sjcl.zrsy.service.implement.IFarmService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,5 +39,10 @@ public class FarmController {
             //return "操作失败,重新输入";
             return resourceBundle.getString("OperationFailed,re-enter");
         }
+    }
+
+    @GetMapping("/")
+    public String index() {
+        return "index";
     }
 }

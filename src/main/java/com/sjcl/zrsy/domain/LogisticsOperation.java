@@ -2,18 +2,28 @@ package com.sjcl.zrsy.domain;
 
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Past;
+import javax.xml.crypto.Data;
+
 //运输数据
 public class LogisticsOperation {
-    @Length
+    @Length(min = 7,max = 7,message = "车牌号长度为7")
     private String carId;
-    private String temperature;
-    private String humidity;
-    private String location;
-    private String time;
-    private String co2;
-    private String id;
+    @Digits(integer = 99,fraction = 99,message = "温度格式错误")
+    private double temperature;
+    @Digits(integer = 99,fraction = 99,message = "湿度格式错误")
+    private double humidity;
 
-    public LogisticsOperation(String carId, String temperature, String humidity, String location, String time, String co2, String id) {
+    private String location;
+    @Past(message="日期不符合规定")
+    private Data time;
+    @Digits(integer = 99,fraction = 99,message = "CO2格式错误")
+    private double co2;
+    @Length(min = 13,max = 13,message = "猪ID长度为13")
+    private String  id;
+
+    public LogisticsOperation(@Length(min = 7, max = 7, message = "车牌号长度为7") String carId, @Digits(integer = 99, fraction = 99, message = "温度格式错误") double temperature, @Digits(integer = 99, fraction = 99, message = "湿度格式错误") double humidity, String location, @Past(message = "日期不符合规定") Data time, @Digits(integer = 99, fraction = 99, message = "CO2格式错误") double co2, @Length(min = 13, max = 13, message = "猪ID长度为13") String id) {
         this.carId = carId;
         this.temperature = temperature;
         this.humidity = humidity;
@@ -23,7 +33,8 @@ public class LogisticsOperation {
         this.id = id;
     }
 
-    public LogisticsOperation() { }
+    public LogisticsOperation() {
+    }
 
     public String getCarId() {
         return carId;
@@ -33,19 +44,19 @@ public class LogisticsOperation {
         this.carId = carId;
     }
 
-    public String getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(String temperature) {
+    public void setTemperature(double temperature) {
         this.temperature = temperature;
     }
 
-    public String getHumidity() {
+    public double getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(String humidity) {
+    public void setHumidity(double humidity) {
         this.humidity = humidity;
     }
 
@@ -57,19 +68,19 @@ public class LogisticsOperation {
         this.location = location;
     }
 
-    public String getTime() {
+    public Data getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Data time) {
         this.time = time;
     }
 
-    public String getCo2() {
+    public double getCo2() {
         return co2;
     }
 
-    public void setCo2(String co2) {
+    public void setCo2(double co2) {
         this.co2 = co2;
     }
 
@@ -80,4 +91,5 @@ public class LogisticsOperation {
     public void setId(String id) {
         this.id = id;
     }
+
 }

@@ -1,9 +1,11 @@
 package com.sjcl.zrsy.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.Length;
 
 public class SlaughterOperation {
     @JsonProperty(value = "pigId")
+    @Length(min = 13,max = 13,message = "猪ID长度13位")
     private String id;
     private String operation;
     @JsonProperty(value="pigContent")
