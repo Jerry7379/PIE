@@ -93,11 +93,11 @@
                 var time=new Date();
                 var t=time.toLocaleString();
                 var pigMwork = {
-                    pigId: $("#pigId").val(),
-                    pigOperation: $("#selectW").val(),
-                    pigContent: $("#message").val(),
-                    pigRemark: $("#remark").val(),
-                    pigTime: t
+                    id: $("#pigId").val(),
+                    operation: $("#selectW").val(),
+                    content: $("#message").val(),
+                    remark: $("#remark").val(),
+                    time: t
                 };
                 var PigMwork=JSON.stringify(pigMwork);
                 alert(PigMwork);
@@ -140,7 +140,7 @@
                     maxlength:50
                 },
                 beizhu:{
-                    required:true,
+
                     maxlength:50
                 }
             }

@@ -43,9 +43,6 @@ public class FarmController {
         }
     }
 
-    public static void main(String[] args){
-        ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.getDefault());
-        System.out.println(resourceBundle.getString("hello"));
-    }
+
 
 }

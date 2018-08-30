@@ -4,19 +4,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 
 public class SlaughterOperation {
-    @JsonProperty(value = "pigId")
+    @JsonProperty(value = "id")
     @Length(min = 13,max = 13,message = "猪ID长度13位")
     private String id;
     private String operation;
-    @JsonProperty(value="pigContent")
+    @JsonProperty(value="content")
     private String content;//当操作不是排酸，这项为操作的主要内容，当操作为排酸时，这个为排酸人员id，pigIsacid为是否排酸
 
     private String isAcid;
 
-    @JsonProperty(value="pigRemark")
+    @JsonProperty(value="remark")
     private String remark;
 
-    @JsonProperty(value="pigTime")
+    @JsonProperty(value="time")
     private String time;
 
     public SlaughterOperation(String id, String operation, String content, String isAcid, String remark, String time) {

@@ -109,7 +109,7 @@
             }
             var Checker=JSON.stringify(checker);
             $.post({
-                url: "http://localhost:8080/slaughterreceive",
+                url: "http://localhost:8080/slaughterreception",
                 headers: {
                     "content-Type": "application/json;charset=utf-8"
                 }
@@ -117,7 +117,7 @@
                 if(data=="请先登录")
                 {
                     alert(data);
-                    //location.assign("http://localhost:8080/test.html");
+                    location.assign("http://localhost:8080/login/Login.html");
                 }
                 else {
                     alert(data);

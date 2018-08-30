@@ -16,14 +16,14 @@ public class LogisticsOperation {
     private double humidity;
 
     private String location;
-    @Past(message="日期不符合规定")
-    private Data time;
+
+    private String time;
     @Digits(integer = 99,fraction = 99,message = "CO2格式错误")
     private double co2;
     @Length(min = 13,max = 13,message = "猪ID长度为13")
     private String  id;
 
-    public LogisticsOperation(@Length(min = 7, max = 7, message = "车牌号长度为7") String carId, @Digits(integer = 99, fraction = 99, message = "温度格式错误") double temperature, @Digits(integer = 99, fraction = 99, message = "湿度格式错误") double humidity, String location, @Past(message = "日期不符合规定") Data time, @Digits(integer = 99, fraction = 99, message = "CO2格式错误") double co2, @Length(min = 13, max = 13, message = "猪ID长度为13") String id) {
+    public LogisticsOperation(@Length(min = 7, max = 7, message = "车牌号长度为7") String carId, @Digits(integer = 99, fraction = 99, message = "温度格式错误") double temperature, @Digits(integer = 99, fraction = 99, message = "湿度格式错误") double humidity, String location, String time, @Digits(integer = 99, fraction = 99, message = "CO2格式错误") double co2, @Length(min = 13, max = 13, message = "猪ID长度为13") String id) {
         this.carId = carId;
         this.temperature = temperature;
         this.humidity = humidity;
@@ -68,11 +68,11 @@ public class LogisticsOperation {
         this.location = location;
     }
 
-    public Data getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Data time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

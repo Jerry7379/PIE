@@ -32,8 +32,8 @@ public class SlaughterHouseConstroller {
     public String  slaughterhouseoperation(@RequestBody SlaughterOperation slaughterAcid){
         String info[]=slaughterAcid.getContent().split(";");
         if(info.length==2){
-        slaughterAcid.setContent(info[0]);
-        slaughterAcid.setContent(info[1]);
+            slaughterAcid.setContent(info[0]);
+            slaughterAcid.setIsAcid(info[1]);
         }
         else {
             slaughterAcid.setContent(info[0]);

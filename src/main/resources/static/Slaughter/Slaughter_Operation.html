@@ -135,11 +135,11 @@
                 var time=new Date();
                 var t=time.toLocaleString();
                 var pigMwork = {
-                    pigId: $("#pigId").val(),
-                    pigOperation: $("#selectW").val(),
-                    pigContent: $("#message").val(),
-                    pigRemark: $("#remark").val(),
-                    pigTime: t
+                    id: $("#pigId").val(),
+                    operation: $("#selectW").val(),
+                    content: $("#message").val(),
+                    remark: $("#remark").val(),
+                    time: t
                 };
                 var PigMwork=JSON.stringify(pigMwork);
                 alert(PigMwork);
@@ -170,11 +170,11 @@
                 var time=new Date();
                 var t=time.toLocaleString();
                 var pigAddacid = {
-                    pigId: $("#pigId").val(),
-                    pigOperation: $("#selectW").val(),
-                    pigContent: $("#pspId").val()+";"+$("input[name='optionsRadios']:checked").val(),
-                    pigRemark: $("#remark").val(),
-                    pigTime: t
+                    id: $("#pigId").val(),
+                    operation: $("#selectW").val(),
+                    content: $("#pspId").val()+";"+$("input[name='optionsRadios']:checked").val(),
+                    remark: $("#remark").val(),
+                    time: t
                 };
                 var PigAddacid=JSON.stringify(pigAddacid);
                 alert(PigAddacid);
@@ -219,8 +219,8 @@
                 pspid:{
                     required:true,
                     number:true,
-                    minlength:6,
-                    maxlength:6
+                    minlength:18,
+                    maxlength:18
                 },
                 remark:{
                     reangelength:[0,200]
