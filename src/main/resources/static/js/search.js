@@ -1,10 +1,13 @@
+import "globalization";
+
 var vm =new Vue({
     el : '#main',
     data: {
         status: false,
         msg: "",
         result: {}
-    }
+    },
+    i18n: i18n
 })
 
 

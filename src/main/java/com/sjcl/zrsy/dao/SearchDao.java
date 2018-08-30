@@ -65,7 +65,7 @@ public class SearchDao {
         List<SearchId> list = jdbcTemplate.query
                 ("SELECT id, birthday, breed, gender, isacid, ischeck, " +
                         "farm_id, farm_location, farm_name, traceability_idcard.breeder_id, " +
-                        "slaughterhouse_id, slaughterhouse_location,slaughterhouse_name, traceability_idcard.checker_id, traceability_idcard.acider_id, " +
+                        "slaughterhouse_id, slaughterhouse_location, slaughterhouse_name, traceability_idcard.checker_id, traceability_idcard.acider_id, " +
                         "logistics_id, logistics_name, logistics_location, " +
                         "supermarket_id, supermarket_name, supermarket_location, salesperson_id " +
                         "FROM traceability_idcard LEFT JOIN pig_farm using(farm_id) " +

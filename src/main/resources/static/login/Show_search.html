@@ -14,9 +14,9 @@
 
 </head>
 <body class="top-navigation">
-<div id="wrapper">
+<div>
     <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom white-bg">
+        <div class="row border-bottom white-bg" id="globalization">
             <nav class="navbar navbar-static-top" role="navigation">
                 <div class="navbar-header">
                     <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
@@ -27,7 +27,7 @@
                 <div class="navbar-collapse collapse" id="navbar">
                     <ul class="nav navbar-nav" id="test">
                         <li class="active">
-                            <a aria-expanded="false" role="button" href="search.html">返回主页</a>
+                            <a aria-expanded="false" role="button" href="search.html" v-html="$t('message.returnHome')"></a>
                         </li>
                     </ul>
                     <ul class="nav navbar-top-links navbar-right">
@@ -75,7 +75,7 @@
                                 <h5>小猪ID</h5>
                             </div>
                             <div class="ibox-content">
-                                <h4 class="no-margins">{{result.id}}</h4>
+                                <h4 class="no-margins" v-html="result.id"></h4>
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                                 <h5>出生日期</h5>
                             </div>
                             <div class="ibox-content">
-                                <h4 class="no-margins">{{result.birthday}}</h4>
+                                <h4 class="no-margins" v-html="result.birthday"></h4>
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                                 <h5>猪品种</h5>
                             </div>
                             <div class="ibox-content">
-                                <h4 class="no-margins">{{result.breed}}</h4>
+                                <h4 class="no-margins" v-html="result.breed"></h4>
                             </div>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                                 <h5>性别</h5>
                             </div>
                             <div class="ibox-content">
-                                <h4 class="no-margins">{{result.gender}}</h4>
+                                <h4 class="no-margins" v-html="result.gender"></h4>
                             </div>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                                 <h5>排酸情况</h5>
                             </div>
                             <div class="ibox-content">
-                                <h4 class="no-margins">{{result.isacid}}</h4>
+                                <h4 class="no-margins" v-html="result.isacid"></h4>
                             </div>
                         </div>
                     </div>
@@ -125,7 +125,7 @@
                                 <h5>检疫情况</h5>
                             </div>
                             <div class="ibox-content">
-                                <h4 class="no-margins">{{result.ischeck}}</h4>
+                                <h4 class="no-margins" v-html="result.ischeck"></h4>
                             </div>
                         </div>
                     </div>
@@ -135,16 +135,16 @@
                         </div>
                         <div class="ibox-content">
                             <p><i class="fa fa-star"></i> 养殖场名称：
-                                <a href="#" target="_blank">{{result.farmName}}</a>
+                                <i v-html="result.farmName"></i>
                             </p>
                             <p><i class="fa fa-home"></i> 养殖场地址：
-                                <a href="javascript:;">{{result.farmLocation}}</a>
+                                <i v-html="result.farmLocation"></i>
                             </p>
                             <p><i class="fa fa-font"></i> 养殖场ID：
-                                <a href="javascript:;" class="">{{result.farmId}}</a>
+                                <i v-html="result.farmId"></i>
                             </p>
                             <p><i class="fa fa-user"></i> 饲养员ID：
-                                <a href="javascript:;" class="">{{result.breederId}}</a>
+                                <i v-html="result.breederId"></i>
                             </p>
                         </div>
                     </div>
@@ -154,19 +154,19 @@
                         </div>
                         <div class="ibox-content">
                             <p><i class="fa fa-star"></i> 屠宰场名称：
-                                <a href="#" target="_blank">{{result.slaughterhouseName}}</a>
+                                <i target="_blank" v-html="result.slaughterhouseName"></i>
                             </p>
                             <p><i class="fa fa-home"></i> 屠宰场地址：
-                                <a href="javascript:;">{{result.slaughterhouseLocation}}</a>
+                                <i v-html="result.slaughterhouseLocation"></i>
                             </p>
                             <p><i class="fa fa-font"></i> 屠宰场ID：
-                                <a href="javascript:;" class="">{{result.slaughterhouseId}}</a>
+                                <i v-html="result.slaughterhouseId"></i>
                             </p>
                             <p><i class="fa fa-user"></i> 排酸人员ID：
-                                <a href="javascript:;" class="">{{result.aciderId}}</a>
+                                <i v-html="result.aciderId"></i>
                             </p>
                             <p><i class="fa fa-user"></i> 检疫人员ID：
-                                <a href="javascript:;" class="">{{result.checkerId}}</a>
+                                <i v-html="result.checkerId"></i>
                             </p>
                         </div>
                     </div>
@@ -176,13 +176,13 @@
                         </div>
                         <div class="ibox-content">
                             <p><i class="fa fa-star"></i> 物流公司名称：
-                                <a href="#" target="_blank">{{result.logisticsName}}</a>
+                                <i href="#" target="_blank" v-html="result.logisticsName"></i>
                             </p>
                             <p><i class="fa fa-home"></i> 物流公司地址：
-                                <a href="javascript:;">{{result.logisticsLocation}}</a>
+                                <i href="javascript:;" v-html="result.logisticsLocation"></i>
                             </p>
                             <p><i class="fa fa-font"></i> 物流公司ID：
-                                <a href="javascript:;" class="">{{result.logisticsId}}</a>
+                                <i href="javascript:;" v-html="result.logisticsId"></i>
                             </p>
                         </div>
                     </div>
@@ -192,16 +192,16 @@
                         </div>
                         <div class="ibox-content">
                             <p><i class="fa fa-star"></i> 超市名称：
-                                <a href="#" target="_blank">{{result.supermarketName}}</a>
+                                <i href="#" target="_blank" v-html="result.supermarketName"></i>
                             </p>
                             <p><i class="fa fa-home"></i> 超市地址：
-                                <a href="javascript:;">{{result.supermarketLocation}}</a>
+                                <i href="javascript:;" v-html="result.supermarketLocation"></i>
                             </p>
                             <p><i class="fa fa-font"></i> 超市ID：
-                                <a href="javascript:;" class="">{{result.supermarketId}}</a>
+                                <i href="javascript:;" v-html="result.supermarketId"></i>
                             </p>
                             <p><i class="fa fa-font"></i> 售货员ID：
-                                <a href="javascript:;" class="">{{result.salespersonId}}</a>
+                                <i href="javascript:;" v-html="result.salespersonId"></i>
                             </p>
                         </div>
                     </div>
@@ -220,14 +220,13 @@
                                                     <div class="vertical-timeline-icon navy-bg">
                                                         <i class="fa fa-briefcase"></i>
                                                     </div>
-
                                                     <div class="vertical-timeline-content">
-                                                        <h2>{{site.operation}}</h2>
-                                                        <h3>内容：{{site.content}}</h3>
-                                                        <h4>备注：{{site.remark}}</h4>
+                                                        <h2 v-html="site.operation"></h2>
+                                                        <h3 v-html="site.content"></h3>
+                                                        <h4 v-html="site.remark"></h4>
                                                         <span class="vertical-date">
                                                             <br>
-                                                            <small>{{site.time}}</small>
+                                                            <small v-html="site.time"></small>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -259,6 +258,9 @@
 <script src="../js/jquery-3.3.1.js"></script>
 <script src="../js/bootstrap.min.js?v=3.4.0"></script>
 <script src="../js/vue.js"></script>
+<script src="https://unpkg.com/vue-i18n/dist/vue-i18n.js"></script>
+<script src="../js/globalization.js"></script>
+<script src="../js/search.js"></script>
 <script src="../js/echarts.js"></script>
 <script type="text/javascript">
     var dom = document.getElementById("container");
@@ -320,6 +322,5 @@
         myChart.setOption(option, true);
     }
 </script>
-<script src="../js/search.js"></script>
 </body>
 </html>
