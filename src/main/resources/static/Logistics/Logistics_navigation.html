@@ -55,11 +55,13 @@
         </div>
     </div>
     <!-- Mainly scripts -->
-    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
     <script src="../js/bootstrap.min.js?v=3.4.0"></script>
     <script>
         $("#logout").click(function(){
-            $.get("http://localhost:8080/logout")
+            $.get("http://localhost:8080/logout",function () {
+                location.assign("http://localhost:8080/login/Login.html");
+            })
         })
     </script>
 </body>

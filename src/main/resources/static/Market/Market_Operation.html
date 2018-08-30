@@ -149,7 +149,9 @@
 </script>
 <script>
     $("#logout").click(function(){
-        $.get("http://localhost:8080/logout")
+        $.get("http://localhost:8080/logout",function () {
+            location.assign("http://localhost:8080/login/Login.html");
+        })
     })
 </script>
 </body>
