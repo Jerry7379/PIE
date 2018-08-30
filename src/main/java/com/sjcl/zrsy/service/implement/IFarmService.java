@@ -9,5 +9,7 @@ import com.sjcl.zrsy.domain.FarmReception;
 public interface IFarmService {
      boolean farmReception(FarmReception farmReception);
      boolean farmOperation(FarmOperation farmOperation) ;
+     boolean farmReceptionCheck(String id);
+
 
 }

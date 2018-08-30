@@ -14,11 +14,16 @@ public class FarmServiceImpl implements IFarmService {
     //养殖场接受新猪
     @Override
     public boolean farmReception(FarmReception farmReception){
-        return farmdao.insertFarmreception(farmReception);
+        return farmdao.insertFarmReception(farmReception);
     }
     //养殖场操作
     @Override
     public boolean farmOperation(FarmOperation farmOperation) {
-        return farmdao.insertFarmoperation(farmOperation);
+        return farmdao.insertFarmOperation(farmOperation);
+    }
+
+    @Override
+    public boolean farmReceptionCheck(String id ){
+        return farmdao.getFarmCheck(id);
     }
 }

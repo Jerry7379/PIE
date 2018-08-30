@@ -29,8 +29,8 @@
                             </li>
                         </ul>
                         <ul class="nav navbar-top-links navbar-right">
-                            <li>
-                                <a href="../login/Login.html">
+                            <li id="logout">
+                                <a href="">
                                     <i class="fa fa-sign-out"></i> 退出
                                 </a>
                             </li>
@@ -55,8 +55,15 @@
         </div>
     </div>
     <!-- Mainly scripts -->
-    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
     <script src="../js/bootstrap.min.js?v=3.4.0"></script>
+    <script>
+        $("#logout").click(function(){
+            $.get("http://localhost:8080/logout",function () {
+                location.assign("http://localhost:8080/login/Login.html");
+            })
+        })
+    </script>
 </body>
 
 </html>
