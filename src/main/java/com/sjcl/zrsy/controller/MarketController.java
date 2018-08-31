@@ -2,7 +2,7 @@ package com.sjcl.zrsy.controller;
 
 import com.sjcl.zrsy.domain.MarketOperation;
 import com.sjcl.zrsy.domain.MarketReception;
-import com.sjcl.zrsy.service.implement.IMarketService;
+import com.sjcl.zrsy.service.IMarketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

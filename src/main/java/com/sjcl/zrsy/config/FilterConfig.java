@@ -12,12 +12,12 @@ public class FilterConfig{
 
             FilterRegistrationBean registration = new FilterRegistrationBean();
             registration.setFilter(new LoginFilter());
-            registration.addUrlPatterns("/Farm/*");
-            registration.addUrlPatterns("/Gov/*");
-            registration.addUrlPatterns("/Logistics/*");
-            registration.addUrlPatterns("/Market/*");
-            registration.addUrlPatterns("/Slaughter/*");
-            registration.setName("testFilter");
+            registration.addUrlPatterns("/PorkTraceability/Farm/*");
+            registration.addUrlPatterns("/PorkTraceability/Gov/*");
+            registration.addUrlPatterns("/PorkTraceability/Logistics/*");
+            registration.addUrlPatterns("/PorkTraceability/Market/*");
+            registration.addUrlPatterns("/PorkTraceability/Slaughter/*");
+            registration.setName("Filter");
             registration.setOrder(1);
             return registration;
         }

@@ -2,7 +2,7 @@ package com.sjcl.zrsy.controller;
 
 import com.sjcl.zrsy.domain.RoleRegistration;
 import com.sjcl.zrsy.domain.RoleLogin;
-import com.sjcl.zrsy.service.implement.IRoleService;
+import com.sjcl.zrsy.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

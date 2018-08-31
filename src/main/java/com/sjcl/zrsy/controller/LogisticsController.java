@@ -2,7 +2,7 @@ package com.sjcl.zrsy.controller;
 
 import com.sjcl.zrsy.domain.LogisticsReception;
 import com.sjcl.zrsy.domain.LogisticsOperation;
-import com.sjcl.zrsy.service.implement.ILogisticsService;
+import com.sjcl.zrsy.service.ILogisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +16,7 @@ public class LogisticsController {
     @Autowired
     ILogisticsService logisticsService;
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
+
     @PostMapping("/logisticsoperation")
     public String  logisticsoperation(@RequestBody LogisticsOperation logisticsOperation){
         String info[]=logisticsOperation.getId().split(";");

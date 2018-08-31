@@ -4,7 +4,12 @@ import com.sjcl.zrsy.domain.FarmOperation;
 import com.sjcl.zrsy.domain.FarmReception;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 public class FarmDao {
@@ -30,7 +35,15 @@ public class FarmDao {
             return false;
         }
     }
-    public boolean getFarmCheck(String id) {
-        return false;
+    //检查是否重复
+    public int getFarmCheck(String id) {
+        List<String> checkid=jdbcTemplate.query("select id from traceability_idcard where id='"+id+"'", new RowMapper<String>(){
+            @Override
+            public String mapRow(ResultSet resultSet, int i) throws SQLException {
+                 return resultSet.getString("id");
+            }
+        });
+       return checkid.size();
+
     }
 }

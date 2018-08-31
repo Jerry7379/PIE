@@ -35,7 +35,7 @@ public class LoginFilter implements Filter {
                 if(req.getSession().getAttribute("userInfo")==null) {
                     resp.getOutputStream().write("请先登录".getBytes());
                     //resp.getOutputStream().write(resourceBundle.getString("PleaseLogInFirst").getBytes());//国际化
-                    resp.sendRedirect("http://localhost:8080/login/Login.html");
+                    resp.sendRedirect("http://localhost:8080/PorkTraceability/login/Login.html");
                 }
                 else {
                     filterChain.doFilter(servletRequest, servletResponse);
