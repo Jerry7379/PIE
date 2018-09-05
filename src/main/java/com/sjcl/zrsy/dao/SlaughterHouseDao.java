@@ -25,19 +25,15 @@ public class SlaughterHouseDao {
 
     public boolean insertSlaughteroperartion(SlaughterOperation slaughterOperation){
         try {
-            int a = jdbcTemplate.update("INSERT INTO slaughter_operation (id, operation, content,remark ,time) VALUES (?, ?, ?,?, ?)", slaughterOperation.getId(), slaughterOperation.getOperation(), slaughterOperation.getContent() + "+" + slaughterOperation.getIsAcid(), slaughterOperation.getRemark(), slaughterOperation.getTime());
-            int b;
-            if(slaughterOperation.getIsAcid()!=null)
-            {
-                b = jdbcTemplate.update("UPDATE pig_idcard SET Acider_id = ?, Isacid = ? WHERE Id= ?", slaughterOperation.getContent(), slaughterOperation.getIsAcid(), slaughterOperation.getId());
-            }
-            else
-                b=1;
-
-            if(a==1&&b==1)
-                return true;
-            else
+            int insertSlaughterOperationResult = jdbcTemplate.update("INSERT INTO slaughter_operation (id, operation, content,remark ,time) VALUES (?, ?, ?,?, ?)", slaughterOperation.getId(), slaughterOperation.getOperation(), slaughterOperation.getContent() + "+" + slaughterOperation.getIsAcid(), slaughterOperation.getRemark(), slaughterOperation.getTime());
+            if (insertSlaughterOperationResult < 1) {
                 return false;
+            }
+            if (slaughterOperation.getIsAcid() != null) {
+                int updatePigIdCardResult = jdbcTemplate.update("UPDATE pig_idcard SET Acider_id = ?, Isacid = ? WHERE Id= ?", slaughterOperation.getContent(), slaughterOperation.getIsAcid(), slaughterOperation.getId());
+                return updatePigIdCardResult >= 1;
+            }
+            return true;
         }catch (Exception e)
         {
             return false;
