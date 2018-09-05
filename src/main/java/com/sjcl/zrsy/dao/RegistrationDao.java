@@ -15,15 +15,21 @@ public class RegistrationDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<String> getLoginByRegistrationId(String registrationId){
-        List<String> passwords=jdbcTemplate.query("select * from registration where registration_id= ?", new Object[]{registrationId}, new RowMapper<String>(){
+    public Registration getLoginByRegistrationId(String registrationId){
+        List<Registration> registrations =jdbcTemplate.query("select * from registration where registration_id= ?", new Object[]{registrationId}, new RowMapper<Registration>(){
             @Override
-            public String mapRow(ResultSet resultSet, int i) throws SQLException {
-                String u=resultSet.getString("passwd")+";"+resultSet.getString("types");
-                return u;
+            public Registration mapRow(ResultSet resultSet, int i) throws SQLException {
+                Registration user = new Registration();
+                user.setPassword(resultSet.getString("passwd"));
+                user.setType(resultSet.getString("types"));
+                return user;
             }
         });
-        return passwords;
+        if (registrations != null && registrations.size() > 0) {
+            return registrations.get(0);
+        } else {
+            return null;
+        }
     }
 
     public boolean insertRegistration(Registration registration){

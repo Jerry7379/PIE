@@ -11,7 +11,6 @@ import sun.misc.BASE64Decoder;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.List;
 
 @Repository
 public class RoleServiceImpl implements IRoleService {
@@ -26,7 +25,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public List<String> login(RoleLogin roleLogin)
+    public Registration login(RoleLogin roleLogin)
     {
         return roledao.getLoginByRegistrationId(roleLogin.getName());
     }
