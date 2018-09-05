@@ -15,11 +15,13 @@ import java.util.ResourceBundle;
 public class Rolecontroller {
     @Autowired
     IRoleService roleService;
+
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
+
     @PostMapping("/registration") //角色注册
     public String registration(@RequestBody RoleRegistration roleRegistration)
     {
-        roleRegistration.setPicture(roleService.picturechange(roleRegistration.getRegistrationId(),roleRegistration.getPicture()));
+        roleRegistration.setPicture(roleService.picturechange(roleRegistration.getRegistrationId(), roleRegistration.getPicture()));
         if(roleService.registration(roleRegistration)){
             //return "注册成功，请等候审核";
             return resourceBundle.getString("RegistrationSuccessful");
