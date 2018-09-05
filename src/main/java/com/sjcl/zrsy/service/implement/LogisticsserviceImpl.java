@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.dao.LogisticsDao;
+import com.sjcl.zrsy.dao.LogisticsOperationDao;
 import com.sjcl.zrsy.domain.dto.LogisticsReception;
 import com.sjcl.zrsy.domain.po.LogisticsOperation;
 import com.sjcl.zrsy.service.ILogisticsService;
@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class LogisticsserviceImpl implements ILogisticsService {
     @Autowired
-    LogisticsDao logisticsDao;
+    LogisticsOperationDao logisticsOperationDao;
     //物流接受货物
     @Override
     public boolean logisticsreception(LogisticsReception logisticsReception) {
-        return logisticsDao.updateLogisticsReception(logisticsReception);
+        return logisticsOperationDao.updateLogisticsReception(logisticsReception);
     }
 
 
     //物流货物操作
     @Override
     public boolean logisticsoperation(LogisticsOperation logisticsOperation){
-        return logisticsDao.insertLogisticsoperarion(logisticsOperation);
+        return logisticsOperationDao.insertLogisticsoperarion(logisticsOperation);
 
     }
 }

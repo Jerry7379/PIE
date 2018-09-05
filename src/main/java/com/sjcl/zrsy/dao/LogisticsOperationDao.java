@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LogisticsDao {
+public class LogisticsOperationDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -26,7 +26,11 @@ public class LogisticsDao {
         }
     }
 
-    //物流运输过程检测温湿度
+    /**
+     * 物流运输过程检测温湿度
+     * @param logisticsOperation
+     * @return
+     */
     public boolean insertLogisticsoperarion(LogisticsOperation logisticsOperation) {
 
         try {
