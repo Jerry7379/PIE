@@ -20,23 +20,18 @@ public class LogisticsController {
     @PostMapping("/logisticsoperation")
     public String  logisticsoperation(@RequestBody LogisticsOperation logisticsOperation){
         String info[]=logisticsOperation.getId().split(";");
-        int i;
-        for(i=0;i<info.length;)
+
+        for(int i = 0; i < info.length; i++)
         {
             logisticsOperation.setId(info[i]);
-            if(logisticsService.logisticsoperation(logisticsOperation))
-                i++;
-            else
-                break;
+            if(!logisticsService.logisticsoperation(logisticsOperation)) {
+                //return "操作失败,重新输入";
+                return resourceBundle.getString("OperationFailed,re-enter");
+            }
         }
-        if(i==info.length){
-            //return "操作成功";
-            return resourceBundle.getString("SuccessfulOperation");
-        }
-        else {
-            //return "操作失败,重新输入";
-            return resourceBundle.getString("OperationFailed,re-enter");
-        }
+
+        //return "操作成功";
+        return resourceBundle.getString("SuccessfulOperation");
     }
 
     @PostMapping("/logisticsreception")
