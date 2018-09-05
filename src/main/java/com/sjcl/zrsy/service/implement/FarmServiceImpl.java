@@ -19,7 +19,7 @@ public class FarmServiceImpl implements IFarmService {
     //养殖场接受新猪
     @Override
     public boolean farmReception(FarmReception farmReception){
-        return farmOperationDao.insertFarmReception(farmReception);
+        return traceabilityIdcardDao.insertFarmReception(farmReception);
     }
     //养殖场操作
     @Override

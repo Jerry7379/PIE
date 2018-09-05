@@ -21,13 +21,4 @@ public class FarmOperationDao {
         }
     }
 
-    public boolean insertFarmReception(FarmReception farmReception) {
-        try {
-            jdbcTemplate.update("insert into  traceability_idcard(id,farm_id,breeder_id, birthday, breed, gender,birthweight) values  (?, ?, ?, ?, ?,?,?)",
-                   farmReception.getId(), farmReception.getFarmId(),farmReception.getBreederId(), farmReception.getDate(), farmReception.getBreed(), farmReception.getGender(), farmReception.getWeight());
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 }
