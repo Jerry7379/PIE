@@ -19,25 +19,14 @@ public class MarketController {
     @PostMapping("/marketreception")
     public String marketreception(@RequestBody MarketReception marketReception) {
         String info[]=marketReception.getId().split(";");
-        int i;
-        for(i=0;i<info.length;) {
+        for(int i = 0; i < info.length; i++) {
             marketReception.setId(info[i]);
-            if(marketService.marketreception(marketReception)) {
-                i++;
-            }
-            else {
-                break;
+            if(!marketService.marketreception(marketReception)) {
+                return resourceBundle.getString("OperationFailed,re-enter");
             }
         }
 
-        if(i==info.length) {
-            //return "操作成功";
-            return resourceBundle.getString("SuccessfulOperation");
-        }
-        else {
-            //return "操作失败,重新输入";
-            return resourceBundle.getString("OperationFailed,re-enter");
-        }
+        return resourceBundle.getString("SuccessfulOperation");
     }
 
     @PostMapping("/marketoperation")
