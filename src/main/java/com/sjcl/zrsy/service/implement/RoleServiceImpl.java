@@ -28,7 +28,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public List<String> login(RoleLogin roleLogin)
     {
-        return roledao.getLogin(roleLogin);
+        return roledao.getLoginByRegistrationId(roleLogin.getName());
     }
 
     @Override

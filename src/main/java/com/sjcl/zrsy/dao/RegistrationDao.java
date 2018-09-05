@@ -1,6 +1,5 @@
 package com.sjcl.zrsy.dao;
 
-import com.sjcl.zrsy.domain.dto.RoleLogin;
 import com.sjcl.zrsy.domain.po.RoleRegistration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,12 +15,11 @@ public class RegistrationDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<String> getLogin(RoleLogin roleLogin){
-
-        List<String> passwords=jdbcTemplate.query("select * from registration where registration_id="+roleLogin.getName(),new RowMapper<String>(){
+    public List<String> getLoginByRegistrationId(String registrationId){
+        List<String> passwords=jdbcTemplate.query("select * from registration where registration_id= ?", new Object[]{registrationId}, new RowMapper<String>(){
             @Override
             public String mapRow(ResultSet resultSet, int i) throws SQLException {
-                String  u=resultSet.getString("passwd")+";"+resultSet.getString("types");
+                String u=resultSet.getString("passwd")+";"+resultSet.getString("types");
                 return u;
             }
         });
