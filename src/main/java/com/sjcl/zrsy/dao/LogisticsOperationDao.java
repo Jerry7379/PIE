@@ -11,21 +11,6 @@ public class LogisticsOperationDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    //插入物流公司收货操作
-    public boolean updateLogisticsReception(LogisticsReception logisticsReception) {
-
-        try {
-            if(jdbcTemplate.update("UPDATE traceability_idcard SET logistics_id = ?, car_id = ?, driver_id = ? WHERE id = ?",
-                    logisticsReception.getLogisticsId(), logisticsReception.getCarId(), logisticsReception.getDriverId(), logisticsReception.getId())==1)
-                return true;
-            else
-                return false;
-
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
     /**
      * 物流运输过程检测温湿度
      * @param logisticsOperation
