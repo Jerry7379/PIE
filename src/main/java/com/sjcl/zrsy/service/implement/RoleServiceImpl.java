@@ -2,7 +2,7 @@ package com.sjcl.zrsy.service.implement;
 
 import com.sjcl.zrsy.dao.RegistrationDao;
 import com.sjcl.zrsy.domain.dto.RoleLogin;
-import com.sjcl.zrsy.domain.po.RoleRegistration;
+import com.sjcl.zrsy.domain.po.Registration;
 import com.sjcl.zrsy.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,9 +20,9 @@ public class RoleServiceImpl implements IRoleService {
     private RegistrationDao roledao;
 
     @Override
-    public boolean registration(RoleRegistration roleRegistration)
+    public boolean registration(Registration registration)
     {
-        return roledao.insertRegistration(roleRegistration);
+        return roledao.insertRegistration(registration);
     }
 
     @Override

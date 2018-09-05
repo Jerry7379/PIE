@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.dao;
 
-import com.sjcl.zrsy.domain.po.RoleRegistration;
+import com.sjcl.zrsy.domain.po.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -26,10 +26,10 @@ public class RegistrationDao {
         return passwords;
     }
 
-    public boolean insertRegistration(RoleRegistration roleRegistration){
+    public boolean insertRegistration(Registration registration){
         try {
             jdbcTemplate.update("insert into registration (registration_id,types,email,picture,name,location,legal_rep,capital,date_establishment) value(?,?,?,?,?,?,?,?,?)",
-                    roleRegistration.getRegistrationId(), roleRegistration.getType(), roleRegistration.getEmail(), roleRegistration.getPicture(), roleRegistration.getName(), roleRegistration.getLocation(), roleRegistration.getLegal_rep(), roleRegistration.getCapital(), roleRegistration.getDestablishment());
+                    registration.getRegistrationId(), registration.getType(), registration.getEmail(), registration.getPicture(), registration.getName(), registration.getLocation(), registration.getLegal_rep(), registration.getCapital(), registration.getDestablishment());
             return true;
         }catch(Exception e) {
             return false;

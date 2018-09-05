@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.controller;
 
-import com.sjcl.zrsy.domain.po.RoleRegistration;
+import com.sjcl.zrsy.domain.po.Registration;
 import com.sjcl.zrsy.domain.dto.RoleLogin;
 import com.sjcl.zrsy.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +19,10 @@ public class Rolecontroller {
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
 
     @PostMapping("/registration") //角色注册
-    public String registration(@RequestBody RoleRegistration roleRegistration)
+    public String registration(@RequestBody Registration registration)
     {
-        roleRegistration.setPicture(roleService.picturechange(roleRegistration.getRegistrationId(), roleRegistration.getPicture()));
-        if(roleService.registration(roleRegistration)){
+        registration.setPicture(roleService.picturechange(registration.getRegistrationId(), registration.getPicture()));
+        if(roleService.registration(registration)){
             //return "注册成功，请等候审核";
             return resourceBundle.getString("RegistrationSuccessful");
         }

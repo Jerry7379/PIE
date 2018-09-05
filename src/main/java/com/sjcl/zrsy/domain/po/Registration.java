@@ -9,7 +9,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Past;
 import java.util.Date;
 
-public class RoleRegistration {    //注册模块
+public class Registration {    //注册模块
     @Length(min = 6,max=6,message = "注册号为6位")
     private String registrationId;
 
@@ -40,7 +40,7 @@ public class RoleRegistration {    //注册模块
     private String account;//账号 255
     private String password;//密码 255
 
-    public RoleRegistration()
+    public Registration()
     {
 
     }
