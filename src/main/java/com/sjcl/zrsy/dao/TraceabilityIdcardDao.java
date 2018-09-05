@@ -2,6 +2,7 @@ package com.sjcl.zrsy.dao;
 
 import com.sjcl.zrsy.domain.dto.FarmReception;
 import com.sjcl.zrsy.domain.dto.LogisticsReception;
+import com.sjcl.zrsy.domain.dto.MarketReception;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -63,6 +64,18 @@ public class TraceabilityIdcardDao {
                 return false;
 
         } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean updateMarketReception(MarketReception marketReception){
+        try {
+            if(jdbcTemplate.update("UPDATE traceability_idcard SET supermarket_id = ? WHERE Id = ?", marketReception.getMarketId(), marketReception.getId())==1)
+                return true;
+            else
+                return false;
+        }
+        catch (Exception e){
             return false;
         }
     }

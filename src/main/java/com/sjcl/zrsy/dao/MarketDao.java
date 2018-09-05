@@ -10,17 +10,6 @@ import org.springframework.stereotype.Component;
 public class MarketDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
-    public boolean updateMarketReception(MarketReception marketReception){
-        try {
-            if(jdbcTemplate.update("UPDATE traceability_idcard SET supermarket_id = ? WHERE Id = ?", marketReception.getMarketId(), marketReception.getId())==1)
-                return true;
-            else
-                return false;
-        }
-        catch (Exception e){
-            return false;
-        }
-    }
 
     public boolean insertMarketOperation(MarketOperation marketOperation){
         try {
