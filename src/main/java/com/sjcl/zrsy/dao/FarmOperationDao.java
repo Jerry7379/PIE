@@ -1,18 +1,13 @@
 package com.sjcl.zrsy.dao;
 
-import com.sjcl.zrsy.domain.po.FarmOperation;
 import com.sjcl.zrsy.domain.dto.FarmReception;
+import com.sjcl.zrsy.domain.po.FarmOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-
 @Repository
-public class FarmDao {
+public class FarmOperationDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
     //插入养殖场相关操作
