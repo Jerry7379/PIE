@@ -6,16 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-import sun.misc.BASE64Decoder;
 
-
-import java.io.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 @Component
-public class RoleDao {
+public class RegistrationDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

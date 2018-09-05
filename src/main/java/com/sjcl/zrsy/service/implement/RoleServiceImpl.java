@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.dao.RoleDao;
+import com.sjcl.zrsy.dao.RegistrationDao;
 import com.sjcl.zrsy.domain.dto.RoleLogin;
 import com.sjcl.zrsy.domain.po.RoleRegistration;
 import com.sjcl.zrsy.service.IRoleService;
@@ -17,7 +17,7 @@ import java.util.List;
 public class RoleServiceImpl implements IRoleService {
 
     @Autowired
-    private RoleDao roledao;
+    private RegistrationDao roledao;
 
     @Override
     public boolean registration(RoleRegistration roleRegistration)
