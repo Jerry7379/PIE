@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.dao.SlaughterHouseDao;
+import com.sjcl.zrsy.dao.SlaughterOperationDao;
 import com.sjcl.zrsy.dao.TraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.dto.SlaughterReception;
 import com.sjcl.zrsy.domain.po.SlaughterOperation;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SlaughterHouseServiceImpl implements ISlaughterHouseService {
     @Autowired
-    SlaughterHouseDao slaughterHouseDao;
+    SlaughterOperationDao slaughterOperationDao;
 
     @Autowired
     TraceabilityIdcardDao traceabilityIdcardDao;
@@ -23,6 +23,6 @@ public class SlaughterHouseServiceImpl implements ISlaughterHouseService {
 
     @Override
     public boolean slaughteroperation(SlaughterOperation slaughterOperation){
-        return slaughterHouseDao.insertSlaughteroperartion(slaughterOperation);
+        return slaughterOperationDao.insertSlaughteroperartion(slaughterOperation);
     }
 }

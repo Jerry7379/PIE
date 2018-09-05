@@ -1,13 +1,12 @@
 package com.sjcl.zrsy.dao;
 
-import com.sjcl.zrsy.domain.dto.SlaughterReception;
 import com.sjcl.zrsy.domain.po.SlaughterOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SlaughterHouseDao {
+public class SlaughterOperationDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
