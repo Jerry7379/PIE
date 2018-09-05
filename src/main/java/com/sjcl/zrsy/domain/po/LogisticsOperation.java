@@ -21,7 +21,7 @@ public class LogisticsOperation {
     @Length(min = 13,max = 13,message = "猪ID长度为13")
     private String  id;
 
-    public LogisticsOperation(@Length(min = 7, max = 7, message = "车牌号长度为7") String carId, @Digits(integer = 99, fraction = 99, message = "温度格式错误") double temperature, @Digits(integer = 99, fraction = 99, message = "湿度格式错误") double humidity, String location, String transportTime, @Digits(integer = 99, fraction = 99, message = "CO2格式错误") double co2, @Length(min = 13, max = 13, message = "猪ID长度为13") String id) {
+    public LogisticsOperation(String carId, double temperature, double humidity, String location, String transportTime, double co2, String id) {
         this.carId = carId;
         this.temperature = temperature;
         this.humidity = humidity;

@@ -30,7 +30,7 @@ public class FarmReception {
     @Digits(integer = 99,fraction = 99,message = "出生体重输入错误")
     private Double weight;//出生体重
 
-    public FarmReception(@Length(min = 13, max = 13, message = "猪id为13位") String id, @Length(min = 6, max = 6, message = "养殖场id为6位") String farmId, @Length(min = 6, max = 6, message = "饲养员id") String breederId, @Past(message = "日期不符合规定") Date date, String breed, String gender, @Digits(integer = 99, fraction = 99, message = "出生体重输入错误") Double weight) {
+    public FarmReception(String id, String farmId, String breederId, Date date, String breed, String gender, Double weight) {
         this.id = id;
         this.farmId = farmId;
         this.breederId = breederId;
