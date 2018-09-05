@@ -28,7 +28,7 @@ public class FarmServiceImpl implements IFarmService {
     }
 
     @Override
-    public boolean farmCheck(String id ){
+    public boolean idCardExists(String id ){
         return traceabilityIdcardDao.exsits(id);
     }
 }

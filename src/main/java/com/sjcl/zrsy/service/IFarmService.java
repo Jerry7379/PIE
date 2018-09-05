@@ -9,7 +9,7 @@ import com.sjcl.zrsy.domain.dto.FarmReception;
 public interface IFarmService {
      boolean farmReception(FarmReception farmReception);
      boolean farmOperation(FarmOperation farmOperation) ;
-     boolean farmCheck(String id);
+     boolean idCardExists(String id);
 
 
 }
