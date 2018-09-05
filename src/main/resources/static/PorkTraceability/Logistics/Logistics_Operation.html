@@ -97,8 +97,8 @@
         $(function(){
             $(document).ready(function(){
                 $("#btnlw").click(function(){
-                    var time=new Date();
-                    var t=time.toLocaleString();
+                    var transportTime=new Date();
+                    var t=transportTime.toLocaleString();
                     //alert(str);
 
                     var lw = {
@@ -108,7 +108,7 @@
                         temperature: $("#temperature").val(),
                         co2: $("#co2").val(),
                         location: $("#location").val(),
-                        time: t
+                        transportTime: t
 
                     }
                     var LW=JSON.stringify(lw);

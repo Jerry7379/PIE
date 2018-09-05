@@ -132,14 +132,14 @@
     $(function(){
         $(document).ready(function(){
             $("#Btn1").click(function(){
-                var time=new Date();
-                var t=time.toLocaleString();
+                var transportTime=new Date();
+                var t=transportTime.toLocaleString();
                 var pigMwork = {
                     id: $("#pigId").val(),
                     operation: $("#selectW").val(),
                     content: $("#message").val(),
                     remark: $("#remark").val(),
-                    time: t
+                    transportTime: t
                 };
                 var PigMwork=JSON.stringify(pigMwork);
                 alert(PigMwork);
@@ -167,14 +167,14 @@
     $(function(){
         $(document).ready(function(){
             $("#Btn2").click(function(){
-                var time=new Date();
-                var t=time.toLocaleString();
+                var transportTime=new Date();
+                var t=transportTime.toLocaleString();
                 var pigAddacid = {
                     id: $("#pigId").val(),
                     operation: $("#selectW").val(),
                     content: $("#pspId").val()+";"+$("input[name='optionsRadios']:checked").val(),
                     remark: $("#remark").val(),
-                    time: t
+                    transportTime: t
                 };
                 var PigAddacid=JSON.stringify(pigAddacid);
                 alert(PigAddacid);

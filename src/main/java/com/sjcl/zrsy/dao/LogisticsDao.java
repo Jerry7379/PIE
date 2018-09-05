@@ -31,7 +31,7 @@ public class LogisticsDao {
 
         try {
             jdbcTemplate.update("insert into logistics_operation (id,Car_id,humidity,temperature,co2,location,transport_time ) values (?,?,?,?,?,?,?)",
-                    logisticsOperation.getId(), logisticsOperation.getCarId(), logisticsOperation.getHumidity(), logisticsOperation.getTemperature(), logisticsOperation.getCo2(), logisticsOperation.getLocation(), logisticsOperation.getTime());
+                    logisticsOperation.getId(), logisticsOperation.getCarId(), logisticsOperation.getHumidity(), logisticsOperation.getTemperature(), logisticsOperation.getCo2(), logisticsOperation.getLocation(), logisticsOperation.getTransportTime());
             return true;
         } catch (Exception e) {
             return false;
