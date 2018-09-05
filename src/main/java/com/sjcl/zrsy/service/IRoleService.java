@@ -1,6 +1,7 @@
 package com.sjcl.zrsy.service;
 
-import com.sjcl.zrsy.domain.*;
+import com.sjcl.zrsy.domain.dto.RoleLogin;
+import com.sjcl.zrsy.domain.po.RoleRegistration;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.sjcl.zrsy.domain;
+package com.sjcl.zrsy.domain.dto;
 
 import java.util.List;
 

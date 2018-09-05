@@ -1,13 +1,12 @@
 package com.sjcl.zrsy.dao;
 
-import com.sjcl.zrsy.domain.RoleLogin;
-import com.sjcl.zrsy.domain.RoleRegistration;
+import com.sjcl.zrsy.domain.dto.RoleLogin;
+import com.sjcl.zrsy.domain.po.RoleRegistration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 
 import java.io.*;

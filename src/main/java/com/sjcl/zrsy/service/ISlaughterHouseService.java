@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.service;
 
-import com.sjcl.zrsy.domain.SlaughterReception;
-import com.sjcl.zrsy.domain.SlaughterOperation;
+import com.sjcl.zrsy.domain.dto.SlaughterReception;
+import com.sjcl.zrsy.domain.po.SlaughterOperation;
 
 public interface ISlaughterHouseService {
     boolean slaughterreception(SlaughterReception slaughterReception);//屠宰检查

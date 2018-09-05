@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.controller;
 
-import com.sjcl.zrsy.domain.SlaughterReception;
-import com.sjcl.zrsy.domain.SlaughterOperation;
+import com.sjcl.zrsy.domain.dto.SlaughterReception;
+import com.sjcl.zrsy.domain.po.SlaughterOperation;
 import com.sjcl.zrsy.service.ISlaughterHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

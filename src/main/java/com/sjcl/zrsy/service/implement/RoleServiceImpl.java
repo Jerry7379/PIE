@@ -1,7 +1,8 @@
 package com.sjcl.zrsy.service.implement;
 
 import com.sjcl.zrsy.dao.RoleDao;
-import com.sjcl.zrsy.domain.*;
+import com.sjcl.zrsy.domain.dto.RoleLogin;
+import com.sjcl.zrsy.domain.po.RoleRegistration;
 import com.sjcl.zrsy.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

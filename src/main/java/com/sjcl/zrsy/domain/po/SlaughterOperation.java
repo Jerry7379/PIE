@@ -1,4 +1,4 @@
-package com.sjcl.zrsy.domain;
+package com.sjcl.zrsy.domain.po;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;

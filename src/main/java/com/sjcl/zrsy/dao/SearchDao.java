@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.dao;
 
-import com.sjcl.zrsy.domain.SearchId;
-import com.sjcl.zrsy.domain.SearchOperation;
+import com.sjcl.zrsy.domain.dto.SearchId;
+import com.sjcl.zrsy.domain.dto.SearchOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

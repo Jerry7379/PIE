@@ -1,8 +1,8 @@
 package com.sjcl.zrsy.service.implement;
 
 import com.sjcl.zrsy.dao.FarmDao;
-import com.sjcl.zrsy.domain.FarmOperation;
-import com.sjcl.zrsy.domain.FarmReception;
+import com.sjcl.zrsy.domain.po.FarmOperation;
+import com.sjcl.zrsy.domain.dto.FarmReception;
 import com.sjcl.zrsy.service.IFarmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

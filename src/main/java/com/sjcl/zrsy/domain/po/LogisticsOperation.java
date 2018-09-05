@@ -1,4 +1,4 @@
-package com.sjcl.zrsy.domain;
+package com.sjcl.zrsy.domain.po;
 
 import org.hibernate.validator.constraints.Length;
 

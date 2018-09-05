@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.dao;
 
-import com.sjcl.zrsy.domain.LogisticsReception;
-import com.sjcl.zrsy.domain.LogisticsOperation;
+import com.sjcl.zrsy.domain.dto.LogisticsReception;
+import com.sjcl.zrsy.domain.po.LogisticsOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;

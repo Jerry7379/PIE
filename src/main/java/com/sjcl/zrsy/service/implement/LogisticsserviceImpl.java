@@ -1,8 +1,8 @@
 package com.sjcl.zrsy.service.implement;
 
 import com.sjcl.zrsy.dao.LogisticsDao;
-import com.sjcl.zrsy.domain.LogisticsReception;
-import com.sjcl.zrsy.domain.LogisticsOperation;
+import com.sjcl.zrsy.domain.dto.LogisticsReception;
+import com.sjcl.zrsy.domain.po.LogisticsOperation;
 import com.sjcl.zrsy.service.ILogisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

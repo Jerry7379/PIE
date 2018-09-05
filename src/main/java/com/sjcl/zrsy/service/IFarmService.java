@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.service;
 
-import com.sjcl.zrsy.domain.FarmOperation;
-import com.sjcl.zrsy.domain.FarmReception;
+import com.sjcl.zrsy.domain.po.FarmOperation;
+import com.sjcl.zrsy.domain.dto.FarmReception;
 
 /**
  * 养殖场服务接口

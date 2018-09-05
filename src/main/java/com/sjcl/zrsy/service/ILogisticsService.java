@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.service;
 
-import com.sjcl.zrsy.domain.LogisticsOperation;
-import com.sjcl.zrsy.domain.LogisticsReception;
+import com.sjcl.zrsy.domain.po.LogisticsOperation;
+import com.sjcl.zrsy.domain.dto.LogisticsReception;
 
 /**
  * 物流接口

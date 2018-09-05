@@ -1,8 +1,8 @@
 package com.sjcl.zrsy.service.implement;
 
 import com.sjcl.zrsy.dao.SlaughterHouseDao;
-import com.sjcl.zrsy.domain.SlaughterReception;
-import com.sjcl.zrsy.domain.SlaughterOperation;
+import com.sjcl.zrsy.domain.dto.SlaughterReception;
+import com.sjcl.zrsy.domain.po.SlaughterOperation;
 import com.sjcl.zrsy.service.ISlaughterHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
