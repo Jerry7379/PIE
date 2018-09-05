@@ -1,6 +1,7 @@
 package com.sjcl.zrsy.service.implement;
 
 import com.sjcl.zrsy.dao.FarmDao;
+import com.sjcl.zrsy.dao.TraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.po.FarmOperation;
 import com.sjcl.zrsy.domain.dto.FarmReception;
 import com.sjcl.zrsy.service.IFarmService;
@@ -9,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FarmServiceImpl implements IFarmService {
+
+    @Autowired
+    TraceabilityIdcardDao traceabilityIdcardDao;
+
     @Autowired
     FarmDao farmdao;
     //养殖场接受新猪
@@ -24,6 +29,6 @@ public class FarmServiceImpl implements IFarmService {
 
     @Override
     public int farmCheck(String id ){
-        return farmdao.getFarmCheck(id);
+        return traceabilityIdcardDao.getFarmCheck(id);
     }
 }

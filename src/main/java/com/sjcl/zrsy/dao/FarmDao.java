@@ -35,15 +35,4 @@ public class FarmDao {
             return false;
         }
     }
-    //检查是否重复
-    public int getFarmCheck(String id) {
-        List<String> checkid=jdbcTemplate.query("select id from traceability_idcard where id='"+id+"'", new RowMapper<String>(){
-            @Override
-            public String mapRow(ResultSet resultSet, int i) throws SQLException {
-                 return resultSet.getString("id");
-            }
-        });
-       return checkid.size();
-
-    }
 }
