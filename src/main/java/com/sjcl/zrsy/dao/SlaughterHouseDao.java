@@ -11,18 +11,6 @@ public class SlaughterHouseDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public boolean updateSlaughterreception(SlaughterReception receiver)//屠宰场检疫（还没数据检查）
-    {
-        try {
-            if(jdbcTemplate.update("update traceability_idcard set slaughterhouse_id=?,checker_id=?,ischeck=? where id=?", receiver.getSlaughterId(), receiver.getCheckerId(), receiver.getIsCheck(), receiver.getId())==1)
-                return true;
-            else
-                return false;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
     public boolean insertSlaughteroperartion(SlaughterOperation slaughterOperation){
         try {
             int insertSlaughterOperationResult = jdbcTemplate.update("INSERT INTO slaughter_operation (id, operation, content,remark ,time) VALUES (?, ?, ?,?, ?)", slaughterOperation.getId(), slaughterOperation.getOperation(), slaughterOperation.getContent() + "+" + slaughterOperation.getIsAcid(), slaughterOperation.getRemark(), slaughterOperation.getTime());

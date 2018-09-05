@@ -3,6 +3,7 @@ package com.sjcl.zrsy.dao;
 import com.sjcl.zrsy.domain.dto.FarmReception;
 import com.sjcl.zrsy.domain.dto.LogisticsReception;
 import com.sjcl.zrsy.domain.dto.MarketReception;
+import com.sjcl.zrsy.domain.dto.SlaughterReception;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -76,6 +77,23 @@ public class TraceabilityIdcardDao {
                 return false;
         }
         catch (Exception e){
+            return false;
+        }
+    }
+
+    /**
+     * 屠宰场检疫（还没数据检查）
+     * @param receiver
+     * @return
+     */
+    public boolean updateSlaughterreception(SlaughterReception receiver)
+    {
+        try {
+            if(jdbcTemplate.update("update traceability_idcard set slaughterhouse_id=?,checker_id=?,ischeck=? where id=?", receiver.getSlaughterId(), receiver.getCheckerId(), receiver.getIsCheck(), receiver.getId())==1)
+                return true;
+            else
+                return false;
+        }catch (Exception e){
             return false;
         }
     }
