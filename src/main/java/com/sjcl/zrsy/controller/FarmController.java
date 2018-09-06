@@ -19,7 +19,7 @@ public class FarmController {
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.getDefault());
     @PostMapping("/farmreception")
     public String farmreception(@RequestBody FarmReception farmReception) {
-        if(farmService.idCardExists(farmReception.getId())){
+        if(!farmService.idCardExists(farmReception.getId())){
             if(farmService.farmReception(farmReception)){
                 //return "操作成功";
                 return resourceBundle.getString("SuccessfulOperation");
