@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.service;
 
-import com.sjcl.zrsy.domain.po.FarmOperation;
+import com.sjcl.zrsy.domain.dto.FarmOperation;
 import com.sjcl.zrsy.domain.dto.FarmReception;
 
 /**

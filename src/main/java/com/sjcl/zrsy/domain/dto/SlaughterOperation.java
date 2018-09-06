@@ -1,6 +1,7 @@
-package com.sjcl.zrsy.domain.po;
+package com.sjcl.zrsy.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.hibernate.validator.constraints.Length;
 
 public class SlaughterOperation {

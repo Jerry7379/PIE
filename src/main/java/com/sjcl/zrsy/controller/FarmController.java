@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.controller;
 
-import com.sjcl.zrsy.domain.po.FarmOperation;
+import com.sjcl.zrsy.domain.dto.FarmOperation;
 import com.sjcl.zrsy.domain.dto.FarmReception;
 import com.sjcl.zrsy.service.IFarmService;
 import org.springframework.beans.factory.annotation.Autowired;

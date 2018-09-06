@@ -2,9 +2,8 @@ package com.sjcl.zrsy.service.implement;
 
 import com.sjcl.zrsy.dao.FarmOperationDao;
 import com.sjcl.zrsy.dao.TraceabilityIdcardDao;
-import com.sjcl.zrsy.domain.po.FarmOperation;
+import com.sjcl.zrsy.domain.dto.FarmOperation;
 import com.sjcl.zrsy.domain.dto.FarmReception;
-import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import com.sjcl.zrsy.service.IFarmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

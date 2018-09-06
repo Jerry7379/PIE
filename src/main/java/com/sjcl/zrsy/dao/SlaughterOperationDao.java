@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.dao;
 
-import com.sjcl.zrsy.domain.po.SlaughterOperation;
+import com.sjcl.zrsy.domain.dto.SlaughterOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;

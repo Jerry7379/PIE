@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.dao;
 
-import com.sjcl.zrsy.domain.po.MarketOperation;
+import com.sjcl.zrsy.domain.dto.MarketOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;

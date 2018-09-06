@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.controller;
 
-import com.sjcl.zrsy.domain.po.MarketOperation;
+import com.sjcl.zrsy.domain.dto.MarketOperation;
 import com.sjcl.zrsy.domain.dto.MarketReception;
 import com.sjcl.zrsy.service.IMarketService;
 import org.springframework.beans.factory.annotation.Autowired;
