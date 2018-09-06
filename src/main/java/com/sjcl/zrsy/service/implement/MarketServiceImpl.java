@@ -18,7 +18,9 @@ public class MarketServiceImpl implements IMarketService {
 
     @Override
     public boolean marketreception(MarketReception marketReception){
-        return traceabilityIdcardDao.updateMarketReception(marketReception);
+        // int updateResult = jdbcTemplate.update("UPDATE traceability_idcard SET supermarket_id = ? WHERE Id = ?", marketReception.getMarketId(), marketReception.getId());
+
+        return traceabilityIdcardDao.updateMarket(marketReception.toMarket());
     }
     @Override
     public boolean marketoperation(MarketOperation marketOperation){

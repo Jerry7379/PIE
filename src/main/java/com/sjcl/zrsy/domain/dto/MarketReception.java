@@ -1,6 +1,7 @@
 package com.sjcl.zrsy.domain.dto;
 
 
+import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.hibernate.validator.constraints.Length;
 
 public class MarketReception {
@@ -16,6 +17,13 @@ public class MarketReception {
 
     public MarketReception() {
 
+    }
+
+    public TraceabilityIdcard toMarket() {
+        TraceabilityIdcard obj = new TraceabilityIdcard();
+        obj.setId(this.id);
+        obj.setSupermarketId(this.marketId);
+        return obj;
     }
 
     public String getId() {

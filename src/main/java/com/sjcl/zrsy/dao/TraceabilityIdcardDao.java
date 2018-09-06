@@ -71,12 +71,10 @@ public class TraceabilityIdcardDao {
         }
     }
 
-    public boolean updateMarketReception(MarketReception marketReception){
+    public boolean updateMarket(TraceabilityIdcard marketReception){
         try {
-            if(jdbcTemplate.update("UPDATE traceability_idcard SET supermarket_id = ? WHERE Id = ?", marketReception.getMarketId(), marketReception.getId())==1)
-                return true;
-            else
-                return false;
+            int updateResult = jdbcTemplate.update("UPDATE traceability_idcard SET supermarket_id = ? WHERE Id = ?", marketReception.getSupermarketId(), marketReception.getId());
+            return updateResult == 1;
         }
         catch (Exception e){
             return false;
