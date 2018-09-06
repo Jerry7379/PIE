@@ -1,10 +1,14 @@
 package com.sjcl.zrsy.domain.po;
 
 public class Operation {
+    private String id;
     private String operation;
     private String content;
     private String remark;
     private String time;
+
+    public Operation() {
+    }
 
     public String getOperation() {
         return operation;
@@ -36,5 +40,13 @@ public class Operation {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
