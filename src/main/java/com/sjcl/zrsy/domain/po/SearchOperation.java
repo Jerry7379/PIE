@@ -1,4 +1,4 @@
-package com.sjcl.zrsy.domain.dto;
+package com.sjcl.zrsy.domain.po;
 
 public class SearchOperation {
     private String operation;

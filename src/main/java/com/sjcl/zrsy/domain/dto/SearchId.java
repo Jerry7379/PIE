@@ -1,5 +1,7 @@
 package com.sjcl.zrsy.domain.dto;
 
+import com.sjcl.zrsy.domain.po.SearchOperation;
+
 import java.util.ArrayList;
 import java.util.List;
 
