@@ -1,5 +1,6 @@
 package com.sjcl.zrsy.domain.dto;
 
+import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Size;
@@ -60,5 +61,14 @@ public class SlaughterReception {
 
     public void setIsCheck(int isCheck) {
         this.isCheck = isCheck;
+    }
+
+    public TraceabilityIdcard toQuarantine() {
+        TraceabilityIdcard quarantine = new TraceabilityIdcard();
+        quarantine.setSlaughterhouseId(this.slaughterId);
+        quarantine.setCheckerId(this.checkerId);
+        quarantine.setIscheck(this.isCheck);
+        quarantine.setId(this.id);
+        return quarantine;
     }
 }

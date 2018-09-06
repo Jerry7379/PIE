@@ -85,23 +85,26 @@ public class TraceabilityIdcardDao {
 
     /**
      * 屠宰场检疫（还没数据检查）
-     * @param receiver
+     * @param quarantine
      * @returnSlaughterHouseServiceImpl
      */
-    public boolean updateQuarantine(SlaughterReception receiver)
+    public boolean updateQuarantine(TraceabilityIdcard quarantine)
     {
         try {
-            if(jdbcTemplate.update("update traceability_idcard set slaughterhouse_id=?,checker_id=?,ischeck=? where id=?", receiver.getSlaughterId(), receiver.getCheckerId(), receiver.getIsCheck(), receiver.getId())==1)
-                return true;
-            else
-                return false;
+            int updateResult = jdbcTemplate.update("update traceability_idcard set slaughterhouse_id=?,checker_id=?,ischeck=? where id=?",
+                    quarantine.getSlaughterhouseId(),
+                    quarantine.getCheckerId(),
+                    quarantine.getIscheck(),
+                    quarantine.getId()
+            );
+
+            return updateResult == 1;
         }catch (Exception e){
             return false;
         }
     }
 
     public boolean updateAcid(TraceabilityIdcard acid){
-//        int updatePigIdCardResult = jdbcTemplate.update("UPDATE traceability_idcard SET Acider_id = ?, Isacid = ? WHERE Id= ?", slaughterOperation.getContent(), slaughterOperation.getIsAcid(), slaughterOperation.getId());
         int updatePigIdCardResult = jdbcTemplate.update("UPDATE traceability_idcard SET Acider_id = ?, Isacid = ? WHERE Id= ?", acid.getAciderId(), acid.getIsacid(), acid.getIsacid());
         return updatePigIdCardResult > 0;
     }
