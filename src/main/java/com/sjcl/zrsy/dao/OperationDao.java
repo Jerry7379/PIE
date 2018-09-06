@@ -1,35 +1,35 @@
 package com.sjcl.zrsy.dao;
 
-import com.sjcl.zrsy.domain.dto.FarmOperation;
-import com.sjcl.zrsy.domain.dto.MarketOperation;
 import com.sjcl.zrsy.domain.dto.SlaughterOperation;
+import com.sjcl.zrsy.domain.po.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class OperationDao {
+    private static final String TABLE_NAME_FARM_OPERATION = "farm_operation";
+    private static final String TABLE_NAME_SLAUGHTER_OPERATION = "slaughter_operation";
+    private static final String TABLE_NAME_MARKET_OPERATION = "market_operation";
+
+
+
     @Autowired
     JdbcTemplate jdbcTemplate;
 
 
     //插入养殖场相关操作
-    public boolean insertFarmOperation(FarmOperation farmOperation) {
+    public boolean insertFarmOperation(Operation operation) {
         try {
-            jdbcTemplate.update("insert into farm_operation(id,operation,content,remark,time) values (?,?,?,?,?)",
-                    farmOperation.getId(), farmOperation.getOperation(), farmOperation.getContent(), farmOperation.getRemark(), farmOperation.getTime());
-            return true;
+            return insertOperation(TABLE_NAME_FARM_OPERATION, operation);
         } catch (Exception e) {
             return false;
         }
     }
 
-    public boolean insertMarketOperation(MarketOperation marketOperation){
+    public boolean insertMarketOperation(Operation operation){
         try {
-            if (jdbcTemplate.update("INSERT INTO market_operation (id, operation, content, remark, time) VALUES (?, ?, ?, ?, ?)", marketOperation.getId(), marketOperation.getOperation(), marketOperation.getContent(), marketOperation.getRemark(), marketOperation.getTime()) == 1)
-                return true;
-            else
-                return false;
+            return insertOperation(TABLE_NAME_MARKET_OPERATION, operation);
         }
         catch (Exception e) {
             return false;
@@ -45,6 +45,23 @@ public class OperationDao {
                     slaughterOperation.getContent() + "+" + slaughterOperation.getIsAcid(),
                     slaughterOperation.getRemark(),
                     slaughterOperation.getTime()
+            );
+            return insertSlaughterOperationResult > 0;
+        }catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    private boolean insertOperation(String tableName, Operation operation) {
+        try {
+            int insertSlaughterOperationResult = jdbcTemplate.update(
+                    "INSERT INTO " + tableName + " (id, operation, content,remark ,time) VALUES (?, ?, ?, ?, ?)",
+                    operation.getId(),
+                    operation.getOperation(),
+                    operation.getContent(),
+                    operation.getRemark(),
+                    operation.getTime()
             );
             return insertSlaughterOperationResult > 0;
         }catch (Exception e)

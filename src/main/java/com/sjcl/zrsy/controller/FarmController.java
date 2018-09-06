@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.controller;
 
-import com.sjcl.zrsy.domain.dto.FarmOperation;
 import com.sjcl.zrsy.domain.dto.FarmReception;
+import com.sjcl.zrsy.domain.po.Operation;
 import com.sjcl.zrsy.service.IFarmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,9 +35,9 @@ public class FarmController {
     }
 
     @PostMapping("/farmoperation")
-    public String farmoperation(@RequestBody FarmOperation farmOperation) {
-        if(farmService.idCardExists(farmOperation.getId())) {
-            if (farmService.farmOperation(farmOperation)) {
+    public String farmoperation(@RequestBody Operation operation) {
+        if(farmService.idCardExists(operation.getId())) {
+            if (farmService.farmOperation(operation)) {
                 //return "操作成功";
                 return resourceBundle.getString("SuccessfulOperation");
             } else {

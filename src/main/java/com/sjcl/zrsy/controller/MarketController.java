@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.controller;
 
-import com.sjcl.zrsy.domain.dto.MarketOperation;
 import com.sjcl.zrsy.domain.dto.MarketReception;
+import com.sjcl.zrsy.domain.po.Operation;
 import com.sjcl.zrsy.service.IMarketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,8 +30,8 @@ public class MarketController {
     }
 
     @PostMapping("/marketoperation")
-    public String marketoperation(@RequestBody MarketOperation marketOperation) {
-        if(marketService.marketoperation(marketOperation)) {
+    public String marketoperation(@RequestBody Operation operation) {
+        if(marketService.marketoperation(operation)) {
             //return "操作成功";
             return resourceBundle.getString("SuccessfulOperation");
         }

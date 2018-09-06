@@ -1,6 +1,5 @@
 package com.sjcl.zrsy.dao;
 
-import com.sjcl.zrsy.domain.dto.FarmReception;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
