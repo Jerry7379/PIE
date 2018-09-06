@@ -6,9 +6,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FarmOperationDao {
+public class OperationDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+
     //插入养殖场相关操作
     public boolean insertFarmOperation(FarmOperation farmOperation) {
         try {
@@ -19,5 +21,4 @@ public class FarmOperationDao {
             return false;
         }
     }
-
 }

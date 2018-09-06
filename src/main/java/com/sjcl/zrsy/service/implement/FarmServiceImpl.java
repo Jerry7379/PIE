@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.dao.FarmOperationDao;
+import com.sjcl.zrsy.dao.OperationDao;
 import com.sjcl.zrsy.dao.TraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.dto.FarmOperation;
 import com.sjcl.zrsy.domain.dto.FarmReception;
@@ -15,7 +15,7 @@ public class FarmServiceImpl implements IFarmService {
     TraceabilityIdcardDao traceabilityIdcardDao;
 
     @Autowired
-    FarmOperationDao farmOperationDao;
+    OperationDao operationDao;
     //养殖场接受新猪
     @Override
     public boolean farmReception(FarmReception farmReception){
@@ -24,7 +24,7 @@ public class FarmServiceImpl implements IFarmService {
     //养殖场操作
     @Override
     public boolean farmOperation(FarmOperation farmOperation) {
-        return farmOperationDao.insertFarmOperation(farmOperation);
+        return operationDao.insertFarmOperation(farmOperation);
     }
 
     @Override
