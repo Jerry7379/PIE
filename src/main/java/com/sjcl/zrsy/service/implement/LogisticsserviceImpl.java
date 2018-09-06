@@ -19,7 +19,7 @@ public class LogisticsserviceImpl implements ILogisticsService {
     //物流接受货物
     @Override
     public boolean logisticsreception(LogisticsReception logisticsReception) {
-        return traceabilityIdcardDao.updateLogisticsReception(logisticsReception);
+        return traceabilityIdcardDao.updateLogisticsReception(logisticsReception.toLogistics());
     }
 
 

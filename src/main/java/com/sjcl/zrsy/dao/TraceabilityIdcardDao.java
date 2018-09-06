@@ -54,26 +54,26 @@ public class TraceabilityIdcardDao {
 
     /**
      * 插入物流公司收货操作
-     * @param logisticsReception
+     * @param logistics
      * @return
      */
-    public boolean updateLogisticsReception(LogisticsReception logisticsReception) {
+    public boolean updateLogisticsReception(TraceabilityIdcard logistics) {
 
         try {
-            if(jdbcTemplate.update("UPDATE traceability_idcard SET logistics_id = ?, car_id = ?, driver_id = ? WHERE id = ?",
-                    logisticsReception.getLogisticsId(), logisticsReception.getCarId(), logisticsReception.getDriverId(), logisticsReception.getId())==1)
-                return true;
-            else
-                return false;
-
+            int updateResult = jdbcTemplate.update("UPDATE traceability_idcard SET logistics_id = ?, car_id = ?, driver_id = ? WHERE id = ?",
+                    logistics.getLogisticsId(),
+                    logistics.getCarId(),
+                    logistics.getDriverId(),
+                    logistics.getId());
+            return updateResult == 1;
         } catch (Exception e) {
             return false;
         }
     }
 
-    public boolean updateMarket(TraceabilityIdcard marketReception){
+    public boolean updateMarket(TraceabilityIdcard market){
         try {
-            int updateResult = jdbcTemplate.update("UPDATE traceability_idcard SET supermarket_id = ? WHERE Id = ?", marketReception.getSupermarketId(), marketReception.getId());
+            int updateResult = jdbcTemplate.update("UPDATE traceability_idcard SET supermarket_id = ? WHERE Id = ?", market.getSupermarketId(), market.getId());
             return updateResult == 1;
         }
         catch (Exception e){

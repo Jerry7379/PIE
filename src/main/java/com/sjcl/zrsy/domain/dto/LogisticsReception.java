@@ -1,5 +1,6 @@
 package com.sjcl.zrsy.domain.dto;
 
+import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.hibernate.validator.constraints.Length;
 
 public class LogisticsReception {
@@ -56,5 +57,14 @@ public class LogisticsReception {
 
     public void setDriverId(String driverId) {
         this.driverId = driverId;
+    }
+
+    public TraceabilityIdcard toLogistics() {
+        TraceabilityIdcard logistics = new TraceabilityIdcard();
+        logistics.setLogisticsId(this.logisticsId);
+        logistics.setCarId(this.carId);
+        logistics.setDriverId(this.driverId);
+        logistics.setId(this.id);
+        return logistics;
     }
 }
