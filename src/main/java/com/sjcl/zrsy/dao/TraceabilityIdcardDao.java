@@ -4,6 +4,7 @@ import com.sjcl.zrsy.domain.dto.FarmReception;
 import com.sjcl.zrsy.domain.dto.LogisticsReception;
 import com.sjcl.zrsy.domain.dto.MarketReception;
 import com.sjcl.zrsy.domain.dto.SlaughterReception;
+import com.sjcl.zrsy.domain.po.SlaughterOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -96,5 +97,10 @@ public class TraceabilityIdcardDao {
         }catch (Exception e){
             return false;
         }
+    }
+
+    public boolean updateIdcard(SlaughterOperation slaughterOperation){
+        int updatePigIdCardResult = jdbcTemplate.update("UPDATE traceability_idcard SET Acider_id = ?, Isacid = ? WHERE Id= ?", slaughterOperation.getContent(), slaughterOperation.getIsAcid(), slaughterOperation.getId());
+        return updatePigIdCardResult > 0;
     }
 }

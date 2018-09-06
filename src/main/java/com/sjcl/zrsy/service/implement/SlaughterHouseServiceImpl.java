@@ -1,6 +1,5 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.dao.PigIdcardDao;
 import com.sjcl.zrsy.dao.SlaughterOperationDao;
 import com.sjcl.zrsy.dao.TraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.dto.SlaughterReception;
@@ -17,9 +16,6 @@ public class SlaughterHouseServiceImpl implements ISlaughterHouseService {
     @Autowired
     private TraceabilityIdcardDao traceabilityIdcardDao;
 
-    @Autowired
-    private PigIdcardDao pigIdcardDao;
-
     @Override
     public boolean slaughterreception(SlaughterReception slaughterReception) {
         return traceabilityIdcardDao.updateSlaughterreception(slaughterReception);
@@ -28,7 +24,7 @@ public class SlaughterHouseServiceImpl implements ISlaughterHouseService {
     @Override
     public boolean slaughteroperation(SlaughterOperation slaughterOperation){
         boolean insertOperationSuccess = slaughterOperationDao.insertSlaughteroperartion(slaughterOperation);
-        boolean updateIdcardSuccess = pigIdcardDao.updatePigIdcard(slaughterOperation);
+        boolean updateIdcardSuccess = traceabilityIdcardDao.updateIdcard(slaughterOperation);
         return insertOperationSuccess && updateIdcardSuccess;
     }
 }
