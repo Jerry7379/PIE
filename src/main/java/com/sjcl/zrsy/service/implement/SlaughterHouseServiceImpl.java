@@ -19,7 +19,7 @@ public class SlaughterHouseServiceImpl implements ISlaughterHouseService {
 
     @Override
     public boolean slaughterreception(SlaughterReception slaughterReception) {
-        return traceabilityIdcardDao.updateSlaughterreception(slaughterReception);
+        return traceabilityIdcardDao.updateQuarantine(slaughterReception);
     }
 
     @Override

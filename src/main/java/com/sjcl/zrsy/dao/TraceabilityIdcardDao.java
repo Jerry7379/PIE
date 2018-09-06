@@ -88,7 +88,7 @@ public class TraceabilityIdcardDao {
      * @param receiver
      * @returnSlaughterHouseServiceImpl
      */
-    public boolean updateSlaughterreception(SlaughterReception receiver)
+    public boolean updateQuarantine(SlaughterReception receiver)
     {
         try {
             if(jdbcTemplate.update("update traceability_idcard set slaughterhouse_id=?,checker_id=?,ischeck=? where id=?", receiver.getSlaughterId(), receiver.getCheckerId(), receiver.getIsCheck(), receiver.getId())==1)
