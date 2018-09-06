@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.dao.MarketOperationDao;
+import com.sjcl.zrsy.dao.OperationDao;
 import com.sjcl.zrsy.dao.TraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.dto.MarketOperation;
 import com.sjcl.zrsy.domain.dto.MarketReception;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MarketServiceImpl implements IMarketService {
     @Autowired
-    MarketOperationDao marketdao;
+    OperationDao operationDao;
 
     @Autowired
     TraceabilityIdcardDao traceabilityIdcardDao;
@@ -22,6 +22,6 @@ public class MarketServiceImpl implements IMarketService {
     }
     @Override
     public boolean marketoperation(MarketOperation marketOperation){
-        return marketdao.insertMarketOperation(marketOperation);
+        return operationDao.insertMarketOperation(marketOperation);
     }
 }
