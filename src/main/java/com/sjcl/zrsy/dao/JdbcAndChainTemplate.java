@@ -1,7 +1,12 @@
 package com.sjcl.zrsy.dao;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.sjcl.zrsy.domain.dto.IdCard;
+import com.sjcl.zrsy.domain.dto.JsonRpcRequest;
+import com.sjcl.zrsy.domain.dto.JsonRpcRespones;
+import com.sjcl.zrsy.domain.dto.JsonRpcResponesResult;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
@@ -11,14 +16,18 @@ import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.insert.Insert;
 import net.sf.jsqlparser.statement.update.Update;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +37,15 @@ public class JdbcAndChainTemplate {
     @Autowired
     JdbcTemplate jdbcTemplate;
     @Autowired
-    TXDao txDao;
+    RestTemplate restTemplate;
+
+    private String url;
+
+    public JdbcAndChainTemplate(@Value("${chain_url}") String url) {
+        this.url = url;
+    }
+
+
     List<String> id;
 
     public boolean insert(String sql, @Nullable Object... args) throws DataAccessException, JSQLParserException {
@@ -73,7 +90,7 @@ public class JdbcAndChainTemplate {
                 }
             });
             jsonObject.put("Field", idCards.get(0));
-            if (jdbcTemplate.update("update ? set hash=? where id =?", table, txDao.sendTX(jsonObject), idCards.get(0).getId()) == 1) {
+            if (jdbcTemplate.update("update ? set hash=? where id =?", table, sendTX(jsonObject), idCards.get(0).getId()) == 1) {
                 return true;
             } else {
                 return false;
@@ -91,7 +108,7 @@ public class JdbcAndChainTemplate {
                 }
             });
             jsonObject.put("Field", maps.get(0));
-            if (jdbcTemplate.update("update ? set hash=? where num =?", table, txDao.sendTX(jsonObject), id.get(0)) == 1) {
+            if (jdbcTemplate.update("update ? set hash=? where num =?", table, sendTX(jsonObject), id.get(0)) == 1) {
                 return true;
             } else {
                 return false;
@@ -124,7 +141,7 @@ public class JdbcAndChainTemplate {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("table", table.get(0));
         jsonObject.put("Field", maps.get(0));
-        if (jdbcTemplate.update("update ? set hash=? where num =?", table, txDao.sendTX(jsonObject), c[1])==1) {
+        if (jdbcTemplate.update("update ? set hash=? where num =?", table, sendTX(jsonObject), c[1])==1) {
             return true;
         } else {
             return false;
@@ -132,12 +149,34 @@ public class JdbcAndChainTemplate {
     }
 
 
-    public static void main(String[] args) throws JSQLParserException {
-        Statement statement = CCJSqlParserUtil.parse("update traceability_idcard set gender=0 where id='1234567890123'");
-        Update a = (Update) statement;
-        List<Table> table = a.getTables();
-        List<Column> colums = a.getColumns();//列名
-        Expression b=a.getWhere();
-        System.out.println(b.toString());
+
+    public String sendTX(Object object) throws JSONException {
+        JsonRpcRequest jsonRpcRequest = buildBroadcatTxRequest(object);
+        ResponseEntity<JSONObject> responseEntity = restTemplate.postForEntity(url, JSON.toJSONString(jsonRpcRequest),JSONObject.class);
+        JsonRpcRespones jsonRpcRespones =JSON.parseObject(responseEntity.getBody().toString(),JsonRpcRespones.class);
+        JsonRpcResponesResult jsonRpcResponesResult=JSON.parseObject(jsonRpcRespones.getResult().toString(),JsonRpcResponesResult.class);
+        return jsonRpcResponesResult.getHash();
     }
+
+
+    private JsonRpcRequest buildBroadcatTxRequest(Object object) {
+        JsonRpcRequest jsonRpcRequest = new JsonRpcRequest(String.valueOf(object.hashCode()), "broadcast_tx_commit");
+        Base64.Encoder encoder = Base64.getEncoder();
+        byte[] strBytes = JSON.toJSONString(object).getBytes();
+        String encodedStr=encoder.encodeToString(strBytes);
+        Map m=new HashMap();
+        m.put("tx",encodedStr);
+        jsonRpcRequest.setParams(m);
+        return jsonRpcRequest;
+    }
+
+
+//    public static void main(String[] args) throws JSQLParserException {
+//        Statement statement = CCJSqlParserUtil.parse("update traceability_idcard set gender=0 where id='1234567890123'");
+//        Update a = (Update) statement;
+//        List<Table> table = a.getTables();
+//        List<Column> colums = a.getColumns();//列名
+//        Expression b=a.getWhere();
+//        System.out.println(b.toString());
+//    }
 }
