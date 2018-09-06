@@ -5,6 +5,7 @@ import com.sjcl.zrsy.domain.dto.LogisticsReception;
 import com.sjcl.zrsy.domain.dto.MarketReception;
 import com.sjcl.zrsy.domain.dto.SlaughterReception;
 import com.sjcl.zrsy.domain.po.SlaughterOperation;
+import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -85,7 +86,7 @@ public class TraceabilityIdcardDao {
     /**
      * 屠宰场检疫（还没数据检查）
      * @param receiver
-     * @return
+     * @returnSlaughterHouseServiceImpl
      */
     public boolean updateSlaughterreception(SlaughterReception receiver)
     {
@@ -99,8 +100,9 @@ public class TraceabilityIdcardDao {
         }
     }
 
-    public boolean updateAcid(SlaughterOperation slaughterOperation){
-        int updatePigIdCardResult = jdbcTemplate.update("UPDATE traceability_idcard SET Acider_id = ?, Isacid = ? WHERE Id= ?", slaughterOperation.getContent(), slaughterOperation.getIsAcid(), slaughterOperation.getId());
+    public boolean updateAcid(TraceabilityIdcard acid){
+//        int updatePigIdCardResult = jdbcTemplate.update("UPDATE traceability_idcard SET Acider_id = ?, Isacid = ? WHERE Id= ?", slaughterOperation.getContent(), slaughterOperation.getIsAcid(), slaughterOperation.getId());
+        int updatePigIdCardResult = jdbcTemplate.update("UPDATE traceability_idcard SET Acider_id = ?, Isacid = ? WHERE Id= ?", acid.getAciderId(), acid.getIsacid(), acid.getIsacid());
         return updatePigIdCardResult > 0;
     }
 }

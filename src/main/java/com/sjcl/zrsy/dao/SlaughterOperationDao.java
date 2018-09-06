@@ -12,7 +12,14 @@ public class SlaughterOperationDao {
 
     public boolean insertSlaughteroperartion(SlaughterOperation slaughterOperation) {
         try {
-            int insertSlaughterOperationResult = jdbcTemplate.update("INSERT INTO slaughter_operation (id, operation, content,remark ,time) VALUES (?, ?, ?,?, ?)", slaughterOperation.getId(), slaughterOperation.getOperation(), slaughterOperation.getContent() + "+" + slaughterOperation.getIsAcid(), slaughterOperation.getRemark(), slaughterOperation.getTime());
+            int insertSlaughterOperationResult = jdbcTemplate.update(
+                    "INSERT INTO slaughter_operation (id, operation, content,remark ,time) VALUES (?, ?, ?,?, ?)",
+                    slaughterOperation.getId(),
+                    slaughterOperation.getOperation(),
+                    slaughterOperation.getContent() + "+" + slaughterOperation.getIsAcid(),
+                    slaughterOperation.getRemark(),
+                    slaughterOperation.getTime()
+            );
             return insertSlaughterOperationResult > 0;
         }catch (Exception e)
         {

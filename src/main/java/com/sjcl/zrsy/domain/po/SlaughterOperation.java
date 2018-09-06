@@ -11,7 +11,7 @@ public class SlaughterOperation {
     @JsonProperty(value="content")
     private String content;//当操作不是排酸，这项为操作的主要内容，当操作为排酸时，这个为排酸人员id，pigIsacid为是否排酸
 
-    private String isAcid;
+    private Integer isAcid;
 
     @JsonProperty(value="remark")
     private String remark;
@@ -19,7 +19,7 @@ public class SlaughterOperation {
     @JsonProperty(value="time")
     private String time;
 
-    public SlaughterOperation(String id, String operation, String content, String isAcid, String remark, String time) {
+    public SlaughterOperation(String id, String operation, String content, Integer isAcid, String remark, String time) {
         this.id = id;
         this.operation = operation;
         this.content = content;
@@ -55,11 +55,11 @@ public class SlaughterOperation {
         this.content = content;
     }
 
-    public String getIsAcid() {
+    public Integer getIsAcid() {
         return isAcid;
     }
 
-    public void setIsAcid(String isAcid) {
+    public void setIsAcid(Integer isAcid) {
         this.isAcid = isAcid;
     }
 
@@ -77,5 +77,17 @@ public class SlaughterOperation {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    /**
+     * 排酸信息
+     * @return
+     */
+    public TraceabilityIdcard toAcid() {
+        TraceabilityIdcard acid = new TraceabilityIdcard();
+        acid.setAciderId(this.content);
+        acid.setIsacid(this.isAcid);
+        acid.setId(this.id);
+        return acid;
     }
 }

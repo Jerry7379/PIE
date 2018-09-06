@@ -33,7 +33,7 @@ public class SlaughterHouseConstroller {
         String info[]=slaughterAcid.getContent().split(";");
         if(info.length==2){
             slaughterAcid.setContent(info[0]);
-            slaughterAcid.setIsAcid(info[1]);
+            slaughterAcid.setIsAcid(Integer.parseInt(info[1]));
         }
         else {
             slaughterAcid.setContent(info[0]);
