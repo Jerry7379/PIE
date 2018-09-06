@@ -99,7 +99,7 @@ public class TraceabilityIdcardDao {
         }
     }
 
-    public boolean updateIdcard(SlaughterOperation slaughterOperation){
+    public boolean updateAcid(SlaughterOperation slaughterOperation){
         int updatePigIdCardResult = jdbcTemplate.update("UPDATE traceability_idcard SET Acider_id = ?, Isacid = ? WHERE Id= ?", slaughterOperation.getContent(), slaughterOperation.getIsAcid(), slaughterOperation.getId());
         return updatePigIdCardResult > 0;
     }
