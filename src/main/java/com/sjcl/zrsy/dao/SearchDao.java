@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.dao;
 
 import com.sjcl.zrsy.domain.dto.SearchId;
-import com.sjcl.zrsy.domain.po.SearchOperation;
+import com.sjcl.zrsy.domain.po.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -50,10 +50,10 @@ public class SearchDao {
             return u;
         }
     };
-    private static final RowMapper<SearchOperation> SEARCHID_ROW_MAPPERR1 = new RowMapper<SearchOperation>() {
+    private static final RowMapper<Operation> SEARCHID_ROW_MAPPERR1 = new RowMapper<Operation>() {
         @Override
-        public SearchOperation mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-            SearchOperation k = new SearchOperation();
+        public Operation mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+            Operation k = new Operation();
             k.setOperation(resultSet.getString("operation"));
             k.setContent(resultSet.getString("content"));
             k.setRemark(resultSet.getString("remark"));
@@ -82,11 +82,11 @@ public class SearchDao {
         }
     }
 
-    private List<SearchOperation> searchOperation(String id){
-        List<SearchOperation> list1 = jdbcTemplate.query("SELECT operation, content, remark, time FROM farm_operation WHERE Id = ?", new Object[]{id}, SEARCHID_ROW_MAPPERR1);
-        List<SearchOperation> list2 = jdbcTemplate.query("SELECT operation, content, remark, time FROM slaughter_operation WHERE Id = ?", new Object[]{id}, SEARCHID_ROW_MAPPERR1);
-        List<SearchOperation> list3 = jdbcTemplate.query("SELECT operation, content, remark, time FROM market_operation WHERE Id = ?", new Object[]{id}, SEARCHID_ROW_MAPPERR1);
-        List<List<SearchOperation>> all=new ArrayList<>();
+    private List<Operation> searchOperation(String id){
+        List<Operation> list1 = jdbcTemplate.query("SELECT operation, content, remark, time FROM farm_operation WHERE Id = ?", new Object[]{id}, SEARCHID_ROW_MAPPERR1);
+        List<Operation> list2 = jdbcTemplate.query("SELECT operation, content, remark, time FROM slaughter_operation WHERE Id = ?", new Object[]{id}, SEARCHID_ROW_MAPPERR1);
+        List<Operation> list3 = jdbcTemplate.query("SELECT operation, content, remark, time FROM market_operation WHERE Id = ?", new Object[]{id}, SEARCHID_ROW_MAPPERR1);
+        List<List<Operation>> all=new ArrayList<>();
         all.add(list1);
         all.add(list2);
         all.add(list3);

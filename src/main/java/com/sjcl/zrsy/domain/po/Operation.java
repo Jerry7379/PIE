@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.domain.po;
 
-public class SearchOperation {
+public class Operation {
     private String operation;
     private String content;
     private String remark;

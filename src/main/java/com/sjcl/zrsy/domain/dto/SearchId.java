@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.domain.dto;
 
-import com.sjcl.zrsy.domain.po.SearchOperation;
+import com.sjcl.zrsy.domain.po.Operation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +33,13 @@ public class SearchId {
     private String supermarketLocation;
     private String salespersonId;
 
-    private List<SearchOperation> operations = new ArrayList<>();
+    private List<Operation> operations = new ArrayList<>();
 
-    public List<SearchOperation> getOperations() {
+    public List<Operation> getOperations() {
         return operations;
     }
 
-    public void setOperations(List<SearchOperation> operations) {
+    public void setOperations(List<Operation> operations) {
         this.operations = operations;
     }
 
