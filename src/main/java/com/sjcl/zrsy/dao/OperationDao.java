@@ -2,6 +2,7 @@ package com.sjcl.zrsy.dao;
 
 import com.sjcl.zrsy.domain.dto.FarmOperation;
 import com.sjcl.zrsy.domain.dto.MarketOperation;
+import com.sjcl.zrsy.domain.dto.SlaughterOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -31,6 +32,23 @@ public class OperationDao {
                 return false;
         }
         catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean insertSlaughteroperartion(SlaughterOperation slaughterOperation) {
+        try {
+            int insertSlaughterOperationResult = jdbcTemplate.update(
+                    "INSERT INTO slaughter_operation (id, operation, content,remark ,time) VALUES (?, ?, ?,?, ?)",
+                    slaughterOperation.getId(),
+                    slaughterOperation.getOperation(),
+                    slaughterOperation.getContent() + "+" + slaughterOperation.getIsAcid(),
+                    slaughterOperation.getRemark(),
+                    slaughterOperation.getTime()
+            );
+            return insertSlaughterOperationResult > 0;
+        }catch (Exception e)
+        {
             return false;
         }
     }
