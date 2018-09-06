@@ -1,11 +1,13 @@
 package com.sjcl.zrsy.domain.po;
 
+import java.util.Date;
+
 public class TraceabilityIdcard {
     // 小猪标签
     private String id;
 
     // 出生日期
-    private String birthday;
+    private Date birthday;
 
     // 猪品种
     private String breed;
@@ -65,11 +67,11 @@ public class TraceabilityIdcard {
         this.id = id;
     }
 
-    public String getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

@@ -1,6 +1,7 @@
 package com.sjcl.zrsy.domain.dto;
 
 
+import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Past;
@@ -41,6 +42,18 @@ public class FarmReception {
     }
 
     public FarmReception() {
+    }
+
+    public TraceabilityIdcard toFarm() {
+        TraceabilityIdcard farm = new TraceabilityIdcard();
+        farm.setId(this.id);
+        farm.setFarmId(this.farmId);
+        farm.setBreederId(this.breederId);
+        farm.setBreed(this.breed);
+        farm.setBirthday(this.date);
+        farm.setGender(this.gender);
+        farm.setBirthweight(this.weight);
+        return farm;
     }
 
     public String getId() {

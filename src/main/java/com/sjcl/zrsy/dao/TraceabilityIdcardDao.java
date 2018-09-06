@@ -1,10 +1,6 @@
 package com.sjcl.zrsy.dao;
 
 import com.sjcl.zrsy.domain.dto.FarmReception;
-import com.sjcl.zrsy.domain.dto.LogisticsReception;
-import com.sjcl.zrsy.domain.dto.MarketReception;
-import com.sjcl.zrsy.domain.dto.SlaughterReception;
-import com.sjcl.zrsy.domain.po.SlaughterOperation;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -39,13 +35,20 @@ public class TraceabilityIdcardDao {
 
     /**
      * 插入 traceabilityIdcard
-     * @param farmReception
+     * @param initialFarm
      * @return
      */
-    public boolean insertFarmReception(FarmReception farmReception) {
+    public boolean insert(TraceabilityIdcard initialFarm) {
         try {
             jdbcTemplate.update("insert into  traceability_idcard(id,farm_id,breeder_id, birthday, breed, gender,birthweight) values  (?, ?, ?, ?, ?,?,?)",
-                    farmReception.getId(), farmReception.getFarmId(),farmReception.getBreederId(), farmReception.getDate(), farmReception.getBreed(), farmReception.getGender(), farmReception.getWeight());
+                    initialFarm.getId(),
+                    initialFarm.getFarmId(),
+                    initialFarm.getBreederId(),
+                    initialFarm.getBirthday(),
+                    initialFarm.getBreed(),
+                    initialFarm.getGender(),
+                    initialFarm.getBirthweight()
+            );
             return true;
         } catch (Exception e) {
             return false;
@@ -57,7 +60,7 @@ public class TraceabilityIdcardDao {
      * @param logistics
      * @return
      */
-    public boolean updateLogisticsReception(TraceabilityIdcard logistics) {
+    public boolean updateLogistics(TraceabilityIdcard logistics) {
 
         try {
             int updateResult = jdbcTemplate.update("UPDATE traceability_idcard SET logistics_id = ?, car_id = ?, driver_id = ? WHERE id = ?",
