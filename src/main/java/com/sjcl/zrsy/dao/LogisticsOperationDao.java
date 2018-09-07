@@ -11,11 +11,11 @@ public class LogisticsOperationDao {
     JdbcTemplate jdbcTemplate;
 
     /**
-     * 物流运输过程检测温湿度
+     * insert logistics operation
      * @param logisticsOperation
      * @return
      */
-    public boolean insertLogisticsoperarion(LogisticsOperation logisticsOperation) {
+    public boolean insertLogisticsOperation(LogisticsOperation logisticsOperation) {
 
         try {
             jdbcTemplate.update("insert into logistics_operation (id,Car_id,humidity,temperature,co2,location,transport_time ) values (?,?,?,?,?,?,?)",

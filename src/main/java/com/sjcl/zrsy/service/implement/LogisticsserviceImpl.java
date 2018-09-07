@@ -26,7 +26,7 @@ public class LogisticsserviceImpl implements ILogisticsService {
     //物流货物操作
     @Override
     public boolean logisticsoperation(LogisticsOperation logisticsOperation){
-        return logisticsOperationDao.insertLogisticsoperarion(logisticsOperation);
+        return logisticsOperationDao.insertLogisticsOperation(logisticsOperation);
 
     }
 }
