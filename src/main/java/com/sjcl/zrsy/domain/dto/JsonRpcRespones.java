@@ -5,6 +5,9 @@ public class JsonRpcRespones {
     private String id;
     private Object result;
 
+    public JsonRpcRespones() {
+    }
+
     public String getJsonrpc() {
         return jsonrpc;
     }
