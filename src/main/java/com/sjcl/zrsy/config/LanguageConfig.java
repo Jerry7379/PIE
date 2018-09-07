@@ -7,10 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
 
@@ -22,8 +20,9 @@ public class LanguageConfig extends WebMvcConfigurerAdapter {
     public LocaleResolver localeResolver() {
         CookieLocaleResolver slr = new CookieLocaleResolver();
         slr.setCookieMaxAge(3600);
-        slr.setCookieName("Language");//设置存储的Cookie的name为Language
-        // 默认语言
+        // set local cookie name is "Language"
+        slr.setCookieName("Language");
+        // default language
         slr.setDefaultLocale(Locale.CHINA);
 
         return slr;
@@ -33,7 +32,6 @@ public class LanguageConfig extends WebMvcConfigurerAdapter {
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-        // 参数名
         lci.setParamName("lang");
         return lci;
     }
