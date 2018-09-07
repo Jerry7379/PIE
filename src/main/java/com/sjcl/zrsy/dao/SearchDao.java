@@ -30,22 +30,18 @@ public class SearchDao {
             u.setGender(resultSet.getString("gender"));
             u.setIsacid(resultSet.getString("isacid"));
             u.setIscheck(resultSet.getString("ischeck"));
-
             u.setFarmId(resultSet.getString("farm_id"));
             u.setFarmLocation(resultSet.getString("farm_location"));
             u.setFarmName(resultSet.getString("farm_name"));
             u.setBreederId(resultSet.getString("breeder_id"));
-
             u.setSlaughterhouseId(resultSet.getString("slaughterhouse_id"));
             u.setSlaughterhouseLocation(resultSet.getString("slaughterhouse_location"));
             u.setSlaughterhouseName(resultSet.getString("slaughterhouse_name"));
             u.setCheckerId(resultSet.getString("checker_id"));
             u.setAciderId(resultSet.getString("acider_id"));
-
             u.setLogisticsId(resultSet.getString("logistics_id"));
             u.setLogisticsName(resultSet.getString("logistics_name"));
             u.setLogisticsLocation(resultSet.getString("logistics_location"));
-
             u.setSupermarketId(resultSet.getString("supermarket_id"));
             u.setSupermarketName(resultSet.getString("supermarket_name"));
             u.setSupermarketLocation(resultSet.getString("supermarket_location"));
@@ -54,18 +50,40 @@ public class SearchDao {
         }
     };
 
-    public SearchId select(String id){
-        List<SearchId> list = jdbcTemplate.query
-                ("SELECT id, birthday, breed, gender, isacid, ischeck, " +
-                        "farm_id, farm_location, farm_name, traceability_idcard.breeder_id, " +
-                        "slaughterhouse_id, slaughterhouse_location,slaughterhouse_name, traceability_idcard.checker_id, traceability_idcard.acider_id, " +
-                        "logistics_id, logistics_name, logistics_location, " +
-                        "supermarket_id, supermarket_name, supermarket_location, salesperson_id " +
-                        "FROM traceability_idcard LEFT JOIN pig_farm using(farm_id) " +
-                        "LEFT JOIN pig_slaughterhouse using(slaughterhouse_id)" +
-                        "LEFT JOIN pig_logistics using(logistics_id) " +
-                        "LEFT JOIN pig_supermarket using(supermarket_id) " +
-                        "WHERE id = ?", new Object[]{id}, SEARCHID_ROW_MAPPERR);
+    public SearchId select(String id) {
+        List<SearchId> list = jdbcTemplate.query("SELECT\n" +
+                        "    id,\n" +
+                        "    birthday,\n" +
+                        "    breed,\n" +
+                        "    gender,\n" +
+                        "    isacid,\n" +
+                        "    ischeck,\n" +
+                        "    farm_id,\n" +
+                        "    farm_location,\n" +
+                        "    farm_name,\n" +
+                        "    traceability_idcard.breeder_id,\n" +
+                        "    slaughterhouse_id,\n" +
+                        "    slaughterhouse_location,\n" +
+                        "    slaughterhouse_name,\n" +
+                        "    traceability_idcard.checker_id,\n" +
+                        "    traceability_idcard.acider_id,\n" +
+                        "    logistics_id,\n" +
+                        "    logistics_name,\n" +
+                        "    logistics_location,\n" +
+                        "    supermarket_id,\n" +
+                        "    supermarket_name,\n" +
+                        "    supermarket_location,\n" +
+                        "    salesperson_id\n" +
+                        "FROM\n" +
+                        "    traceability_idcard\n" +
+                        "    LEFT JOIN pig_farm using(farm_id)\n" +
+                        "    LEFT JOIN pig_slaughterhouse using(slaughterhouse_id)\n" +
+                        "    LEFT JOIN pig_logistics using(logistics_id)\n" +
+                        "    LEFT JOIN pig_supermarket using(supermarket_id)\n" +
+                        "WHERE\n" +
+                        "    id = ?", new Object[]{id}, SEARCHID_ROW_MAPPERR);
+
+
         if (list == null || list.size() == 0) {
             return null;
         } else {
@@ -75,7 +93,7 @@ public class SearchDao {
         }
     }
 
-    private List<Operation> searchOperation(String id){
+    private List<Operation> searchOperation(String id) {
         return operationDao.findallOperationByPigid(id);
     }
 }
