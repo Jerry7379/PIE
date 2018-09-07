@@ -5,7 +5,8 @@ import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Past;
-import java.util.Date;
+import java.sql.Date;
+
 
 public class FarmReception {
     //public static final int male=0;

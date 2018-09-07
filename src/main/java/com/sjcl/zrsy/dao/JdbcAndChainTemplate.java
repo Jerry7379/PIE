@@ -7,8 +7,10 @@ import com.sjcl.zrsy.domain.dto.IdCard;
 import com.sjcl.zrsy.domain.dto.JsonRpcRequest;
 import com.sjcl.zrsy.domain.dto.JsonRpcRespones;
 import com.sjcl.zrsy.domain.dto.JsonRpcResponesResult;
+import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.operators.relational.ItemsList;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.schema.Table;
@@ -46,37 +48,41 @@ public class JdbcAndChainTemplate {
     }
 
 
-    List<String> id;
+    List<String> id;//
+    List<Expression> expressions;//
 
-    public boolean insert(String sql, @Nullable Object... args) throws DataAccessException, JSQLParserException {
-        jdbcTemplate.update(sql, args);
+    public boolean insert(String sql) throws DataAccessException, JSQLParserException {
+        jdbcTemplate.update(sql);
+
         Statement statement = CCJSqlParserUtil.parse(sql);
         Insert insertStatment = (Insert) statement;
         String table = insertStatment.getTable().getName();//表名
         List<Column> colums = insertStatment.getColumns();//列名
+        expressions=insertStatment.getSetExpressionList();
+
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("table", table);
-        id = jdbcTemplate.query("SELECT LAST_INSERT_ID()", new RowMapper<String>() {
-            @Override
-            public String mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-                return resultSet.getString("LAST_INSERT_ID()");
-            }
-        });
+//        id = jdbcTemplate.query("SELECT LAST_INSERT_ID()", new RowMapper<String>() {
+//            @Override
+//            public String mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+//                return resultSet.getString("LAST_INSERT_ID()");
+//            }
+//        });
         if (table.equals("traceability_idcard")) {
-            String sql1 = "select * from " + table + "where id=" + id.get(0);
-            List<IdCard> idCards = jdbcTemplate.query(sql1, new RowMapper<IdCard>() {
+            String sql1 = "select * from " + table + " where id=" + expressions.get(0);
+            List<TraceabilityIdcard> idCards = jdbcTemplate.query(sql1, new RowMapper<TraceabilityIdcard>() {
                 @Override
-                public IdCard mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    IdCard a = new IdCard();
+                public TraceabilityIdcard mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    TraceabilityIdcard a = new TraceabilityIdcard();
                     a.setId(rs.getString("id"));
-                    a.setBirthday(rs.getString("birthday"));
+                    a.setBirthday(rs.getDate("birthday"));
                     a.setBreed(rs.getString("breed"));
                     a.setGender(rs.getString("gender"));
-                    a.setIsacid(rs.getString("isacid"));
-                    a.setIshealth(rs.getString("ishealth"));
+                    a.setIsacid(rs.getInt("isacid"));
+                    a.setIshealth(rs.getInt("ishealth"));
                     a.setAciderId(rs.getString("acider_id"));
-                    a.setIscheck(rs.getString("ischeck"));
+                    a.setIscheck(rs.getInt("ischeck"));
                     a.setCheckerId(rs.getString("checker_id"));
                     a.setFarmId(rs.getString("farm_id"));
                     a.setLogisticsId(rs.getString("logistics_id"));
@@ -84,13 +90,13 @@ public class JdbcAndChainTemplate {
                     a.setSupermarketId(rs.getString("supermarket_id"));
                     a.setBreederId(rs.getString("breeder_id"));
                     a.setCarId(rs.getString("car_id"));
-                    a.setDriverID(rs.getString("driver_id"));
-                    a.setBirthweight(rs.getString("birthweight"));
+                    a.setDriverId(rs.getString("driver_id"));
+                    a.setBirthweight(rs.getDouble("birthweight"));
                     return a;
                 }
             });
             jsonObject.put("Field", idCards.get(0));
-            if (jdbcTemplate.update("update ? set hash=? where id =?", table, sendTX(jsonObject), idCards.get(0).getId()) == 1) {
+            if (jdbcTemplate.update("update "+table+" set hash=? where id =?", sendTX(jsonObject), idCards.get(0).getId()) == 1) {
                 return true;
             } else {
                 return false;
@@ -118,30 +124,44 @@ public class JdbcAndChainTemplate {
     }
 
 
-    public boolean update(String sql, @Nullable Object... args) throws DataAccessException, JSQLParserException {
-        jdbcTemplate.update(sql, args);
+    public boolean update(String sql) throws DataAccessException, JSQLParserException {
+        jdbcTemplate.update(sql);
         Statement statement = CCJSqlParserUtil.parse(sql);
         Update a = (Update) statement;
         List<Table> table = a.getTables();
         List<Column> colums = a.getColumns();//列名
         Expression b=a.getWhere();
-        String c[]=b.toString().split(":");
 
-        String sql1 = "select * from " + table.get(0) + "where" + b;
-        List<Map<String, Object>> maps = jdbcTemplate.query(sql1, new RowMapper<Map<String, Object>>() {
+
+        String sql1 = "select * from " + table.get(0) + " where " + b;
+        List<TraceabilityIdcard> maps = jdbcTemplate.query(sql1, new RowMapper<TraceabilityIdcard>() {
             @Override
-            public Map<String, Object> mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Map m = new HashMap();
-                for (int i = 0; i < colums.size(); i++) {
-                    m.put(colums.get(i), rs.getObject(i));
-                }
-                return m;
+            public TraceabilityIdcard mapRow(ResultSet rs, int rowNum) throws SQLException {
+                TraceabilityIdcard a = new TraceabilityIdcard();
+                a.setId(rs.getString("id"));
+                a.setBirthday(rs.getDate("birthday"));
+                a.setBreed(rs.getString("breed"));
+                a.setGender(rs.getString("gender"));
+                a.setIsacid(rs.getInt("isacid"));
+                a.setIshealth(rs.getInt("ishealth"));
+                a.setAciderId(rs.getString("acider_id"));
+                a.setIscheck(rs.getInt("ischeck"));
+                a.setCheckerId(rs.getString("checker_id"));
+                a.setFarmId(rs.getString("farm_id"));
+                a.setLogisticsId(rs.getString("logistics_id"));
+                a.setSlaughterhouseId(rs.getString("slaughterhouse_id"));
+                a.setSupermarketId(rs.getString("supermarket_id"));
+                a.setBreederId(rs.getString("breeder_id"));
+                a.setCarId(rs.getString("car_id"));
+                a.setDriverId(rs.getString("driver_id"));
+                a.setBirthweight(rs.getDouble("birthweight"));
+                return a;
             }
         });
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("table", table.get(0));
         jsonObject.put("Field", maps.get(0));
-        if (jdbcTemplate.update("update ? set hash=? where num =?", table, sendTX(jsonObject), c[1])==1) {
+        if (jdbcTemplate.update("update "+table.get(0)+" set hash='"+sendTX(jsonObject)+"' where "+b.toString())==1) {
             return true;
         } else {
             return false;
@@ -171,12 +191,5 @@ public class JdbcAndChainTemplate {
     }
 
 
-//    public static void main(String[] args) throws JSQLParserException {
-//        Statement statement = CCJSqlParserUtil.parse("update traceability_idcard set gender=0 where id='1234567890123'");
-//        Update a = (Update) statement;
-//        List<Table> table = a.getTables();
-//        List<Column> colums = a.getColumns();//列名
-//        Expression b=a.getWhere();
-//        System.out.println(b.toString());
-//    }
+
 }

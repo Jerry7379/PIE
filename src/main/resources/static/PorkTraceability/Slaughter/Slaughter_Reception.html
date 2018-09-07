@@ -102,10 +102,10 @@
     $(document).ready(function(){
         $("#btn").click(function(){
             var checker={
-                pigid:$("#pigId").val(),
-                slaughterid:$("#slaughterId").val(),
-                checkerid:$("#checkerId").val(),
-                ischeck:$('input:radio:checked').val()
+                id:$("#pigId").val(),
+                slaughterId:$("#slaughterId").val(),
+                checkerId:$("#checkerId").val(),
+                isCheck:$('input:radio:checked').val()
             }
             var Checker=JSON.stringify(checker);
             $.post({

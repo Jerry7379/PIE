@@ -17,9 +17,6 @@ public class SearchDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    private OperationDao operationDao;
-
     private static final RowMapper<SearchId> SEARCHID_ROW_MAPPERR = new RowMapper<SearchId>() {
         @Override
         public SearchId mapRow(ResultSet resultSet, int rowNum) throws SQLException {
@@ -53,7 +50,17 @@ public class SearchDao {
             return u;
         }
     };
-
+    private static final RowMapper<Operation> SEARCHID_ROW_MAPPERR1 = new RowMapper<Operation>() {
+        @Override
+        public Operation mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+            Operation k = new Operation();
+            k.setOperation(resultSet.getString("operation"));
+            k.setContent(resultSet.getString("content"));
+            k.setRemark(resultSet.getString("remark"));
+            k.setTime(resultSet.getString("time"));
+            return k;
+        }
+    };
     public SearchId select(String id){
         List<SearchId> list = jdbcTemplate.query
                 ("SELECT id, birthday, breed, gender, isacid, ischeck, " +
@@ -76,6 +83,13 @@ public class SearchDao {
     }
 
     private List<Operation> searchOperation(String id){
-        return operationDao.findallOperationByPigid(id);
+        List<Operation> list1 = jdbcTemplate.query("SELECT operation, content, remark, time FROM farm_operation WHERE Id = ?", new Object[]{id}, SEARCHID_ROW_MAPPERR1);
+        List<Operation> list2 = jdbcTemplate.query("SELECT operation, content, remark, time FROM slaughter_operation WHERE Id = ?", new Object[]{id}, SEARCHID_ROW_MAPPERR1);
+        List<Operation> list3 = jdbcTemplate.query("SELECT operation, content, remark, time FROM market_operation WHERE Id = ?", new Object[]{id}, SEARCHID_ROW_MAPPERR1);
+        List<List<Operation>> all=new ArrayList<>();
+        all.add(list1);
+        all.add(list2);
+        all.add(list3);
+        return list1;
     }
 }

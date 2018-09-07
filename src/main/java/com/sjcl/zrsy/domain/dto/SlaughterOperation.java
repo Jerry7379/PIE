@@ -1,7 +1,6 @@
 package com.sjcl.zrsy.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sjcl.zrsy.domain.po.Operation;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.hibernate.validator.constraints.Length;
 
@@ -91,19 +90,5 @@ public class SlaughterOperation {
         acid.setIsacid(this.isAcid);
         acid.setId(this.id);
         return acid;
-    }
-
-    /**
-     * 转为通用Operation
-     * @return
-     */
-    public Operation toOperation() {
-        Operation operation = new Operation();
-        operation.setId(this.id);
-        operation.setOperation(this.operation);
-        operation.setContent(this.content + "+" + this.isAcid);
-        operation.setRemark(this.remark);
-        operation.setTime(this.time);
-        return operation;
     }
 }

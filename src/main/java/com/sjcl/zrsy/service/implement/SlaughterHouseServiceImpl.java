@@ -20,14 +20,12 @@ public class SlaughterHouseServiceImpl implements ISlaughterHouseService {
     @Override
     public boolean slaughterreception(SlaughterReception slaughterReception) {
 
-
-
         return traceabilityIdcardDao.updateQuarantine(slaughterReception.toQuarantine());
     }
 
     @Override
     public boolean slaughteroperation(SlaughterOperation slaughterOperation){
-        boolean insertOperationSuccess = operationDao.insertSlaughteroperartion(slaughterOperation.toOperation());
+        boolean insertOperationSuccess = operationDao.insertSlaughteroperartion(slaughterOperation);
         TraceabilityIdcard acidInfo = slaughterOperation.toAcid();
         boolean updateIdcardSuccess = traceabilityIdcardDao.updateAcid(acidInfo);
         return insertOperationSuccess && updateIdcardSuccess;

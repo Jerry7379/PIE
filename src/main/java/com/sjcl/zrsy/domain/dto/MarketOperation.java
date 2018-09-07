@@ -1,13 +1,28 @@
-package com.sjcl.zrsy.domain.po;
+package com.sjcl.zrsy.domain.dto;
 
-public class Operation {
+import org.hibernate.validator.constraints.Length;
+
+public class MarketOperation {
+    @Length(max = 13,min = 13,message = "猪ID长度10-50")
     private String id;
+
     private String operation;
+    @Length(max = 50,min = 10,message = "主要内容长度10-50")
     private String content;
+    @Length(max = 50,min = 10,message = "备注长度10-50")
     private String remark;
+    @Length(max = 30,min = 30,message = "时间格式有问题")
     private String time;
 
-    public Operation() {
+    public MarketOperation() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getOperation() {
@@ -40,13 +55,5 @@ public class Operation {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }

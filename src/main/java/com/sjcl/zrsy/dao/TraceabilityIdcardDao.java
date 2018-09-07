@@ -1,5 +1,6 @@
 package com.sjcl.zrsy.dao;
 
+import com.sjcl.zrsy.domain.dto.FarmReception;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,6 +19,8 @@ public class TraceabilityIdcardDao {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    JdbcAndChainTemplate jdbcAndChainTemplate;
 
     /**
      * 检查是否存在
@@ -41,15 +44,14 @@ public class TraceabilityIdcardDao {
      */
     public boolean insert(TraceabilityIdcard initialFarm) {
         try {
-            jdbcTemplate.update("insert into  traceability_idcard(id,farm_id,breeder_id, birthday, breed, gender,birthweight) values  (?, ?, ?, ?, ?,?,?)",
-                    initialFarm.getId(),
-                    initialFarm.getFarmId(),
-                    initialFarm.getBreederId(),
-                    initialFarm.getBirthday(),
-                    initialFarm.getBreed(),
-                    initialFarm.getGender(),
-                    initialFarm.getBirthweight()
-            );
+            //insert语句使用 insert into 表名 set 字段名=‘’形式，插入主键的放在 set后第一个位置。
+            jdbcAndChainTemplate.insert("insert into  traceability_idcard set id='"+initialFarm.getId()+
+                            "',farm_id='"+initialFarm.getFarmId()+
+                            "',breeder_id='"+initialFarm.getBreederId()+
+                            "',birthday='"+initialFarm.getBirthday()+
+                            "',breed='"+initialFarm.getBreed()+
+                            "',gender='"+initialFarm.getGender()+
+                            "',birthweight='"+initialFarm.getBirthweight()+"'");
             return true;
         } catch (Exception e) {
             return false;
@@ -93,14 +95,12 @@ public class TraceabilityIdcardDao {
     public boolean updateQuarantine(TraceabilityIdcard quarantine)
     {
         try {
-            int updateResult = jdbcTemplate.update("update traceability_idcard set slaughterhouse_id=?,checker_id=?,ischeck=? where id=?",
-                    quarantine.getSlaughterhouseId(),
-                    quarantine.getCheckerId(),
-                    quarantine.getIscheck(),
-                    quarantine.getId()
+            return  jdbcAndChainTemplate.update("update traceability_idcard set slaughterhouse_id='"+quarantine.getSlaughterhouseId()+
+                            "',checker_id='"+quarantine.getCheckerId()+
+                            "',ischeck='"+quarantine.getIscheck()+
+                            "' where id='"+quarantine.getId()+"'"
             );
 
-            return updateResult == 1;
         }catch (Exception e){
             return false;
         }

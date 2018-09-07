@@ -1,6 +1,7 @@
 package com.sjcl.zrsy.domain.po;
 
-import java.util.Date;
+
+import java.sql.Date;
 
 public class TraceabilityIdcard {
     // 小猪标签
