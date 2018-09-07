@@ -10,9 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * TraceabilityIdcard数据访问对象
- */
+
 @Component
 public class TraceabilityIdcardDao {
 
@@ -20,7 +18,7 @@ public class TraceabilityIdcardDao {
     JdbcTemplate jdbcTemplate;
 
     /**
-     * 检查是否存在
+     * check is exsits
      * @param id
      * @return
      */
@@ -35,7 +33,7 @@ public class TraceabilityIdcardDao {
     }
 
     /**
-     * 插入 traceabilityIdcard
+     * insert traceabilityIdcard
      * @param initialFarm
      * @return
      */
@@ -57,7 +55,7 @@ public class TraceabilityIdcardDao {
     }
 
     /**
-     * 插入物流公司收货操作
+     * update logistics
      * @param logistics
      * @return
      */
@@ -75,6 +73,11 @@ public class TraceabilityIdcardDao {
         }
     }
 
+    /**
+     * update market
+     * @param market
+     * @return
+     */
     public boolean updateMarket(TraceabilityIdcard market){
         try {
             int updateResult = jdbcTemplate.update("UPDATE traceability_idcard SET supermarket_id = ? WHERE Id = ?", market.getSupermarketId(), market.getId());
@@ -86,9 +89,9 @@ public class TraceabilityIdcardDao {
     }
 
     /**
-     * 屠宰场检疫（还没数据检查）
+     * update quarantine
      * @param quarantine
-     * @returnSlaughterHouseServiceImpl
+     * @return
      */
     public boolean updateQuarantine(TraceabilityIdcard quarantine)
     {
@@ -106,6 +109,11 @@ public class TraceabilityIdcardDao {
         }
     }
 
+    /**
+     * update acid
+     * @param acid
+     * @return
+     */
     public boolean updateAcid(TraceabilityIdcard acid){
         int updatePigIdCardResult = jdbcTemplate.update("UPDATE traceability_idcard SET Acider_id = ?, Isacid = ? WHERE Id= ?", acid.getAciderId(), acid.getIsacid(), acid.getIsacid());
         return updatePigIdCardResult > 0;
