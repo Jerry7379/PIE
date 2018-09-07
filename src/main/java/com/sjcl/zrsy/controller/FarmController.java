@@ -13,24 +13,26 @@ import java.util.ResourceBundle;
 
 @RestController
 public class FarmController {
+
     @Autowired
     IFarmService farmService;
-    //国际化
+
+    //i18n
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.getDefault());
+
     @PostMapping("/farmreception")
     public String farmreception(@RequestBody FarmReception farmReception) {
         if(!farmService.idCardExists(farmReception.getId())){
             if(farmService.farmReception(farmReception)){
-                //return "操作成功";
                 return resourceBundle.getString("SuccessfulOperation");
             }
             else {
-                //return "操作失败,重新输入";
                 return resourceBundle.getString("OperationFailed,re-enter");
             }
         }
         else {
-            return "此小猪已经出生，id错误";//未加国际化
+            //TODO i18n
+            return "此小猪已经出生，id错误";
         }
     }
 
@@ -38,14 +40,13 @@ public class FarmController {
     public String farmoperation(@RequestBody Operation operation) {
         if(farmService.idCardExists(operation.getId())) {
             if (farmService.farmOperation(operation)) {
-                //return "操作成功";
                 return resourceBundle.getString("SuccessfulOperation");
             } else {
-                //return "操作失败,重新输入";
                 return resourceBundle.getString("OperationFailed,re-enter");
             }
         }
         else{
+            //TODO i18n
             return "小猪还未出生";
         }
 
