@@ -27,10 +27,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class JdbcAndChainTemplate {
@@ -47,25 +44,36 @@ public class JdbcAndChainTemplate {
 
 
     List<String> id;//
-    List<Expression> expressions;//
 
-    public boolean insert(String sql) throws DataAccessException, JSQLParserException {
-        jdbcTemplate.update(sql);
 
+
+
+
+    public boolean insert(String sql, Object... args) throws DataAccessException, JSQLParserException {
+        jdbcTemplate.update(sql,args);
         Statement statement = CCJSqlParserUtil.parse(sql);
+
         Insert insertStatment = (Insert) statement;
         String table = insertStatment.getTable().getName();//表名
-        List<Column> colums = insertStatment.getColumns();//列名
-        expressions=insertStatment.getSetExpressionList();//字段值
+        List<Column> colums = insertStatment.getSetColumns();//列名
 
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("table", table);
+        JSONObject object = new JSONObject();
+        object.put("tableName", table);
+
+        JSONObject fields = new JSONObject();
+        for (int i = 0; i < colums.size(); i++) {
+            String column = colums.get(i).getColumnName();
+            Object value = args[i];
+            fields.put(column, value);
+        }
+        object.put("fields", fields);
+
+
         if (table.equals("traceability_idcard")) {
-            String sql1 = "select * from " + table + " where id=" + expressions.get(0);
+            String sql1 = "select * from " + table + " where id=" + args[0];
             List<TraceabilityIdcard> idCards = jdbcTemplate.query(sql1,TRACEABILITY_IDCARD_ROW_MAPPER);
-            jsonObject.put("Field", idCards.get(0));
-            if (jdbcTemplate.update("update "+table+" set hash=? where id =?", sendTX(jsonObject), idCards.get(0).getId()) == 1) {
+            if (jdbcTemplate.update("update "+table+" set hash=? where id =?", sendTX(object), idCards.get(0).getId()) == 1) {
                 return true;
             } else {
                 return false;
@@ -82,8 +90,8 @@ public class JdbcAndChainTemplate {
                     return m;
                 }
             });
-            jsonObject.put("Field", maps.get(0));
-            if (jdbcTemplate.update("update ? set hash=? where num =?", table, sendTX(jsonObject), id.get(0)) == 1) {
+
+            if (jdbcTemplate.update("update ? set hash=? where num =?", table, sendTX(object), id.get(0)) == 1) {
                 return true;
             } else {
                 return false;
@@ -93,21 +101,21 @@ public class JdbcAndChainTemplate {
     }
 
 
-    public boolean update(String sql) throws DataAccessException, JSQLParserException {
-        jdbcTemplate.update(sql);
+    public boolean update(String sql,Object... args) throws DataAccessException, JSQLParserException {
+        jdbcTemplate.update(sql,args);
         Statement statement = CCJSqlParserUtil.parse(sql);
         Update a = (Update) statement;
         List<Table> table = a.getTables();
         List<Column> colums = a.getColumns();//列名
-        Expression b=a.getWhere();//where后的表达式
 
+        JSONObject object = new JSONObject();
+        object.put("tableName", table);
+        String sql1="select * from "+table.get(0)+" where id='"+args[args.length-1]+"'";
+        List<TraceabilityIdcard> idCards = jdbcTemplate.query(sql1,TRACEABILITY_IDCARD_ROW_MAPPER);
 
-        String sql1 = "select * from " + table.get(0) + " where " + b;
-        List<TraceabilityIdcard> maps = jdbcTemplate.query(sql1, TRACEABILITY_IDCARD_ROW_MAPPER);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("table", table.get(0));
-        jsonObject.put("Field", maps.get(0));
-        if (jdbcTemplate.update("update "+table.get(0)+" set hash='"+sendTX(jsonObject)+"' where "+b.toString())==1) {
+        object.put("fields", idCards.get(0));
+
+        if (jdbcTemplate.update("update traceability_idcard set hash=? where id=?",sendTX(object),args[args.length-1])==1) {
             return true;
         } else {
             return false;
@@ -160,7 +168,5 @@ public class JdbcAndChainTemplate {
             return a;
         }
     };
-
-
 
 }

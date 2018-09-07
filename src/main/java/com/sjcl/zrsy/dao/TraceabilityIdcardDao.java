@@ -45,13 +45,14 @@ public class TraceabilityIdcardDao {
     public boolean insert(TraceabilityIdcard initialFarm) {
         try {
             //insert语句使用 insert into 表名 set 字段名=‘’形式，插入主键的放在 set后第一个位置。
-            jdbcAndChainTemplate.insert("insert into  traceability_idcard set id='"+initialFarm.getId()+
-                            "',farm_id='"+initialFarm.getFarmId()+
-                            "',breeder_id='"+initialFarm.getBreederId()+
-                            "',birthday='"+initialFarm.getBirthday()+
-                            "',breed='"+initialFarm.getBreed()+
-                            "',gender='"+initialFarm.getGender()+
-                            "',birthweight='"+initialFarm.getBirthweight()+"'");
+            jdbcAndChainTemplate.insert("insert into  traceability_idcard set id=?,farm_id=?,breeder_id=?,birthday=?,breed=?,gender=?,birthweight=?",
+                    initialFarm.getId(),
+                    initialFarm.getFarmId(),
+                    initialFarm.getBreederId(),
+                    initialFarm.getBirthday(),
+                    initialFarm.getBreed(),
+                    initialFarm.getGender(),
+                    initialFarm.getBirthweight());
             return true;
         } catch (Exception e) {
             return false;
@@ -95,12 +96,11 @@ public class TraceabilityIdcardDao {
     public boolean updateQuarantine(TraceabilityIdcard quarantine)
     {
         try {
-            return  jdbcAndChainTemplate.update("update traceability_idcard set slaughterhouse_id='"+quarantine.getSlaughterhouseId()+
-                            "',checker_id='"+quarantine.getCheckerId()+
-                            "',ischeck='"+quarantine.getIscheck()+
-                            "' where id='"+quarantine.getId()+"'"
-            );
-
+            return  jdbcAndChainTemplate.update("update traceability_idcard set slaughterhouse_id=?,checker_id=?,ischeck=? where id=?",
+                    quarantine.getSlaughterhouseId(),
+                    quarantine.getCheckerId(),
+                    quarantine.getIscheck(),
+                    quarantine.getId());
         }catch (Exception e){
             return false;
         }
