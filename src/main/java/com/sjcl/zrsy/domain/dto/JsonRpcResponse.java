@@ -1,11 +1,11 @@
 package com.sjcl.zrsy.domain.dto;
 
-public class JsonRpcRespones {
+public class JsonRpcResponse {
     private String jsonrpc;
     private String id;
     private Object result;
 
-    public JsonRpcRespones() {
+    public JsonRpcResponse() {
     }
 
     public String getJsonrpc() {

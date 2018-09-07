@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.sjcl.zrsy.domain.dto.IdCard;
 import com.sjcl.zrsy.domain.dto.JsonRpcRequest;
-import com.sjcl.zrsy.domain.dto.JsonRpcRespones;
+import com.sjcl.zrsy.domain.dto.JsonRpcResponse;
 import com.sjcl.zrsy.domain.dto.Block;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Expression;
@@ -153,8 +153,8 @@ public class JdbcAndChainTemplate {
     public String sendTX(Object object) throws JSONException {
         JsonRpcRequest jsonRpcRequest = buildBroadcatTxRequest(object);
         ResponseEntity<JSONObject> responseEntity = restTemplate.postForEntity(url, JSON.toJSONString(jsonRpcRequest),JSONObject.class);
-        JsonRpcRespones jsonRpcRespones =JSON.parseObject(responseEntity.getBody().toString(),JsonRpcRespones.class);
-        Block block =JSON.parseObject(jsonRpcRespones.getResult().toString(), Block.class);
+        JsonRpcResponse jsonRpcResponse =JSON.parseObject(responseEntity.getBody().toString(), JsonRpcResponse.class);
+        Block block =JSON.parseObject(jsonRpcResponse.getResult().toString(), Block.class);
         return block.getHash();
     }
 
