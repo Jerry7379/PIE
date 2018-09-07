@@ -3,14 +3,13 @@ package com.sjcl.zrsy.dao;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.sjcl.zrsy.domain.dto.IdCard;
 import com.sjcl.zrsy.domain.dto.JsonRpcRequest;
 import com.sjcl.zrsy.domain.dto.JsonRpcRespones;
 import com.sjcl.zrsy.domain.dto.JsonRpcResponesResult;
+import com.sjcl.zrsy.domain.dto.SearchId;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.operators.relational.ItemsList;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.schema.Table;
@@ -23,7 +22,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -58,43 +56,14 @@ public class JdbcAndChainTemplate {
         Insert insertStatment = (Insert) statement;
         String table = insertStatment.getTable().getName();//表名
         List<Column> colums = insertStatment.getColumns();//列名
-        expressions=insertStatment.getSetExpressionList();
+        expressions=insertStatment.getSetExpressionList();//字段值
 
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("table", table);
-//        id = jdbcTemplate.query("SELECT LAST_INSERT_ID()", new RowMapper<String>() {
-//            @Override
-//            public String mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-//                return resultSet.getString("LAST_INSERT_ID()");
-//            }
-//        });
         if (table.equals("traceability_idcard")) {
             String sql1 = "select * from " + table + " where id=" + expressions.get(0);
-            List<TraceabilityIdcard> idCards = jdbcTemplate.query(sql1, new RowMapper<TraceabilityIdcard>() {
-                @Override
-                public TraceabilityIdcard mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    TraceabilityIdcard a = new TraceabilityIdcard();
-                    a.setId(rs.getString("id"));
-                    a.setBirthday(rs.getDate("birthday"));
-                    a.setBreed(rs.getString("breed"));
-                    a.setGender(rs.getString("gender"));
-                    a.setIsacid(rs.getInt("isacid"));
-                    a.setIshealth(rs.getInt("ishealth"));
-                    a.setAciderId(rs.getString("acider_id"));
-                    a.setIscheck(rs.getInt("ischeck"));
-                    a.setCheckerId(rs.getString("checker_id"));
-                    a.setFarmId(rs.getString("farm_id"));
-                    a.setLogisticsId(rs.getString("logistics_id"));
-                    a.setSlaughterhouseId(rs.getString("slaughterhouse_id"));
-                    a.setSupermarketId(rs.getString("supermarket_id"));
-                    a.setBreederId(rs.getString("breeder_id"));
-                    a.setCarId(rs.getString("car_id"));
-                    a.setDriverId(rs.getString("driver_id"));
-                    a.setBirthweight(rs.getDouble("birthweight"));
-                    return a;
-                }
-            });
+            List<TraceabilityIdcard> idCards = jdbcTemplate.query(sql1,TRACEABILITY_IDCARD_ROW_MAPPER);
             jsonObject.put("Field", idCards.get(0));
             if (jdbcTemplate.update("update "+table+" set hash=? where id =?", sendTX(jsonObject), idCards.get(0).getId()) == 1) {
                 return true;
@@ -130,34 +99,11 @@ public class JdbcAndChainTemplate {
         Update a = (Update) statement;
         List<Table> table = a.getTables();
         List<Column> colums = a.getColumns();//列名
-        Expression b=a.getWhere();
+        Expression b=a.getWhere();//where后的表达式
 
 
         String sql1 = "select * from " + table.get(0) + " where " + b;
-        List<TraceabilityIdcard> maps = jdbcTemplate.query(sql1, new RowMapper<TraceabilityIdcard>() {
-            @Override
-            public TraceabilityIdcard mapRow(ResultSet rs, int rowNum) throws SQLException {
-                TraceabilityIdcard a = new TraceabilityIdcard();
-                a.setId(rs.getString("id"));
-                a.setBirthday(rs.getDate("birthday"));
-                a.setBreed(rs.getString("breed"));
-                a.setGender(rs.getString("gender"));
-                a.setIsacid(rs.getInt("isacid"));
-                a.setIshealth(rs.getInt("ishealth"));
-                a.setAciderId(rs.getString("acider_id"));
-                a.setIscheck(rs.getInt("ischeck"));
-                a.setCheckerId(rs.getString("checker_id"));
-                a.setFarmId(rs.getString("farm_id"));
-                a.setLogisticsId(rs.getString("logistics_id"));
-                a.setSlaughterhouseId(rs.getString("slaughterhouse_id"));
-                a.setSupermarketId(rs.getString("supermarket_id"));
-                a.setBreederId(rs.getString("breeder_id"));
-                a.setCarId(rs.getString("car_id"));
-                a.setDriverId(rs.getString("driver_id"));
-                a.setBirthweight(rs.getDouble("birthweight"));
-                return a;
-            }
-        });
+        List<TraceabilityIdcard> maps = jdbcTemplate.query(sql1, TRACEABILITY_IDCARD_ROW_MAPPER);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("table", table.get(0));
         jsonObject.put("Field", maps.get(0));
@@ -169,7 +115,7 @@ public class JdbcAndChainTemplate {
     }
 
 
-
+    //返回交易哈希
     public String sendTX(Object object) throws JSONException {
         JsonRpcRequest jsonRpcRequest = buildBroadcatTxRequest(object);
         ResponseEntity<JSONObject> responseEntity = restTemplate.postForEntity(url, JSON.toJSONString(jsonRpcRequest),JSONObject.class);
@@ -189,6 +135,31 @@ public class JdbcAndChainTemplate {
         jsonRpcRequest.setParams(m);
         return jsonRpcRequest;
     }
+
+    private static final RowMapper<TraceabilityIdcard> TRACEABILITY_IDCARD_ROW_MAPPER =new RowMapper<TraceabilityIdcard>() {
+        @Override
+        public TraceabilityIdcard mapRow(ResultSet rs, int rowNum) throws SQLException {
+            TraceabilityIdcard a = new TraceabilityIdcard();
+            a.setId(rs.getString("id"));
+            a.setBirthday(rs.getDate("birthday"));
+            a.setBreed(rs.getString("breed"));
+            a.setGender(rs.getString("gender"));
+            a.setIsacid(rs.getInt("isacid"));
+            a.setIshealth(rs.getInt("ishealth"));
+            a.setAciderId(rs.getString("acider_id"));
+            a.setIscheck(rs.getInt("ischeck"));
+            a.setCheckerId(rs.getString("checker_id"));
+            a.setFarmId(rs.getString("farm_id"));
+            a.setLogisticsId(rs.getString("logistics_id"));
+            a.setSlaughterhouseId(rs.getString("slaughterhouse_id"));
+            a.setSupermarketId(rs.getString("supermarket_id"));
+            a.setBreederId(rs.getString("breeder_id"));
+            a.setCarId(rs.getString("car_id"));
+            a.setDriverId(rs.getString("driver_id"));
+            a.setBirthweight(rs.getDouble("birthweight"));
+            return a;
+        }
+    };
 
 
 
