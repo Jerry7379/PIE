@@ -1,11 +1,11 @@
 package com.sjcl.zrsy.domain.dto;
 
-public class JsonRpcResponesResult {
+public class Block {
     private Object check_tx;
     private Object deliver_tx;
     private String hash;
     private String height;
-    public JsonRpcResponesResult(){}
+    public Block(){}
 
     public Object getCheck_tx() {
         return check_tx;
