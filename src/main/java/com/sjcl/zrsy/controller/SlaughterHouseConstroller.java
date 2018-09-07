@@ -13,17 +13,18 @@ import java.util.ResourceBundle;
 
 @RestController
 public class SlaughterHouseConstroller {
+
     @Autowired
     ISlaughterHouseService slaughterreceiver;
+
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
-    @PostMapping("/slaughterreception")//屠宰检查
+
+    @PostMapping("/slaughterreception")
     public String  slaughterreception(@RequestBody SlaughterReception checker){
         if(slaughterreceiver.slaughterreception(checker)) {
-            //return "操作成功";
             return resourceBundle.getString("SuccessfulOperation");
         }
         else {
-            //return "操作失败,重新输入";
             return resourceBundle.getString("OperationFailed,re-enter");
         }
     }
@@ -40,11 +41,9 @@ public class SlaughterHouseConstroller {
         }
 
         if(slaughterreceiver.slaughteroperation(slaughterAcid)) {
-            //return "操作成功";
             return resourceBundle.getString("SuccessfulOperation");
         }
         else {
-            //return "操作失败,重新输入";
             return resourceBundle.getString("OperationFailed,re-enter");
         }
     }
