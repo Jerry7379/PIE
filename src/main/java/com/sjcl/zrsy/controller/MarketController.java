@@ -13,9 +13,12 @@ import java.util.ResourceBundle;
 
 @RestController
 public class MarketController {
+
     @Autowired
     IMarketService marketService;
+
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
+
     @PostMapping("/marketreception")
     public String marketreception(@RequestBody MarketReception marketReception) {
         String info[]=marketReception.getId().split(";");
@@ -32,11 +35,9 @@ public class MarketController {
     @PostMapping("/marketoperation")
     public String marketoperation(@RequestBody Operation operation) {
         if(marketService.marketoperation(operation)) {
-            //return "操作成功";
             return resourceBundle.getString("SuccessfulOperation");
         }
         else {
-            //return "操作失败,重新输入";
             return resourceBundle.getString("OperationFailed,re-enter");
         }
     }
