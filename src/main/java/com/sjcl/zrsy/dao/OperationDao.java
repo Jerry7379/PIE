@@ -1,6 +1,5 @@
 package com.sjcl.zrsy.dao;
 
-import com.google.common.collect.Lists;
 import com.sjcl.zrsy.domain.po.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,7 +33,6 @@ public class OperationDao {
     JdbcTemplate jdbcTemplate;
 
 
-    //插入养殖场相关操作
     public boolean insertFarmOperation(Operation operation) {
         try {
             return insertOperation(TABLE_NAME_FARM_OPERATION, operation);
