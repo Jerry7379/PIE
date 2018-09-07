@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SearchController {
+
     @Autowired
     ISearchService searchService;
+
     @GetMapping("/searchid")
     @ResponseBody
     public RestfulResult get(@RequestParam String id){
