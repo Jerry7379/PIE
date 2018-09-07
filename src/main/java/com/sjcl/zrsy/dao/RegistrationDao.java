@@ -35,7 +35,17 @@ public class RegistrationDao {
     public boolean insertRegistration(Registration registration){
         try {
             jdbcTemplate.update("insert into registration (registration_id,types,email,picture,name,location,legal_rep,capital,date_establishment) value(?,?,?,?,?,?,?,?,?)",
-                    registration.getRegistrationId(), registration.getType(), registration.getEmail(), registration.getPicture(), registration.getName(), registration.getLocation(), registration.getLegal_rep(), registration.getCapital(), registration.getDestablishment());
+                    registration.getRegistrationId(),
+                    registration.getType(),
+                    registration.getEmail(),
+                    registration.getPicture(),
+                    registration.getName(),
+                    registration.getLocation(),
+                    registration.getLegal_rep(),
+                    registration.getCapital(),
+                    registration.getDestablishment()
+            );
+
             return true;
         }catch(Exception e) {
             return false;
