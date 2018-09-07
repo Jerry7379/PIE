@@ -169,14 +169,4 @@ public class JdbcAndChainTemplate {
         jsonRpcRequest.setParams(m);
         return jsonRpcRequest;
     }
-
-
-//    public static void main(String[] args) throws JSQLParserException {
-//        Statement statement = CCJSqlParserUtil.parse("update traceability_idcard set gender=0 where id='1234567890123'");
-//        Update a = (Update) statement;
-//        List<Table> table = a.getTables();
-//        List<Column> colums = a.getColumns();//列名
-//        Expression b=a.getWhere();
-//        System.out.println(b.toString());
-//    }
 }
