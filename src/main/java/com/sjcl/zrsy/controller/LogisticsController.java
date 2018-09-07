@@ -13,8 +13,10 @@ import java.util.ResourceBundle;
 
 @RestController
 public class LogisticsController {
+
     @Autowired
     ILogisticsService logisticsService;
+
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
 
     @PostMapping("/logisticsoperation")
@@ -25,23 +27,19 @@ public class LogisticsController {
         {
             logisticsOperation.setId(info[i]);
             if(!logisticsService.logisticsoperation(logisticsOperation)) {
-                //return "操作失败,重新输入";
                 return resourceBundle.getString("OperationFailed,re-enter");
             }
         }
 
-        //return "操作成功";
         return resourceBundle.getString("SuccessfulOperation");
     }
 
     @PostMapping("/logisticsreception")
     public String  logisticsreception(@RequestBody LogisticsReception logisticsReception){
         if( logisticsService.logisticsreception(logisticsReception)) {
-            //return "操作成功";
             return resourceBundle.getString("SuccessfulOperation");
         }
         else {
-            //return "操作失败,重新输入";
             return resourceBundle.getString("OperationFailed,re-enter");
         }
     }
