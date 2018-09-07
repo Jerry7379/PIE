@@ -1,5 +1,6 @@
 package com.sjcl.zrsy.dao;
 
+import com.sjcl.zrsy.domain.dto.FarmReception;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,6 +17,8 @@ public class TraceabilityIdcardDao {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    JdbcAndChainTemplate jdbcAndChainTemplate;
 
     /**
      * check is exsits
@@ -39,15 +42,15 @@ public class TraceabilityIdcardDao {
      */
     public boolean insert(TraceabilityIdcard initialFarm) {
         try {
-            jdbcTemplate.update("insert into  traceability_idcard(id,farm_id,breeder_id, birthday, breed, gender,birthweight) values  (?, ?, ?, ?, ?,?,?)",
+            //insert语句使用 insert into 表名 set 字段名=‘’形式，插入主键的放在 set后第一个位置。
+            jdbcAndChainTemplate.insert("insert into  traceability_idcard set id=?,farm_id=?,breeder_id=?,birthday=?,breed=?,gender=?,birthweight=?",
                     initialFarm.getId(),
                     initialFarm.getFarmId(),
                     initialFarm.getBreederId(),
                     initialFarm.getBirthday(),
                     initialFarm.getBreed(),
                     initialFarm.getGender(),
-                    initialFarm.getBirthweight()
-            );
+                    initialFarm.getBirthweight());
             return true;
         } catch (Exception e) {
             return false;
@@ -96,14 +99,11 @@ public class TraceabilityIdcardDao {
     public boolean updateQuarantine(TraceabilityIdcard quarantine)
     {
         try {
-            int updateResult = jdbcTemplate.update("update traceability_idcard set slaughterhouse_id=?,checker_id=?,ischeck=? where id=?",
+            return  jdbcAndChainTemplate.update("update traceability_idcard set slaughterhouse_id=?,checker_id=?,ischeck=? where id=?",
                     quarantine.getSlaughterhouseId(),
                     quarantine.getCheckerId(),
                     quarantine.getIscheck(),
-                    quarantine.getId()
-            );
-
-            return updateResult == 1;
+                    quarantine.getId());
         }catch (Exception e){
             return false;
         }

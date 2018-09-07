@@ -6,7 +6,8 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Past;
-import java.util.Date;
+import java.sql.Date;
+
 
 public class FarmReception {
     @Length(min = 13, max = 13, message = "猪id为13位")

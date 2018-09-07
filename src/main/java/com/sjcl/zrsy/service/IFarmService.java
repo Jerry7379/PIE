@@ -8,7 +8,7 @@ import com.sjcl.zrsy.domain.po.Operation;
  */
 public interface IFarmService {
      boolean farmReception(FarmReception farmReception);
-     boolean farmOperation(Operation operation) ;
+     boolean farmOperation(Operation Operation) ;
      boolean idCardExists(String id);
 
 

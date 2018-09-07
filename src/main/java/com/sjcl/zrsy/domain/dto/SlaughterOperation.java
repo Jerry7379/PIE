@@ -81,10 +81,6 @@ public class SlaughterOperation {
         this.time = time;
     }
 
-    /**
-     * 排酸信息
-     * @return
-     */
     public TraceabilityIdcard toAcid() {
         TraceabilityIdcard acid = new TraceabilityIdcard();
         acid.setAciderId(this.content);
@@ -93,10 +89,6 @@ public class SlaughterOperation {
         return acid;
     }
 
-    /**
-     * 转为通用Operation
-     * @return
-     */
     public Operation toOperation() {
         Operation operation = new Operation();
         operation.setId(this.id);
