@@ -3,43 +3,30 @@ package com.sjcl.zrsy.domain.dto;
 
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Past;
 import java.util.Date;
 
 public class FarmReception {
-    //public static final int male=0;
-   // public static final int female=1;
-
-//    enum Gender {
-//
-//    }
-    @Length(min = 13,max=13,message = "猪id为13位")
+    @Length(min = 13, max = 13, message = "猪id为13位")
     private String id;
-    @Length(min = 6,max=6,message = "养殖场id为6位")
+
+    @Length(min = 6, max = 6, message = "养殖场id为6位")
     private String farmId;
-    @Length(min=6,max=6,message = "饲养员id")
+
+    @Length(min = 6, max = 6, message = "饲养员id")
     private String breederId;
-    @Past(message="日期不符合规定")
+
+    @Past(message = "日期不符合规定")
     private Date date;
 
     private String breed;//品种
 
-
     private String gender;//性别
 
-    @Digits(integer = 99,fraction = 99,message = "出生体重输入错误")
+    @Digits(integer = 99, fraction = 99, message = "出生体重输入错误")
     private Double weight;//出生体重
-
-    public FarmReception(String id, String farmId, String breederId, Date date, String breed, String gender, Double weight) {
-        this.id = id;
-        this.farmId = farmId;
-        this.breederId = breederId;
-        this.date = date;
-        this.breed = breed;
-        this.gender = gender;
-        this.weight = weight;
-    }
 
     public FarmReception() {
     }
