@@ -19,14 +19,18 @@ public class Rolecontroller {
 
     ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", Locale.US);
 
-    @PostMapping("/registration") //角色注册
+
+    /**
+     * register
+     * @param registration
+     * @return
+     */
+    @PostMapping("/registration")
     public String registration(@RequestBody Registration registration) {
         registration.setPicture(roleService.picturechange(registration.getRegistrationId(), registration.getPicture()));
         if (roleService.registration(registration)) {
-            //return "注册成功，请等候审核";
             return resourceBundle.getString("RegistrationSuccessful");
         } else {
-            //return "注册失败";
             return resourceBundle.getString("RegistrationFailed");
         }
     }
@@ -36,7 +40,6 @@ public class Rolecontroller {
     public String login(@RequestBody RoleLogin roleLogin, HttpSession session) {
         Registration user = roleService.login(roleLogin);
         if (user == null) {
-            //return "账户不存在，请重输入";
             return resourceBundle.getString("AccountNotExist");
         } else {
             String password = user.getPassword();
@@ -45,7 +48,6 @@ public class Rolecontroller {
                 session.setAttribute("type", user.getType());
                 return user.getType();
             } else {
-                //return "密码输入错误";
                 return resourceBundle.getString("IncorrectPassword");
             }
         }
