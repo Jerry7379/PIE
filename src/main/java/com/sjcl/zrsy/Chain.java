@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.sjcl.zrsy.domain.dto.Block;
 import com.sjcl.zrsy.domain.dto.JsonRpcRequest;
 import com.sjcl.zrsy.domain.dto.JsonRpcResponse;
+import com.sjcl.zrsy.service.data.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -13,11 +14,12 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 
 @Component
-public class Chain {
+public class Chain implements Iterable<Record> {
     private final String url;
 
     @Autowired
@@ -45,5 +47,24 @@ public class Chain {
         m.put("tx", encodedStr);
         jsonRpcRequest.setParams(m);
         return jsonRpcRequest;
+    }
+
+    @Override
+    public Iterator<Record> iterator() {
+
+        return new RecordIterator();
+    }
+
+    private class RecordIterator implements Iterator<Record> {
+
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public Record next() {
+            return null;
+        }
     }
 }
