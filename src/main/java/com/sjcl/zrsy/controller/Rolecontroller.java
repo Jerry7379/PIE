@@ -34,30 +34,4 @@ public class Rolecontroller {
             return resourceBundle.getString("RegistrationFailed");
         }
     }
-
-    @PostMapping("/login")
-    @ResponseBody
-    public String login(@RequestBody RoleLogin roleLogin, HttpSession session) {
-        Registration user = roleService.login(roleLogin);
-        if (user == null) {
-            return resourceBundle.getString("AccountNotExist");
-        } else {
-            String password = user.getPassword();
-            if (Objects.equals(password, roleLogin.getPassword())) {
-                session.setAttribute("userInfo", roleLogin.getName());
-                session.setAttribute("type", user.getType());
-                return user.getType();
-            } else {
-                return resourceBundle.getString("IncorrectPassword");
-            }
-        }
-    }
-
-    @GetMapping("/logout")
-    public void logout(HttpSession session) {
-        session.setAttribute("userInfo", null);
-        session.setAttribute("type", null);
-    }
-
-
 }
