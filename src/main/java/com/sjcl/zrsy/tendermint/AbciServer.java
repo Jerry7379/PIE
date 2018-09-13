@@ -1,4 +1,4 @@
-package com.sjcl.zrsy;
+package com.sjcl.zrsy.tendermint;
 
 import com.github.jtendermint.jabci.api.ABCIAPI;
 import com.github.jtendermint.jabci.api.CodeType;
