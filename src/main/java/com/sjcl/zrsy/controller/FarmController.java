@@ -1,13 +1,12 @@
 package com.sjcl.zrsy.controller;
 
-import com.sjcl.zrsy.Action;
 import com.sjcl.zrsy.domain.dto.FarmReception;
 import com.sjcl.zrsy.domain.po.Operation;
 import com.sjcl.zrsy.service.IFarmService;
+import com.sjcl.zrsy.tendermint.ActionClass;
+import com.sjcl.zrsy.tendermint.ActionMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-@RestController
+@ActionClass
 public class FarmController {
 
     @Autowired
@@ -24,17 +23,11 @@ public class FarmController {
     //i18n
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.getDefault());
 
-    @GetMapping("/gege")
-    public Object hello(){
-        return  context.getBeansWithAnnotation(Action.class);
-
-    }
-
     @Autowired
     private ApplicationContext context;
 
-    @PostMapping("/farmreception")
-    public String farmreception(@RequestBody FarmReception farmReception) {
+    @ActionMethod("farmreception")
+    public String farmreception(FarmReception farmReception) {
         if(!farmService.idCardExists(farmReception.getId())){
             if(farmService.farmReception(farmReception)){
                 return resourceBundle.getString("SuccessfulOperation");
@@ -49,8 +42,8 @@ public class FarmController {
         }
     }
 
-    @PostMapping("/farmoperation")
-    public String farmoperation(@RequestBody Operation operation) {
+    @ActionMethod("farmoperation")
+    public String farmoperation(Operation operation) {
         if(farmService.idCardExists(operation.getId())) {
             if (farmService.farmOperation(operation)) {
                 return resourceBundle.getString("SuccessfulOperation");

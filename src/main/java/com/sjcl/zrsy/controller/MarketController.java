@@ -1,18 +1,17 @@
 package com.sjcl.zrsy.controller;
 
-import com.sjcl.zrsy.domain.dto.MarketOperation;
 import com.sjcl.zrsy.domain.dto.MarketReception;
 import com.sjcl.zrsy.domain.po.Operation;
 import com.sjcl.zrsy.service.IMarketService;
+import com.sjcl.zrsy.tendermint.ActionClass;
+import com.sjcl.zrsy.tendermint.ActionMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-@RestController
+@ActionClass
 public class MarketController {
 
     @Autowired
@@ -20,8 +19,8 @@ public class MarketController {
 
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
 
-    @PostMapping("/marketreception")
-    public String marketreception(@RequestBody MarketReception marketReception) {
+    @ActionMethod("/marketreception")
+    public String marketreception(MarketReception marketReception) {
         String info[]=marketReception.getId().split(";");
         for(int i = 0; i < info.length; i++) {
             marketReception.setId(info[i]);
@@ -33,8 +32,8 @@ public class MarketController {
         return resourceBundle.getString("SuccessfulOperation");
     }
 
-    @PostMapping("/marketoperation")
-    public String marketoperation(@RequestBody Operation operation) {
+    @ActionMethod("/marketoperation")
+    public String marketoperation(Operation operation) {
         if(marketService.marketoperation(operation)) {
             return resourceBundle.getString("SuccessfulOperation");
         }
