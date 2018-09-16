@@ -1,28 +1,46 @@
 package com.sjcl.zrsy.tendermint;
 
+import com.alibaba.fastjson.JSON;
 import com.github.jtendermint.jabci.api.ABCIAPI;
 import com.github.jtendermint.jabci.api.CodeType;
 import com.github.jtendermint.jabci.socket.TSocket;
 import com.github.jtendermint.jabci.types.*;
 import com.google.protobuf.ByteString;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 
-public class AbciServer implements ABCIAPI {
+import java.nio.charset.Charset;
+
+public class AbciServer implements ABCIAPI, ApplicationListener<ContextRefreshedEvent> {
     private ByteString lastBlockAppHash;
     private long lastBlockHeight;
 
-    private TSocket socket;
+
+    @Autowired
+    private ActionMapping actionMapping;
 
     public AbciServer() throws InterruptedException {
-        socket = new TSocket();
+    }
+
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        actionMapping.registet(event.getApplicationContext());
+
+        TSocket socket = new TSocket();
         socket.registerListener(this);
 
         Thread t = new Thread(() -> socket.start(26658));
         t.setName("pie abci application");
         t.start();
         while (true) {
-            Thread.sleep(1000L);
+            try {
+                Thread.sleep(1000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -31,6 +49,7 @@ public class AbciServer implements ABCIAPI {
 
     @Override
     public ResponseCheckTx requestCheckTx(RequestCheckTx req) {
+        //TODO 验证签名
         return ResponseCheckTx.newBuilder().setCode(CodeType.OK).build();
     }
 
@@ -41,7 +60,21 @@ public class AbciServer implements ABCIAPI {
 
     @Override
     public ResponseDeliverTx receivedDeliverTx(RequestDeliverTx req) {
-        return ResponseDeliverTx.newBuilder().setCode(CodeType.OK).build();
+        String txStr =  req.getTx().toStringUtf8();
+        Transaction tx = JSON.parseObject(txStr, Transaction.class);
+        Object ret = processTx(tx);
+        String retStr = JSON.toJSONString(ret);
+        return ResponseDeliverTx.newBuilder()
+                .setCode(CodeType.OK)
+                .setData(ByteString.copyFrom(retStr, Charset.forName("utf-8")))
+                .build();
+    }
+
+    private Object processTx(Transaction tx) {
+        String actionName = tx.getAction();
+        String paramStr = tx.getParam();
+        Action action = actionMapping.getAction(actionName);
+        return action.act(paramStr);
     }
 
     @Override
@@ -90,4 +123,5 @@ public class AbciServer implements ABCIAPI {
     public ResponseSetOption requestSetOption(RequestSetOption req) {
         return ResponseSetOption.newBuilder().build();
     }
+
 }
