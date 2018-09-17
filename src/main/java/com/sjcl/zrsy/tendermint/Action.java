@@ -13,7 +13,9 @@ public class Action {
     public Action(Object bean, Method actionMethod){
         this.bean = bean;
         this.actionMethod = actionMethod;
-        this.paramType = this.actionMethod.getParameterTypes()[0];
+        if (this.actionMethod != null) {
+            this.paramType = this.actionMethod.getParameterTypes()[0];
+        }
     }
 
     public Object act(String param) {
