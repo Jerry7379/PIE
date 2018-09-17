@@ -3,17 +3,15 @@ package com.sjcl.zrsy.action;
 import com.sjcl.zrsy.domain.dto.RestfulResult;
 import com.sjcl.zrsy.domain.dto.SearchId;
 import com.sjcl.zrsy.service.ISearchService;
-import com.sjcl.zrsy.tendermint.ActionClass;
-import com.sjcl.zrsy.tendermint.ActionMethod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@ActionClass
+@Component
 public class SearchAction {
 
     @Autowired
     ISearchService searchService;
 
-    @ActionMethod("searchid")
     public RestfulResult get(String id){
         SearchId obj = searchService.get(id);
 

@@ -1,34 +1,46 @@
 package com.sjcl.zrsy.tendermint;
 
 import com.alibaba.fastjson.JSON;
+import com.github.jtendermint.crypto.ByteUtil;
 import com.github.jtendermint.jabci.api.ABCIAPI;
 import com.github.jtendermint.jabci.api.CodeType;
 import com.github.jtendermint.jabci.socket.TSocket;
 import com.github.jtendermint.jabci.types.*;
 import com.google.protobuf.ByteString;
+import com.sjcl.zrsy.action.SearchAction;
+import com.sjcl.zrsy.dao.AppInfoDao;
+import com.sjcl.zrsy.domain.dto.RestfulResult;
+import com.sjcl.zrsy.domain.po.AppInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+
 import java.nio.charset.Charset;
-import java.security.KeyPair;
+import java.util.LinkedList;
+import java.util.List;
 
 @Component
 public class AbciServer implements ABCIAPI, ApplicationListener<ContextRefreshedEvent> {
-    private ByteString lastBlockAppHash;
-    private long lastBlockHeight;
+    private AppInfo appInfo;
 
 
     @Autowired
     private ActionMapping actionMapping;
 
-    public AbciServer() throws InterruptedException {
-    }
+    @Autowired
+    private SearchAction searchAction;
+
+    @Autowired
+    private AppInfoDao appInfoDao;
+
 
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        actionMapping.registet(event.getApplicationContext());
+        this.actionMapping.registet(event.getApplicationContext());
+        this.appInfo = appInfoDao.load();
+
 
         TSocket socket = new TSocket();
         socket.registerListener(this);
@@ -50,12 +62,19 @@ public class AbciServer implements ABCIAPI, ApplicationListener<ContextRefreshed
 
     @Override
     public ResponseCheckTx requestCheckTx(RequestCheckTx req) {
+        //TODO 注册
         //TODO 验证签名
+
         return ResponseCheckTx.newBuilder().setCode(CodeType.OK).build();
     }
 
+
+
+    private List<Transaction> txsInABlock = new LinkedList<>();
+
     @Override
     public ResponseBeginBlock requestBeginBlock(RequestBeginBlock req) {
+        txsInABlock.clear();
         return ResponseBeginBlock.newBuilder().build();
     }
 
@@ -63,6 +82,7 @@ public class AbciServer implements ABCIAPI, ApplicationListener<ContextRefreshed
     public ResponseDeliverTx receivedDeliverTx(RequestDeliverTx req) {
         String txStr =  req.getTx().toStringUtf8();
         Transaction tx = JSON.parseObject(txStr, Transaction.class);
+        txsInABlock.add(tx);
         try {
             Object ret = processTx(tx);
             String retStr = JSON.toJSONString(ret);
@@ -88,13 +108,16 @@ public class AbciServer implements ABCIAPI, ApplicationListener<ContextRefreshed
     }
 
     @Override
-    public ResponseEndBlock requestEndBlock(RequestEndBlock req) {
-        return ResponseEndBlock.newBuilder().build();
-    }
-
-    @Override
     public ResponseCommit requestCommit(RequestCommit requestCommit) {
-        return ResponseCommit.newBuilder().build();
+        int blockHashCode = txsInABlock.hashCode();
+        ByteString hash = ByteString.copyFrom(ByteUtil.toBytes(blockHashCode));
+
+        this.appInfo.incrementLastBlockHeight();
+        this.appInfo.setLastBlockAppHash(hash);
+
+        appInfoDao.save(appInfo);
+
+        return ResponseCommit.newBuilder().setData(hash).build();
     }
 
     @Override
@@ -105,23 +128,28 @@ public class AbciServer implements ABCIAPI, ApplicationListener<ContextRefreshed
 
     @Override
     public ResponseInfo requestInfo(RequestInfo req) {
-        //TODO info
         return ResponseInfo.newBuilder()
-//                .setLastBlockHeight()
-//                .setLastBlockAppHash()
+                .setLastBlockHeight(appInfo.getLastBlockHeight())
+                .setLastBlockAppHash(appInfo.getLastBlockAppHash())
                 .build();
     }
 
+
     @Override
-    public ResponseInitChain requestInitChain(RequestInitChain req) {
-        //TODO
-        return ResponseInitChain.newBuilder().build();
+    public ResponseQuery requestQuery(RequestQuery req) {
+        String id = req.getData().toStringUtf8();
+        RestfulResult result = searchAction.get(id);
+        String value = JSON.toJSONString(result);
+        return ResponseQuery.newBuilder()
+                .setCode(CodeType.OK)
+                .setValue(ByteString.copyFrom(value, Charset.forName("utf-8")))
+                .build();
     }
 
     // don't modify
     @Override
-    public ResponseQuery requestQuery(RequestQuery req) {
-        return ResponseQuery.newBuilder().setCode(CodeType.OK).build();
+    public ResponseEndBlock requestEndBlock(RequestEndBlock req) {
+        return ResponseEndBlock.newBuilder().build();
     }
 
     @Override
@@ -134,4 +162,8 @@ public class AbciServer implements ABCIAPI, ApplicationListener<ContextRefreshed
         return ResponseSetOption.newBuilder().build();
     }
 
+    @Override
+    public ResponseInitChain requestInitChain(RequestInitChain req) {
+        return ResponseInitChain.newBuilder().build();
+    }
 }
