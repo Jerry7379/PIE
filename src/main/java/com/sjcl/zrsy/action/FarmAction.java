@@ -1,4 +1,4 @@
-package com.sjcl.zrsy.controller;
+package com.sjcl.zrsy.action;
 
 import com.sjcl.zrsy.domain.dto.FarmReception;
 import com.sjcl.zrsy.domain.po.Operation;

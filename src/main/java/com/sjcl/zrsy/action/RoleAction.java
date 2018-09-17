@@ -1,4 +1,4 @@
-package com.sjcl.zrsy.controller;
+package com.sjcl.zrsy.action;
 
 import com.sjcl.zrsy.domain.po.Registration;
 import com.sjcl.zrsy.service.IRoleService;
