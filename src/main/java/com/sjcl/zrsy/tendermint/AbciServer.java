@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import java.nio.charset.Charset;
+import java.security.KeyPair;
 
 @Component
 public class AbciServer implements ABCIAPI, ApplicationListener<ContextRefreshedEvent> {
@@ -45,7 +46,6 @@ public class AbciServer implements ABCIAPI, ApplicationListener<ContextRefreshed
     }
 
     public static void main(String[] args) throws InterruptedException {
-        new AbciServer();
     }
 
     @Override
@@ -63,12 +63,21 @@ public class AbciServer implements ABCIAPI, ApplicationListener<ContextRefreshed
     public ResponseDeliverTx receivedDeliverTx(RequestDeliverTx req) {
         String txStr =  req.getTx().toStringUtf8();
         Transaction tx = JSON.parseObject(txStr, Transaction.class);
-        Object ret = processTx(tx);
-        String retStr = JSON.toJSONString(ret);
-        return ResponseDeliverTx.newBuilder()
-                .setCode(CodeType.OK)
-                .setData(ByteString.copyFrom(retStr, Charset.forName("utf-8")))
-                .build();
+        try {
+            Object ret = processTx(tx);
+            String retStr = JSON.toJSONString(ret);
+            return ResponseDeliverTx.newBuilder()
+                    .setCode(CodeType.OK)
+                    .setData(ByteString.copyFrom(retStr, Charset.forName("utf-8")))
+                    .build();
+        } catch (Exception e) {
+            return ResponseDeliverTx.newBuilder()
+                    .setCode(CodeType.OK)
+                    .setData(ByteString.copyFrom(e.getMessage(), Charset.forName("utf-8")))
+                    .build();
+        }
+
+
     }
 
     private Object processTx(Transaction tx) {
