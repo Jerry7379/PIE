@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 @ActionClass
-public class Rolecontroller {
+public class RoleAction {
     @Autowired
     IRoleService roleService;
 

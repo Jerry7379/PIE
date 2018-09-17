@@ -8,7 +8,7 @@ import com.sjcl.zrsy.tendermint.ActionMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @ActionClass
-public class SearchController {
+public class SearchAction {
 
     @Autowired
     ISearchService searchService;

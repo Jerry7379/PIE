@@ -11,7 +11,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 @ActionClass
-public class SlaughterHouseConstroller {
+public class SlaughterHouseAction {
 
     @Autowired
     ISlaughterHouseService slaughterreceiver;
