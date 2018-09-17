@@ -7,9 +7,6 @@ import com.sjcl.zrsy.tendermint.ActionClass;
 import com.sjcl.zrsy.tendermint.ActionMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

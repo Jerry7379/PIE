@@ -1,14 +1,11 @@
 package com.sjcl.zrsy.controller;
 
-import com.sjcl.zrsy.domain.dto.LogisticsReception;
 import com.sjcl.zrsy.domain.dto.LogisticsOperation;
+import com.sjcl.zrsy.domain.dto.LogisticsReception;
 import com.sjcl.zrsy.service.ILogisticsService;
 import com.sjcl.zrsy.tendermint.ActionClass;
 import com.sjcl.zrsy.tendermint.ActionMethod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -21,7 +18,7 @@ public class LogisticsController {
 
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
 
-    @ActionMethod("/logisticsoperation")
+    @ActionMethod("logisticsoperation")
     public String  logisticsoperation(LogisticsOperation logisticsOperation){
         String info[]=logisticsOperation.getId().split(";");
 
@@ -36,7 +33,7 @@ public class LogisticsController {
         return resourceBundle.getString("SuccessfulOperation");
     }
 
-    @ActionMethod("/logisticsreception")
+    @ActionMethod("logisticsreception")
     public String  logisticsreception(LogisticsReception logisticsReception){
         if( logisticsService.logisticsreception(logisticsReception)) {
             return resourceBundle.getString("SuccessfulOperation");

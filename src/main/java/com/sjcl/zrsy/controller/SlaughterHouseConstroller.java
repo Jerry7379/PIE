@@ -1,14 +1,11 @@
 package com.sjcl.zrsy.controller;
 
-import com.sjcl.zrsy.domain.dto.SlaughterReception;
 import com.sjcl.zrsy.domain.dto.SlaughterOperation;
+import com.sjcl.zrsy.domain.dto.SlaughterReception;
 import com.sjcl.zrsy.service.ISlaughterHouseService;
 import com.sjcl.zrsy.tendermint.ActionClass;
 import com.sjcl.zrsy.tendermint.ActionMethod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -21,7 +18,7 @@ public class SlaughterHouseConstroller {
 
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
 
-    @ActionMethod("/slaughterreception")
+    @ActionMethod("slaughterreception")
     public String  slaughterreception(SlaughterReception checker){
         if(slaughterreceiver.slaughterreception(checker)) {
             return resourceBundle.getString("SuccessfulOperation");
@@ -31,7 +28,7 @@ public class SlaughterHouseConstroller {
         }
     }
 
-    @ActionMethod("/slaughteroperation")
+    @ActionMethod("slaughteroperation")
     public String  slaughterhouseoperation(SlaughterOperation slaughterAcid){
         String info[]=slaughterAcid.getContent().split(";");
         if(info.length==2){

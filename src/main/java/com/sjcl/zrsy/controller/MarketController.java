@@ -6,7 +6,6 @@ import com.sjcl.zrsy.service.IMarketService;
 import com.sjcl.zrsy.tendermint.ActionClass;
 import com.sjcl.zrsy.tendermint.ActionMethod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -19,7 +18,7 @@ public class MarketController {
 
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
 
-    @ActionMethod("/marketreception")
+    @ActionMethod("marketreception")
     public String marketreception(MarketReception marketReception) {
         String info[]=marketReception.getId().split(";");
         for(int i = 0; i < info.length; i++) {
@@ -32,7 +31,7 @@ public class MarketController {
         return resourceBundle.getString("SuccessfulOperation");
     }
 
-    @ActionMethod("/marketoperation")
+    @ActionMethod("marketoperation")
     public String marketoperation(Operation operation) {
         if(marketService.marketoperation(operation)) {
             return resourceBundle.getString("SuccessfulOperation");
