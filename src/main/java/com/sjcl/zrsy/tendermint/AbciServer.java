@@ -9,9 +9,10 @@ import com.google.protobuf.ByteString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-
+import org.springframework.stereotype.Component;
 import java.nio.charset.Charset;
 
+@Component
 public class AbciServer implements ABCIAPI, ApplicationListener<ContextRefreshedEvent> {
     private ByteString lastBlockAppHash;
     private long lastBlockHeight;
