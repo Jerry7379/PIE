@@ -1,4 +1,4 @@
-package com.sjcl.zrsy;
+package com.sjcl.zrsy.tendermint;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface Action {
+public @interface ActionClass {
     @AliasFor(
             annotation = Component.class
     )
