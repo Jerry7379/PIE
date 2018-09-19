@@ -17,8 +17,6 @@ public class TraceabilityIdcardDao {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-    @Autowired
-    JdbcAndChainTemplate jdbcAndChainTemplate;
 
     /**
      * check is exsits
@@ -43,7 +41,7 @@ public class TraceabilityIdcardDao {
     public boolean insert(TraceabilityIdcard initialFarm) {
         try {
             //insert语句使用 insert into 表名 set 字段名=‘’形式，插入主键的放在 set后第一个位置。
-            jdbcAndChainTemplate.insert("insert into  traceability_idcard set id=?,farm_id=?,breeder_id=?,birthday=?,breed=?,gender=?,birthweight=?",
+            jdbcTemplate.update("insert into  traceability_idcard set id=?,farm_id=?,breeder_id=?,birthday=?,breed=?,gender=?,birthweight=?",
                     initialFarm.getId(),
                     initialFarm.getFarmId(),
                     initialFarm.getBreederId(),
@@ -99,11 +97,12 @@ public class TraceabilityIdcardDao {
     public boolean updateQuarantine(TraceabilityIdcard quarantine)
     {
         try {
-            return  jdbcAndChainTemplate.update("update traceability_idcard set slaughterhouse_id=?,checker_id=?,ischeck=? where id=?",
+            int updateResult = jdbcTemplate.update("update traceability_idcard set slaughterhouse_id=?,checker_id=?,ischeck=? where id=?",
                     quarantine.getSlaughterhouseId(),
                     quarantine.getCheckerId(),
                     quarantine.getIscheck(),
                     quarantine.getId());
+            return updateResult == 1;
         }catch (Exception e){
             return false;
         }
