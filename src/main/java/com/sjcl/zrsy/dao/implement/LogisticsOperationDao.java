@@ -4,9 +4,10 @@ import com.sjcl.zrsy.domain.dto.LogisticsOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
-public class LogisticsOperationDao {
+@Repository
+public class LogisticsOperationDao implements com.sjcl.zrsy.dao.ILogisticsOperationDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -15,6 +16,7 @@ public class LogisticsOperationDao {
      * @param logisticsOperation
      * @return
      */
+    @Override
     public boolean insertLogisticsOperation(LogisticsOperation logisticsOperation) {
 
         try {

@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.dao.implement.LogisticsOperationDao;
+import com.sjcl.zrsy.dao.ILogisticsOperationDao;
 import com.sjcl.zrsy.dao.implement.TraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.dto.LogisticsReception;
 import com.sjcl.zrsy.domain.dto.LogisticsOperation;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LogisticsserviceImpl implements ILogisticsService {
     @Autowired
-    LogisticsOperationDao logisticsOperationDao;
+    ILogisticsOperationDao logisticsOperationDao;
 
     @Autowired
     TraceabilityIdcardDao traceabilityIdcardDao;

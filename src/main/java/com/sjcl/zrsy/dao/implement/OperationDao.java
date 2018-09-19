@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class OperationDao {
+public class OperationDao implements com.sjcl.zrsy.dao.IOperationDao {
     private static final String TABLE_NAME_FARM_OPERATION = "farm_operation";
     private static final String TABLE_NAME_SLAUGHTER_OPERATION = "slaughter_operation";
     private static final String TABLE_NAME_MARKET_OPERATION = "market_operation";
@@ -33,6 +33,7 @@ public class OperationDao {
     JdbcTemplate jdbcTemplate;
 
 
+    @Override
     public boolean insertFarmOperation(Operation operation) {
         try {
             return insertOperation(TABLE_NAME_FARM_OPERATION, operation);
@@ -41,6 +42,7 @@ public class OperationDao {
         }
     }
 
+    @Override
     public boolean insertMarketOperation(Operation operation) {
         try {
             return insertOperation(TABLE_NAME_MARKET_OPERATION, operation);
@@ -49,6 +51,7 @@ public class OperationDao {
         }
     }
 
+    @Override
     public boolean insertSlaughteroperartion(Operation operation) {
         try {
             return insertOperation(TABLE_NAME_SLAUGHTER_OPERATION, operation);
@@ -73,18 +76,22 @@ public class OperationDao {
         }
     }
 
+    @Override
     public List<Operation> findFarmOperationByPigid(String pigId) {
         return findOperation(TABLE_NAME_FARM_OPERATION, pigId);
     }
 
+    @Override
     public List<Operation> findMarketOperationByPigid(String pigId) {
         return findOperation(TABLE_NAME_MARKET_OPERATION, pigId);
     }
 
+    @Override
     public List<Operation> findSlaughterOperationByPigid(String pigId) {
         return findOperation(TABLE_NAME_SLAUGHTER_OPERATION, pigId);
     }
 
+    @Override
     public List<Operation> findallOperationByPigid(String pigId) {
         List<Operation> operations = new ArrayList<>();
         operations.addAll(findFarmOperationByPigid(pigId));
