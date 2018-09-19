@@ -1,5 +1,6 @@
 package com.sjcl.zrsy.dao.implement;
 
+import com.sjcl.zrsy.dao.IOperationDao;
 import com.sjcl.zrsy.domain.dto.SearchId;
 import com.sjcl.zrsy.domain.po.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class SearchDao {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private OperationDao operationDao;
+    private IOperationDao operationDao;
 
     private static final RowMapper<SearchId> SEARCHID_ROW_MAPPERR = new RowMapper<SearchId>() {
         @Override

@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.dao.implement.OperationDao;
+import com.sjcl.zrsy.dao.IOperationDao;
 import com.sjcl.zrsy.dao.implement.TraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.dto.MarketReception;
 import com.sjcl.zrsy.domain.po.Operation;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MarketServiceImpl implements IMarketService {
     @Autowired
-    OperationDao operationDao;
+    IOperationDao operationDao;
 
     @Autowired
     TraceabilityIdcardDao traceabilityIdcardDao;
