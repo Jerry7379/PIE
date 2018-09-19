@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.service.implement;
 
 import com.sjcl.zrsy.dao.IOperationDao;
-import com.sjcl.zrsy.dao.implement.TraceabilityIdcardDao;
+import com.sjcl.zrsy.dao.ITraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.dto.MarketReception;
 import com.sjcl.zrsy.domain.po.Operation;
 import com.sjcl.zrsy.service.IMarketService;
@@ -14,7 +14,7 @@ public class MarketServiceImpl implements IMarketService {
     IOperationDao operationDao;
 
     @Autowired
-    TraceabilityIdcardDao traceabilityIdcardDao;
+    ITraceabilityIdcardDao traceabilityIdcardDao;
 
     @Override
     public boolean marketreception(MarketReception marketReception){

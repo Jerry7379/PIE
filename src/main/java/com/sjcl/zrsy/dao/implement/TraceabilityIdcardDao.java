@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Component
-public class TraceabilityIdcardDao {
+public class TraceabilityIdcardDao implements com.sjcl.zrsy.dao.ITraceabilityIdcardDao {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -23,6 +23,7 @@ public class TraceabilityIdcardDao {
      * @param id
      * @return
      */
+    @Override
     public boolean exsits(String id) {
         List<String> records = jdbcTemplate.query("select id from traceability_idcard where id='"+id+"' limit 1", new RowMapper<String>(){
             @Override
@@ -38,6 +39,7 @@ public class TraceabilityIdcardDao {
      * @param initialFarm
      * @return
      */
+    @Override
     public boolean insert(TraceabilityIdcard initialFarm) {
         try {
             //insert语句使用 insert into 表名 set 字段名=‘’形式，插入主键的放在 set后第一个位置。
@@ -60,6 +62,7 @@ public class TraceabilityIdcardDao {
      * @param logistics
      * @return
      */
+    @Override
     public boolean updateLogistics(TraceabilityIdcard logistics) {
 
         try {
@@ -79,6 +82,7 @@ public class TraceabilityIdcardDao {
      * @param market
      * @return
      */
+    @Override
     public boolean updateMarket(TraceabilityIdcard market){
         try {
             int updateResult = jdbcTemplate.update("UPDATE traceability_idcard SET supermarket_id = ? WHERE Id = ?", market.getSupermarketId(), market.getId());
@@ -94,6 +98,7 @@ public class TraceabilityIdcardDao {
      * @param quarantine
      * @return
      */
+    @Override
     public boolean updateQuarantine(TraceabilityIdcard quarantine)
     {
         try {
@@ -113,6 +118,7 @@ public class TraceabilityIdcardDao {
      * @param acid
      * @return
      */
+    @Override
     public boolean updateAcid(TraceabilityIdcard acid){
         int updatePigIdCardResult = jdbcTemplate.update("UPDATE traceability_idcard SET Acider_id = ?, Isacid = ? WHERE Id= ?", acid.getAciderId(), acid.getIsacid(), acid.getIsacid());
         return updatePigIdCardResult > 0;
