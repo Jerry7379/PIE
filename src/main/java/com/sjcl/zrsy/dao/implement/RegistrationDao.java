@@ -11,10 +11,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Component
-public class RegistrationDao {
+public class RegistrationDao implements com.sjcl.zrsy.dao.IRegistrationDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Override
     public Registration getLoginByRegistrationId(String registrationId){
         List<Registration> registrations =jdbcTemplate.query("select * from registration where registration_id= ?", new Object[]{registrationId}, new RowMapper<Registration>(){
             @Override
@@ -32,6 +33,7 @@ public class RegistrationDao {
         }
     }
 
+    @Override
     public boolean insertRegistration(Registration registration){
         try {
             jdbcTemplate.update("insert into registration (registration_id,types,email,picture,name,location,legal_rep,capital,date_establishment) value(?,?,?,?,?,?,?,?,?)",
