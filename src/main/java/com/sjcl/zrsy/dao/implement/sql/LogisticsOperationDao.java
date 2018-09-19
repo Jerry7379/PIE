@@ -1,4 +1,4 @@
-package com.sjcl.zrsy.dao.implement;
+package com.sjcl.zrsy.dao.implement.sql;
 
 import com.sjcl.zrsy.domain.dto.LogisticsOperation;
 import org.springframework.beans.factory.annotation.Autowired;

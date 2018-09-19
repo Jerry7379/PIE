@@ -1,4 +1,4 @@
-package com.sjcl.zrsy.dao.implement;
+package com.sjcl.zrsy.dao.implement.sql;
 
 import com.sjcl.zrsy.domain.dto.FarmReception;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
