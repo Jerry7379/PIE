@@ -6,7 +6,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootConfiguration
-public class FilterConfig{
+public class WebConfig {
         @Bean
         public FilterRegistrationBean testFilterRegistration() {
 
