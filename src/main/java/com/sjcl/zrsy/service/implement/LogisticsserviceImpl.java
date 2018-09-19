@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.dao.LogisticsOperationDao;
-import com.sjcl.zrsy.dao.TraceabilityIdcardDao;
+import com.sjcl.zrsy.dao.implement.LogisticsOperationDao;
+import com.sjcl.zrsy.dao.implement.TraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.dto.LogisticsReception;
 import com.sjcl.zrsy.domain.dto.LogisticsOperation;
 import com.sjcl.zrsy.service.ILogisticsService;

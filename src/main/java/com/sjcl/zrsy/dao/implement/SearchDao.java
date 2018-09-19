@@ -1,4 +1,4 @@
-package com.sjcl.zrsy.dao;
+package com.sjcl.zrsy.dao.implement;
 
 import com.sjcl.zrsy.domain.dto.SearchId;
 import com.sjcl.zrsy.domain.po.Operation;

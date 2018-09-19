@@ -1,6 +1,6 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.dao.RegistrationDao;
+import com.sjcl.zrsy.dao.implement.RegistrationDao;
 import com.sjcl.zrsy.domain.dto.RoleLogin;
 import com.sjcl.zrsy.domain.po.Registration;
 import com.sjcl.zrsy.service.IRoleService;

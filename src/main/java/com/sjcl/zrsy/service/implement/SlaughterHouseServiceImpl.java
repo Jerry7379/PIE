@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.dao.OperationDao;
-import com.sjcl.zrsy.dao.TraceabilityIdcardDao;
+import com.sjcl.zrsy.dao.implement.OperationDao;
+import com.sjcl.zrsy.dao.implement.TraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.dto.SlaughterOperation;
 import com.sjcl.zrsy.domain.dto.SlaughterReception;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
