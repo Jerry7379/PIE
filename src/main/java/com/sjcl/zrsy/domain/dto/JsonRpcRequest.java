@@ -1,7 +1,7 @@
 package com.sjcl.zrsy.domain.dto;
 
 public class JsonRpcRequest {
-    public static final String JSONRPC_VERSION = "2.0";
+    private String jsonrpc = "2.0";
     private String id;
     private String method;
     private Object params;
@@ -36,6 +36,6 @@ public class JsonRpcRequest {
     }
 
     public String getJsonrpc() {
-        return JSONRPC_VERSION;
+        return jsonrpc;
     }
 }

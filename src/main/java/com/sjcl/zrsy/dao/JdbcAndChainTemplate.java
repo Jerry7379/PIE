@@ -1,7 +1,6 @@
 package com.sjcl.zrsy.dao;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sjcl.zrsy.Chain;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
