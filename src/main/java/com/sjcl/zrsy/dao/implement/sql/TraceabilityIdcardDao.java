@@ -1,5 +1,6 @@
 package com.sjcl.zrsy.dao.implement.sql;
 
+import com.sjcl.zrsy.dao.ITraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.dto.FarmReception;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.List;
 
 
 @Component
-public class TraceabilityIdcardDao implements com.sjcl.zrsy.dao.ITraceabilityIdcardDao {
+public class TraceabilityIdcardDao implements ITraceabilityIdcardDao {
 
     @Autowired
     JdbcTemplate jdbcTemplate;

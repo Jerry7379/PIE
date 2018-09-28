@@ -2,13 +2,15 @@ package com.sjcl.zrsy.dao;
 
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 
+import java.io.IOException;
+
 public interface ITraceabilityIdcardDao {
     /**
      * check is exsits
      * @param id
      * @return
      */
-    boolean exsits(String id);
+    boolean exsits(String id) throws IOException;
 
     /**
      * insert traceabilityIdcard
@@ -22,26 +24,26 @@ public interface ITraceabilityIdcardDao {
      * @param logistics
      * @return
      */
-    boolean updateLogistics(TraceabilityIdcard logistics);
+    boolean updateLogistics(TraceabilityIdcard logistics) throws Exception;
 
     /**
      * update market
      * @param market
      * @return
      */
-    boolean updateMarket(TraceabilityIdcard market);
+    boolean updateMarket(TraceabilityIdcard market) throws IOException;
 
     /**
      * update quarantine
      * @param quarantine
      * @return
      */
-    boolean updateQuarantine(TraceabilityIdcard quarantine);
+    boolean updateQuarantine(TraceabilityIdcard quarantine) throws IOException;
 
     /**
      * update acid
      * @param acid
      * @return
      */
-    boolean updateAcid(TraceabilityIdcard acid);
+    boolean updateAcid(TraceabilityIdcard acid) throws IOException;
 }
