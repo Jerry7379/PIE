@@ -8,6 +8,8 @@ import com.sjcl.zrsy.service.IFarmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 public class FarmServiceImpl implements IFarmService {
 
@@ -28,7 +30,7 @@ public class FarmServiceImpl implements IFarmService {
     }
 
     @Override
-    public boolean idCardExists(String id ){
+    public boolean idCardExists(String id )  {
         return traceabilityIdcardDao.exsits(id);
     }
 }

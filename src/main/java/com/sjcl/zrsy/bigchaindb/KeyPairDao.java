@@ -3,6 +3,8 @@ package com.sjcl.zrsy.bigchaindb;
 
 import net.i2p.crypto.eddsa.KeyPairGenerator;
 import net.i2p.crypto.eddsa.spec.EdDSAPrivateKeySpec;
+import org.bouncycastle.crypto.util.PrivateKeyFactory;
+import org.bouncycastle.crypto.util.PublicKeyFactory;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
@@ -72,7 +74,9 @@ public final class KeyPairDao {
                 priKeyIn.read(encodedPriKeyCode);
                 byte[] priKeyCode = cipher.doFinal(encodedPriKeyCode);
 
-                EdDSAPrivateKeySpec priKeySpec = new EdDSAPrivateKeySpec();
+                EdDSAPrivateKeySpec priKeySpec = new EdDSAPrivateKeySpec(
+
+                );
 
                 privateKey = (PrivateKey) PrivateKeyFactory.createKey(priKeyCode);
             }

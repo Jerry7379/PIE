@@ -10,7 +10,7 @@ public interface ITraceabilityIdcardDao {
      * @param id
      * @return
      */
-    boolean exsits(String id) throws IOException;
+    boolean exsits(String id);
 
     /**
      * insert traceabilityIdcard
@@ -24,26 +24,26 @@ public interface ITraceabilityIdcardDao {
      * @param logistics
      * @return
      */
-    boolean updateLogistics(TraceabilityIdcard logistics) throws Exception;
+    boolean updateLogistics(TraceabilityIdcard logistics) ;
 
     /**
      * update market
      * @param market
      * @return
      */
-    boolean updateMarket(TraceabilityIdcard market) throws IOException;
+    boolean updateMarket(TraceabilityIdcard market) ;
 
     /**
      * update quarantine
      * @param quarantine
      * @return
      */
-    boolean updateQuarantine(TraceabilityIdcard quarantine) throws IOException;
+    boolean updateQuarantine(TraceabilityIdcard quarantine) ;
 
     /**
      * update acid
      * @param acid
      * @return
      */
-    boolean updateAcid(TraceabilityIdcard acid) throws IOException;
+    boolean updateAcid(TraceabilityIdcard acid) ;
 }

@@ -5,6 +5,7 @@ import com.sjcl.zrsy.bigchaindb.BigchaindbUtil;
 import com.sjcl.zrsy.bigchaindb.KeyPairHolder;
 import com.sjcl.zrsy.dao.ITraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
+import org.springframework.dao.DataAccessException;
 
 import java.io.IOException;
 import java.security.KeyPair;
@@ -25,18 +26,22 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      * @throws IOException
      */
     @Override
-    public boolean exsits(String id) throws IOException {
+    public boolean exsits(String id) {
         Assets assets=new Assets();
-        if(getAssets(id).size()!=0) {
-            Map<String, Object> data = (Map<String, Object>) assets.getAssets().get(0).getData();
-            if(data.get("type").equals("pig")){
-                return true;
+        try {
+            if(getAssets(id).size()!=0) {
+                Map<String, Object> data = (Map<String, Object>) assets.getAssets().get(0).getData();
+                if(data.get("type").equals("pig")){
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
             else{
                 return false;
             }
-        }
-        else{
+        } catch (IOException e) {
             return false;
         }
 
@@ -75,7 +80,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      * @throws IOException
      */
     @Override
-    public boolean updateLogistics(TraceabilityIdcard logistics) throws IOException {
+    public boolean updateLogistics(TraceabilityIdcard logistics) {
         if(exsits(logistics.getId())) {
             Map<String, Object> idCard = new HashMap<>();
             idCard.put("id", logistics.getId());
@@ -104,7 +109,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      * @throws IOException
      */
     @Override
-    public boolean updateMarket(TraceabilityIdcard market) throws IOException {
+    public boolean updateMarket(TraceabilityIdcard market)  {
         if(exsits(market.getId())) {
             Map<String, Object> idCard = new HashMap<>();
             idCard.put("id", market.getId());
@@ -130,7 +135,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      * @throws IOException
      */
     @Override
-    public boolean updateQuarantine(TraceabilityIdcard quarantine) throws IOException {
+    public boolean updateQuarantine(TraceabilityIdcard quarantine)  {
         if(exsits(quarantine.getId())) {
             Map<String, Object> idCard = new HashMap<>();
             idCard.put("id", quarantine.getId());
@@ -158,7 +163,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      * @throws IOException
      */
     @Override
-    public boolean updateAcid(TraceabilityIdcard acid) throws IOException {
+    public boolean updateAcid(TraceabilityIdcard acid)  {
         if(exsits(acid.getId())) {
             Map<String, Object> idCard = new HashMap<>();
             idCard.put("id", acid.getId());
