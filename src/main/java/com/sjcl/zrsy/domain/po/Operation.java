@@ -10,6 +10,15 @@ public class Operation {
     public Operation() {
     }
 
+
+    public Operation(String id, String operation, String content, String remark, String time) {
+        this.id = id;
+        this.operation = operation;
+        this.content = content;
+        this.remark = remark;
+        this.time = time;
+    }
+
     public String getOperation() {
         return operation;
     }

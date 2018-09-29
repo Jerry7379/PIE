@@ -5,11 +5,8 @@ import com.sjcl.zrsy.bigchaindb.BigchaindbUtil;
 import com.sjcl.zrsy.bigchaindb.KeyPairHolder;
 import com.sjcl.zrsy.dao.ITraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
-import org.springframework.dao.DataAccessException;
-
 import java.io.IOException;
 import java.security.KeyPair;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,10 +24,9 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean exsits(String id) {
-        Assets assets=new Assets();
         try {
             if(getAssets(id).size()!=0) {
-                Map<String, Object> data = (Map<String, Object>) assets.getAssets().get(0).getData();
+                Map<String, Object> data = (Map<String, Object>) getAssets(id).getAssets().get(0).getData();
                 if(data.get("type").equals("pig")){
                     return true;
                 }

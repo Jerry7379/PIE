@@ -1,16 +1,18 @@
 package com.sjcl.zrsy.bigchaindb;
 
+
+import com.alibaba.fastjson.JSONObject;
 import com.bigchaindb.builders.BigchainDbTransactionBuilder;
 import com.bigchaindb.constants.Operations;
-import com.bigchaindb.model.Assets;
-import com.bigchaindb.model.FulFill;
-import com.bigchaindb.model.MetaData;
-import com.bigchaindb.model.Transaction;
+import com.bigchaindb.model.*;
+import com.sjcl.zrsy.domain.po.Operation;
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
 
 import java.io.IOException;
 import java.security.KeyPair;
+
+import java.util.List;
 import java.util.Map;
 
 import static com.bigchaindb.api.AssetsApi.getAssets;
@@ -39,6 +41,13 @@ public class BigchaindbUtil {
         return createTransaction.getId();
     }
 
+    /**
+     * 发送交易，不包括猪的所有权转让
+     * @param metaData
+     * @param keyPair
+     * @return
+     * @throws Exception
+     */
     public static String transferIdCardAndOperation(Map metaData, KeyPair keyPair ) throws Exception {
         Object object=metaData.get("id");
         String assetId=getAssets(object.toString()).getAssets().get(0).getId();
@@ -81,5 +90,59 @@ public class BigchaindbUtil {
             spendFrom.setTransactionId(lastTransactionId);
         }
         return spendFrom;
+    }
+
+    /**
+     *获得某只猪的在某场的操作
+     * @param role
+     * @param pigid
+     * @return
+     * @throws IOException
+     */
+    public static List<Operation> transactionTransfers(String role,String pigid) throws IOException {
+        List<Operation> operations = null;
+        String assetid=getAssets(pigid).getAssets().get(0).getId();
+        Transactions transactions=getTransactionsByAssetId(assetid,Operations.TRANSFER);
+        for (int i=0;i<transactions.getTransactions().size();i++) {
+            JSONObject jsonObject= (JSONObject)transactions.getTransactions().get(i).getMetaData();
+            if(jsonObject.get("operation")!=null){
+                JSONObject metaDataOperation=(JSONObject)jsonObject.get("operation");
+                if(metaDataOperation.get("role").equals(role)) {
+                    Operation operation = new Operation(metaDataOperation.get("id").toString(),metaDataOperation.get("operation").toString(),metaDataOperation.get("content").toString(),metaDataOperation.get("remark").toString(),metaDataOperation.get("time").toString());
+                    operations.add(operation);
+                }
+                else{
+                    continue;
+                }
+            }
+            else{
+                continue;
+            }
+        }
+        return operations;
+    }
+
+    /**
+     * 获得猪的全部操作
+     * @param pigid
+     * @return
+     * @throws IOException
+     */
+    public static List<Operation> transactionAllTransfers(String pigid) throws IOException {
+        List<Operation> operations = null;
+        String assetid=getAssets(pigid).getAssets().get(0).getId();
+        Transactions transactions=getTransactionsByAssetId(assetid,Operations.TRANSFER);
+        for (int i=0;i<transactions.getTransactions().size();i++) {
+            JSONObject jsonObject= (JSONObject)transactions.getTransactions().get(i).getMetaData();
+            if(jsonObject.get("operation")!=null){
+                JSONObject metaDataOperation=(JSONObject)jsonObject.get("operation");
+                    Operation operation = new Operation(metaDataOperation.get("id").toString(),metaDataOperation.get("operation").toString(),metaDataOperation.get("content").toString(),metaDataOperation.get("remark").toString(),metaDataOperation.get("time").toString());
+                    operations.add(operation);
+            }
+            else{
+                continue;
+            }
+        }
+        return operations;
     }
 }
