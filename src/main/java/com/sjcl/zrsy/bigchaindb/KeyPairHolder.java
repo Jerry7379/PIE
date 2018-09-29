@@ -1,5 +1,7 @@
 package com.sjcl.zrsy.bigchaindb;
 
+import java.security.KeyPair;
+
 public class KeyPairHolder {
     public static java.security.KeyPair KEYPAIR;
 
@@ -7,7 +9,7 @@ public class KeyPairHolder {
         KEYPAIR = keyPair;
     }
 
-    public static java.security.KeyPair getKeyPair() {
+    public static KeyPair getKeyPair() {
         return KEYPAIR;
     }
 
