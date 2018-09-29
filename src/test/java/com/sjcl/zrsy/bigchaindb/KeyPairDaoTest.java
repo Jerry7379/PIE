@@ -15,12 +15,11 @@ public class KeyPairDaoTest {
     private static KeyPairDao keyPairDao;
 
 
-    private static final String password = "justtestjusttest";
+    private static final String password = "hellobb";
     @BeforeClass
     public static void prepare() {
         keyPair = new net.i2p.crypto.eddsa.KeyPairGenerator().generateKeyPair();
-        System.out.println(keyPair.getPrivate().toString());
-        keyPairDao = new KeyPairDao();
+        keyPairDao = new KeyPairDaoStub();
     }
 
     @Test

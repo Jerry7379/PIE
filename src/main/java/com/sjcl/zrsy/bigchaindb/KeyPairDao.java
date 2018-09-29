@@ -1,17 +1,23 @@
 package com.sjcl.zrsy.bigchaindb;
 
 
+import net.i2p.crypto.eddsa.EdDSAPrivateKey;
+import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import net.i2p.crypto.eddsa.EdDSASecurityProvider;
+import net.i2p.crypto.eddsa.spec.EdDSANamedCurveSpec;
 import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable;
 import net.i2p.crypto.eddsa.spec.EdDSAPrivateKeySpec;
 import net.i2p.crypto.eddsa.spec.EdDSAPublicKeySpec;
-import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 
 public class KeyPairDao {
     public static final String PRIKEY_FILE = "keystore_prikey.ks";
@@ -19,6 +25,7 @@ public class KeyPairDao {
 
     private static final String KEYFACTORY_ALGORITHM = "EdDSA";
     private static final String EDDSA_PARAMETER_SPEC_NAME = "ed25519";
+    public static final EdDSANamedCurveSpec ED25519 = EdDSANamedCurveTable.getByName(EDDSA_PARAMETER_SPEC_NAME);
 
     public KeyPairDao() {
     }
@@ -41,8 +48,6 @@ public class KeyPairDao {
             return false;
         }
     }
-
-
 
     private static byte[] encoded(Key key) {
         return key.getEncoded();
@@ -91,14 +96,12 @@ public class KeyPairDao {
     }
 
     private PrivateKey deserializePriKey(byte[] priEncoded) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        KeyFactory kf = KeyFactory.getInstance(KEYFACTORY_ALGORITHM);
-        EdDSAPrivateKeySpec priKeySpec = new EdDSAPrivateKeySpec(priEncoded, EdDSANamedCurveTable.getByName(EDDSA_PARAMETER_SPEC_NAME));
-        return kf.generatePrivate(priKeySpec);
+        PKCS8EncodedKeySpec encoded = new PKCS8EncodedKeySpec(priEncoded);
+        return new EdDSAPrivateKey(encoded);
     }
 
     private PublicKey deserializePubKey(byte[] pubEncoded) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        KeyFactory kf = KeyFactory.getInstance("EdDSA");
-        EdDSAPublicKeySpec pubKeySpec = new EdDSAPublicKeySpec(pubEncoded, EdDSANamedCurveTable.getByName(EDDSA_PARAMETER_SPEC_NAME));
-        return kf.generatePublic(pubKeySpec);
+        X509EncodedKeySpec encoded = new X509EncodedKeySpec(pubEncoded);
+        return new EdDSAPublicKey(encoded);
     }
 }
