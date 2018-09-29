@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
+import java.util.Arrays;
 
 public class KeyPairDaoTest {
     private static KeyPair keyPair;
@@ -36,6 +37,8 @@ public class KeyPairDaoTest {
     public void testGet() {
         KeyPair keyPair =  keyPairDao.get(password);
         Assert.assertTrue(keyPair != null);
+        Assert.assertTrue(Arrays.equals(keyPair.getPrivate().getEncoded(), KeyPairDaoTest.keyPair.getPrivate().getEncoded()));
+        Assert.assertTrue(Arrays.equals(keyPair.getPublic().getEncoded(), KeyPairDaoTest.keyPair.getPublic().getEncoded()));
     }
 
     public static class KeyPairDaoStub extends KeyPairDao {
