@@ -4,10 +4,6 @@ package com.sjcl.zrsy.bigchaindb;
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import net.i2p.crypto.eddsa.EdDSASecurityProvider;
-import net.i2p.crypto.eddsa.spec.EdDSANamedCurveSpec;
-import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable;
-import net.i2p.crypto.eddsa.spec.EdDSAPrivateKeySpec;
-import net.i2p.crypto.eddsa.spec.EdDSAPublicKeySpec;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -23,9 +19,6 @@ public class KeyPairDao {
     public static final String PRIKEY_FILE = "keystore_prikey.ks";
     public static final String PUBKEY_FILE = "keystore_pubkey.ks";
 
-    private static final String KEYFACTORY_ALGORITHM = "EdDSA";
-    private static final String EDDSA_PARAMETER_SPEC_NAME = "ed25519";
-    public static final EdDSANamedCurveSpec ED25519 = EdDSANamedCurveTable.getByName(EDDSA_PARAMETER_SPEC_NAME);
 
     public KeyPairDao() {
     }
@@ -65,7 +58,7 @@ public class KeyPairDao {
             PublicKey publicKey = deserializePubKey(pubEncoded);
 
             return new KeyPair(publicKey, privateKey);
-        } catch (InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | InvalidKeySpecException e) {
             e.printStackTrace();
             return null;
         }
@@ -95,12 +88,12 @@ public class KeyPairDao {
         }
     }
 
-    private PrivateKey deserializePriKey(byte[] priEncoded) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    private PrivateKey deserializePriKey(byte[] priEncoded) throws InvalidKeySpecException {
         PKCS8EncodedKeySpec encoded = new PKCS8EncodedKeySpec(priEncoded);
         return new EdDSAPrivateKey(encoded);
     }
 
-    private PublicKey deserializePubKey(byte[] pubEncoded) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    private PublicKey deserializePubKey(byte[] pubEncoded) throws InvalidKeySpecException {
         X509EncodedKeySpec encoded = new X509EncodedKeySpec(pubEncoded);
         return new EdDSAPublicKey(encoded);
     }

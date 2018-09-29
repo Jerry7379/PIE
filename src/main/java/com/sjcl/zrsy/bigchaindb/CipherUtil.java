@@ -4,7 +4,6 @@ import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 
 class CipherUtil {
     private static final String CIPHER_ALGORITHM = "AES";
