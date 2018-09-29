@@ -1,4 +1,4 @@
-import "globalization";
+//import "globalization";
 
 var vm =new Vue({
     el : '#main',
