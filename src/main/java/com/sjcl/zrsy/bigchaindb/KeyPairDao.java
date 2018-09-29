@@ -4,7 +4,12 @@ package com.sjcl.zrsy.bigchaindb;
 import net.i2p.crypto.eddsa.EdDSASecurityProvider;
 import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable;
 import net.i2p.crypto.eddsa.spec.EdDSAPrivateKeySpec;
+<<<<<<< HEAD
+import org.bouncycastle.crypto.util.PrivateKeyFactory;
+import org.bouncycastle.crypto.util.PublicKeyFactory;
+=======
 import net.i2p.crypto.eddsa.spec.EdDSAPublicKeySpec;
+>>>>>>> 438f81a7cae67e0f26bb922a0219ddfd3bbb6f9f
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
@@ -45,9 +50,15 @@ public class KeyPairDao {
 
 
 
+<<<<<<< HEAD
+                EdDSAPrivateKeySpec priKeySpec = new EdDSAPrivateKeySpec(
+
+                );
+=======
     private static byte[] encoded(Key key) {
         return key.getEncoded();
     }
+>>>>>>> 438f81a7cae67e0f26bb922a0219ddfd3bbb6f9f
 
     public KeyPair get(String password) {
 
