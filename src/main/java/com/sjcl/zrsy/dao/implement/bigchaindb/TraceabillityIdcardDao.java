@@ -65,7 +65,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
         metadata.put("traceabilityIdCard",idCard);
         idCard.put("type","pig");
         try {
-            BigchaindbUtil.createAsset(idCard, metadata, keyPair);//返回tansaction id/asset id
+            BigchaindbUtil.createAsset(idCard, metadata);//返回tansaction id/asset id
         }catch (Exception e)
         {
             return false;
@@ -90,7 +90,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
             Map<String, Object> metadata = new HashMap<>();
             metadata.put("traceabilityIdCard", idCard);
             try {
-                BigchaindbUtil.transferIdCardAndOperation(metadata, keyPair);
+                BigchaindbUtil.transferIdCardAndOperation(metadata);
             } catch (Exception e) {
                 return false;
             }
@@ -117,7 +117,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
             Map<String, Object> metadata = new HashMap<>();
             metadata.put("traceabilityIdCard", idCard);
             try {
-                BigchaindbUtil.transferIdCardAndOperation(metadata, keyPair);
+                BigchaindbUtil.transferIdCardAndOperation(metadata);
             } catch (Exception e) {
                 return false;
             }
@@ -145,7 +145,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
             Map<String, Object> metadata = new HashMap<>();
             metadata.put("traceabilityIdCard", idCard);
             try {
-                BigchaindbUtil.transferIdCardAndOperation(metadata, keyPair);
+                BigchaindbUtil.transferIdCardAndOperation(metadata);
             } catch (Exception e) {
                 return false;
             }
@@ -172,7 +172,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
             Map<String, Object> metadata = new HashMap<>();
             metadata.put("traceabilityIdCard", idCard);
             try {
-                BigchaindbUtil.transferIdCardAndOperation(metadata, keyPair);
+                BigchaindbUtil.transferIdCardAndOperation(metadata);
             } catch (Exception e) {
                 return false;
             }
