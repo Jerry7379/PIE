@@ -1,19 +1,29 @@
 package com.sjcl.zrsy.bigchaindb;
 
 
-import net.i2p.crypto.eddsa.KeyPairGenerator;
+import net.i2p.crypto.eddsa.EdDSASecurityProvider;
+import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable;
 import net.i2p.crypto.eddsa.spec.EdDSAPrivateKeySpec;
+<<<<<<< HEAD
 import org.bouncycastle.crypto.util.PrivateKeyFactory;
 import org.bouncycastle.crypto.util.PublicKeyFactory;
+=======
+import net.i2p.crypto.eddsa.spec.EdDSAPublicKeySpec;
+>>>>>>> 438f81a7cae67e0f26bb922a0219ddfd3bbb6f9f
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.*;
+import java.security.spec.InvalidKeySpecException;
 
-public final class KeyPairDao {
-    private static final String PRIKEY_FILE = "keystore_prikey.ks";
-    private static final String PUBKEY_FILE = "keystore_pubkey.ks";
+public class KeyPairDao {
+    private static final String EdDSAParameterSpecName = "ed25519";
+
+    public static final String PRIKEY_FILE = "keystore_prikey.ks";
+    public static final String PUBKEY_FILE = "keystore_pubkey.ks";
 
     private static final String ALGORITHM = "AES";
 
@@ -36,25 +46,16 @@ public final class KeyPairDao {
     }
 
     public boolean save(KeyPair keyPair, String password) {
-        SecretKey secretKey = new SecretKeySpec(password.getBytes(), ALGORITHM);
+
         try {
-            // prikey
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-
-            PrivateKey priKey = keyPair.getPrivate();
-            cipher.update(priKey.getEncoded());
-
-            byte[] encoded = cipher.doFinal();
-
             try(FileOutputStream priKeyOut = new FileOutputStream(PRIKEY_FILE)) {
-                priKeyOut.write(encoded);
+                byte[] priKeyCode = encryptEncoded(keyPair.getPrivate(), password);
+                priKeyOut.write(priKeyCode);
             }
 
-
-            // pubkey
-            PublicKey pubKey = keyPair.getPublic();
             try (FileOutputStream pubKeyOut = new FileOutputStream(PUBKEY_FILE)){
-                pubKeyOut.write(pubKey.getEncoded());
+                byte[] pubKeyCode = encoded(keyPair.getPublic());
+                pubKeyOut.write(pubKeyCode);
             }
             return true;
         } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | IOException e) {
@@ -63,35 +64,81 @@ public final class KeyPairDao {
         }
     }
 
-    public KeyPair get(String password) {
+    private static byte[] encryptEncoded(Key key, String password) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         SecretKey secretKey = new SecretKeySpec(password.getBytes(), ALGORITHM);
-        try {
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        cipher.update(key.getEncoded());
 
-            PrivateKey privateKey;
-            try (FileInputStream priKeyIn = new FileInputStream(PRIKEY_FILE)) {
-                cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-                byte[] encodedPriKeyCode = new byte[priKeyIn.available()];
-                priKeyIn.read(encodedPriKeyCode);
-                byte[] priKeyCode = cipher.doFinal(encodedPriKeyCode);
+        return cipher.doFinal();
+    }
 
+<<<<<<< HEAD
                 EdDSAPrivateKeySpec priKeySpec = new EdDSAPrivateKeySpec(
 
                 );
+=======
+    private static byte[] encoded(Key key) {
+        return key.getEncoded();
+    }
+>>>>>>> 438f81a7cae67e0f26bb922a0219ddfd3bbb6f9f
 
-                privateKey = (PrivateKey) PrivateKeyFactory.createKey(priKeyCode);
-            }
+    public KeyPair get(String password) {
 
-            PublicKey publicKey;
-            try (FileInputStream pubKeyIn = new FileInputStream(PUBKEY_FILE)){
-                byte[] pubKeyCode = new byte[pubKeyIn.available()];
-                pubKeyIn.read(pubKeyCode);
+        try {
+            Security.addProvider(new EdDSASecurityProvider());
 
-                publicKey = (PublicKey) PublicKeyFactory.createKey(pubKeyCode);
-            }
+            byte[] priEncoded = getPriEncoded(password);
+            PrivateKey privateKey = deserializePriKey(priEncoded);
+
+            byte[] pubEncoded = getPubEncoded();
+            PublicKey publicKey = deserializePubKey(pubEncoded);
+
             return new KeyPair(publicKey, privateKey);
-        } catch (InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException e) {
+        } catch (InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    // protected for unit test
+    protected byte[] getPriEncoded(String password) throws IOException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
+        byte[] priEncryptEncoded = getEncryptPriEncoded();
+        return decrypt(priEncryptEncoded, password);
+    }
+
+    // protected for unit test
+    protected byte[] getEncryptPriEncoded() throws IOException {
+        return readBytes(PRIKEY_FILE);
+    }
+
+    // protected for unit test
+    protected byte[] getPubEncoded() throws IOException {
+        return readBytes(PUBKEY_FILE);
+    }
+
+    private static byte[] decrypt(byte[] encryptEncoded, String password) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        SecretKey secretKey = new SecretKeySpec(password.getBytes(), ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        return cipher.doFinal(encryptEncoded);
+    }
+
+    private static byte[] readBytes(String filename) throws IOException {
+        try (FileInputStream in = new FileInputStream(filename)) {
+            byte[] bytes = new byte[in.available()];
+            in.read(bytes);
+            return bytes;
+        }
+    }
+
+    private PrivateKey deserializePriKey(byte[] priEncoded) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        KeyFactory kf = KeyFactory.getInstance("EdDSA");
+        EdDSAPrivateKeySpec priKeySpec = new EdDSAPrivateKeySpec(priEncoded, EdDSANamedCurveTable.getByName(EdDSAParameterSpecName));
+        return kf.generatePrivate(priKeySpec);
+    }
+
+    private PublicKey deserializePubKey(byte[] pubEncoded) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        KeyFactory kf = KeyFactory.getInstance("EdDSA");
+        EdDSAPublicKeySpec pubKeySpec = new EdDSAPublicKeySpec(pubEncoded, EdDSANamedCurveTable.getByName(EdDSAParameterSpecName));
+        return kf.generatePublic(pubKeySpec);
     }
 }
