@@ -5,6 +5,7 @@ import com.bigchaindb.model.Transaction;
 import com.bigchaindb.util.KeyPairUtils;
 import com.sjcl.zrsy.domain.dto.AssetData;
 import com.sjcl.zrsy.domain.dto.RoleLogin;
+import com.sjcl.zrsy.domain.po.Operation;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -44,11 +45,15 @@ public class BigchaindbUtilTest {
 
     @Test
     public void testGetAsset() throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
-        AssetData<RoleLogin> asset = BigchaindbUtil.getAsset(assetId);
+        RoleLogin onlyId = (RoleLogin) BigchaindbUtil.getAsset(assetId);
 
-        RoleLogin login = asset.getData();
-        Assert.assertEquals("zanghongfei", login.getName());
-        Assert.assertEquals("zanghongfei", login.getPassword());
+        Assert.assertEquals("zanghongfei", onlyId.getName());
+        Assert.assertEquals("zanghongfei", onlyId.getPassword());
+
+        RoleLogin byType = BigchaindbUtil.getAsset(assetId, RoleLogin.class);
+
+        Assert.assertEquals("zanghongfei", byType.getName());
+        Assert.assertEquals("zanghongfei", byType.getPassword());
     }
 
     @Test

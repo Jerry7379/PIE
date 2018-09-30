@@ -17,6 +17,7 @@ import org.apache.commons.lang.ClassUtils;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * used for interactive with bigchaindb.
@@ -41,7 +42,7 @@ public class BigchaindbUtil {
         return createTransaction.getId();
     }
 
-    public static AssetData getAsset(String assetId) throws IOException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
+    public static Object getAsset(String assetId) throws IOException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
         Transaction createTransaction = getCreateTransaction(assetId);
         if (createTransaction == null) {
             return null;
@@ -55,7 +56,30 @@ public class BigchaindbUtil {
         Class beanClass = ClassUtils.getClass(type);
         Object bean = beanClass.newInstance();
         BeanUtils.populate(bean, properties);
-        return new AssetData(bean);
+        return bean;
+    }
+
+    public static <T> T getAsset(String assetId, Class<T> type) throws IOException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
+        Objects.requireNonNull(type);
+
+        Transaction createTransaction = getCreateTransaction(assetId);
+        if (createTransaction == null) {
+            return null;
+        }
+        Asset asset = createTransaction.getAsset();
+        com.google.gson.internal.LinkedTreeMap assetData = (LinkedTreeMap) asset.getData();
+
+        String typeName = (String) assetData.get("type");
+        if (!type.getCanonicalName().equals(typeName)) {
+            return null;
+        }
+
+
+        com.google.gson.internal.LinkedTreeMap properties = (LinkedTreeMap) assetData.get("data");
+
+        T bean = type.newInstance();
+        BeanUtils.populate(bean, properties);
+        return bean;
     }
 
     public static String transferToSelf(Object metaData, String assetId) throws Exception {
