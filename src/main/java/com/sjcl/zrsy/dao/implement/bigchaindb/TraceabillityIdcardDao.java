@@ -48,7 +48,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
     @Override
     public boolean insert(TraceabilityIdcard initialFarm) {
         MetaData metaData=new MetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, OperationDao.FARM_ROLE,initialFarm);
-        AssetData assetData =new AssetData("pig",initialFarm);
+        AssetData assetData =new AssetData("pig");
 
         try {
             BigchaindbUtil.createAsset(assetData, metaData);//返回tansaction id/asset id

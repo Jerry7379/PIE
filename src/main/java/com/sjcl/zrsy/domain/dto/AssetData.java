@@ -1,27 +1,22 @@
 package com.sjcl.zrsy.domain.dto;
 
-public class AssetData {
-    String type;
-    Object object;
+public class AssetData<T> {
+    T data;
 
-    public AssetData(String type, Object object) {
-        this.type = type;
-        this.object = object;
+    public AssetData(T data) {
+        this.data = data;
     }
 
     public String getType() {
-        return type;
+        return data == null ? null : data.getClass().getCanonicalName();
     }
 
-    public void setType(String type) {
-        this.type = type;
+
+    public T getData() {
+        return data;
     }
 
-    public Object getObject() {
-        return object;
-    }
-
-    public void setObject(Object object) {
-        this.object = object;
+    public void setData(T object) {
+        this.data = object;
     }
 }
