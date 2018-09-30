@@ -4,20 +4,9 @@ package com.sjcl.zrsy.bigchaindb;
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import net.i2p.crypto.eddsa.EdDSASecurityProvider;
-<<<<<<< HEAD
-import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable;
-import net.i2p.crypto.eddsa.spec.EdDSAPrivateKeySpec;
-
-import net.i2p.crypto.eddsa.spec.EdDSAPublicKeySpec;
-
-
-import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
-=======
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
->>>>>>> 61ced1a878bd5eeecf45b1c1edca3772e9a0b874
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -53,24 +42,9 @@ public class KeyPairDao {
         }
     }
 
-<<<<<<< HEAD
-    private static byte[] encryptEncoded(Key key, String password) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        SecretKey secretKey = new SecretKeySpec(password.getBytes(), ALGORITHM);
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        cipher.update(key.getEncoded());
-
-        return cipher.doFinal();
-    }
-
     private static byte[] encoded(Key key) {
         return key.getEncoded();
     }
-
-=======
-    private static byte[] encoded(Key key) {
-        return key.getEncoded();
-    }
->>>>>>> 61ced1a878bd5eeecf45b1c1edca3772e9a0b874
 
     public KeyPair get(String password) {
 
