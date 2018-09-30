@@ -1,10 +1,12 @@
 package com.sjcl.zrsy.domain.dto;
 
 public class AssetData<T> {
-    T data;
+    private T data;
+    private String type;
 
     public AssetData(T data) {
         this.data = data;
+        this.type = data.getClass().getCanonicalName();
     }
 
     public String getType() {
