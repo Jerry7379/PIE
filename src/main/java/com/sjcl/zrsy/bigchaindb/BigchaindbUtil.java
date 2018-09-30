@@ -1,19 +1,22 @@
 package com.sjcl.zrsy.bigchaindb;
 
 
-import com.alibaba.fastjson.JSONObject;
+import com.bigchaindb.api.TransactionsApi;
 import com.bigchaindb.builders.BigchainDbTransactionBuilder;
 import com.bigchaindb.constants.Operations;
-import com.bigchaindb.model.*;
+import com.bigchaindb.model.Asset;
+import com.bigchaindb.model.FulFill;
+import com.bigchaindb.model.Transaction;
+import com.bigchaindb.model.Transactions;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.internal.LinkedTreeMap;
 import com.sjcl.zrsy.domain.dto.AssetData;
-import com.sjcl.zrsy.domain.po.Operation;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.ClassUtils;
 
 import java.io.IOException;
-
-
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
-import com.bigchaindb.api.TransactionsApi;
 
 /**
  * used for interactive with bigchaindb.
@@ -38,8 +41,21 @@ public class BigchaindbUtil {
         return createTransaction.getId();
     }
 
-    public static AssetData getAsset(String assetId) {
-        return null;
+    public static AssetData getAsset(String assetId) throws IOException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
+        Transaction createTransaction = getCreateTransaction(assetId);
+        if (createTransaction == null) {
+            return null;
+        }
+        Asset asset = createTransaction.getAsset();
+        com.google.gson.internal.LinkedTreeMap assetData = (LinkedTreeMap) asset.getData();
+
+        String type = (String) assetData.get("type");
+        com.google.gson.internal.LinkedTreeMap properties = (LinkedTreeMap) assetData.get("data");
+        
+        Class beanClass = ClassUtils.getClass(type);
+        Object bean = beanClass.newInstance();
+        BeanUtils.populate(bean, properties);
+        return new AssetData(bean);
     }
 
     public static String transferToSelf(Object metaData, String assetId) throws Exception {
@@ -59,11 +75,17 @@ public class BigchaindbUtil {
     }
 
     public static Transaction getCreateTransaction(String assetId) throws IOException {
-        Transactions apiTransactions = TransactionsApi.getTransactionsByAssetId(assetId, Operations.CREATE);
-        List<Transaction> transactions = apiTransactions.getTransactions();
-        if (transactions != null && transactions.size() == 1) {
-            return transactions.get(0);
-        } else {
+        try {
+            Transactions apiTransactions = TransactionsApi.getTransactionsByAssetId(assetId, Operations.CREATE);
+
+            List<Transaction> transactions = apiTransactions.getTransactions();
+            if (transactions != null && transactions.size() == 1) {
+                return transactions.get(0);
+            } else {
+                return null;
+            }
+
+        } catch (JsonSyntaxException e) {
             return null;
         }
     }
