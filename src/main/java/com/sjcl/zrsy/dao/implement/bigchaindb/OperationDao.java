@@ -28,7 +28,7 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     @Override
     public boolean insertFarmOperation(Operation operation) {
         try {
-            BigchaindbUtil.transferIdCardAndOperation(operationMetaData(FARM_ROLE, operation), keyPair);
+            BigchaindbUtil.transferIdCardAndOperation(operationMetaData(FARM_ROLE, operation));
         }catch (Exception e){
             return false;
         }
@@ -43,7 +43,7 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     @Override
     public boolean insertMarketOperation(Operation operation) {
         try {
-            BigchaindbUtil.transferIdCardAndOperation(operationMetaData(MARKET_ROLE, operation), keyPair);
+            BigchaindbUtil.transferIdCardAndOperation(operationMetaData(MARKET_ROLE, operation));
         }catch (Exception e){
             return false;
         }
@@ -58,7 +58,7 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     @Override
     public boolean insertSlaughteroperartion(Operation operation) {
         try {
-            BigchaindbUtil.transferIdCardAndOperation(operationMetaData(SLAUGHTER_ROLE, operation), keyPair);
+            BigchaindbUtil.transferIdCardAndOperation(operationMetaData(SLAUGHTER_ROLE, operation));
         }catch (Exception e){
             return false;
         }
@@ -79,7 +79,7 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
         Map<String,Object> metaData=new HashMap<>();
         metaData.put("operation",params);
         try {
-            BigchaindbUtil.transferIdCardAndOperation(metaData, keyPair);
+            BigchaindbUtil.transferIdCardAndOperation(metaData);
         }catch (Exception e){
             return false;
         }

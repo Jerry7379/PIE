@@ -1,7 +1,10 @@
 package com.sjcl.zrsy.bigchaindb;
 
 
+import net.i2p.crypto.eddsa.EdDSAPrivateKey;
+import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import net.i2p.crypto.eddsa.EdDSASecurityProvider;
+<<<<<<< HEAD
 import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable;
 import net.i2p.crypto.eddsa.spec.EdDSAPrivateKeySpec;
 
@@ -10,34 +13,23 @@ import net.i2p.crypto.eddsa.spec.EdDSAPublicKeySpec;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
+=======
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+>>>>>>> 61ced1a878bd5eeecf45b1c1edca3772e9a0b874
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 
 public class KeyPairDao {
-    private static final String EdDSAParameterSpecName = "ed25519";
-
     public static final String PRIKEY_FILE = "keystore_prikey.ks";
     public static final String PUBKEY_FILE = "keystore_pubkey.ks";
 
-    private static final String ALGORITHM = "AES";
-
-    private static final String ALGORITHM_STR =  ALGORITHM + "/ECB/PKCS5Padding";
-
-
-    private static final Cipher cipher;
-
-    static {
-        try {
-            cipher = Cipher.getInstance(ALGORITHM_STR);
-        } catch (NoSuchAlgorithmException e) {
-            throw new Error("no such algorithm: " + e.getMessage());
-        } catch (NoSuchPaddingException e) {
-            throw new Error("no such padding: " + e.getMessage());
-        }
-    }
 
     public KeyPairDao() {
     }
@@ -46,7 +38,7 @@ public class KeyPairDao {
 
         try {
             try(FileOutputStream priKeyOut = new FileOutputStream(PRIKEY_FILE)) {
-                byte[] priKeyCode = encryptEncoded(keyPair.getPrivate(), password);
+                byte[] priKeyCode =  CipherUtil.encrypt(keyPair.getPrivate().getEncoded(), password);
                 priKeyOut.write(priKeyCode);
             }
 
@@ -61,6 +53,7 @@ public class KeyPairDao {
         }
     }
 
+<<<<<<< HEAD
     private static byte[] encryptEncoded(Key key, String password) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         SecretKey secretKey = new SecretKeySpec(password.getBytes(), ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
@@ -73,6 +66,11 @@ public class KeyPairDao {
         return key.getEncoded();
     }
 
+=======
+    private static byte[] encoded(Key key) {
+        return key.getEncoded();
+    }
+>>>>>>> 61ced1a878bd5eeecf45b1c1edca3772e9a0b874
 
     public KeyPair get(String password) {
 
@@ -86,7 +84,7 @@ public class KeyPairDao {
             PublicKey publicKey = deserializePubKey(pubEncoded);
 
             return new KeyPair(publicKey, privateKey);
-        } catch (InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | InvalidKeySpecException e) {
             e.printStackTrace();
             return null;
         }
@@ -95,7 +93,7 @@ public class KeyPairDao {
     // protected for unit test
     protected byte[] getPriEncoded(String password) throws IOException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
         byte[] priEncryptEncoded = getEncryptPriEncoded();
-        return decrypt(priEncryptEncoded, password);
+        return CipherUtil.decrypt(priEncryptEncoded, password);
     }
 
     // protected for unit test
@@ -108,12 +106,6 @@ public class KeyPairDao {
         return readBytes(PUBKEY_FILE);
     }
 
-    private static byte[] decrypt(byte[] encryptEncoded, String password) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        SecretKey secretKey = new SecretKeySpec(password.getBytes(), ALGORITHM);
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        return cipher.doFinal(encryptEncoded);
-    }
-
     private static byte[] readBytes(String filename) throws IOException {
         try (FileInputStream in = new FileInputStream(filename)) {
             byte[] bytes = new byte[in.available()];
@@ -122,15 +114,13 @@ public class KeyPairDao {
         }
     }
 
-    private PrivateKey deserializePriKey(byte[] priEncoded) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        KeyFactory kf = KeyFactory.getInstance("EdDSA");
-        EdDSAPrivateKeySpec priKeySpec = new EdDSAPrivateKeySpec(priEncoded, EdDSANamedCurveTable.getByName(EdDSAParameterSpecName));
-        return kf.generatePrivate(priKeySpec);
+    private PrivateKey deserializePriKey(byte[] priEncoded) throws InvalidKeySpecException {
+        PKCS8EncodedKeySpec encoded = new PKCS8EncodedKeySpec(priEncoded);
+        return new EdDSAPrivateKey(encoded);
     }
 
-    private PublicKey deserializePubKey(byte[] pubEncoded) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        KeyFactory kf = KeyFactory.getInstance("EdDSA");
-        EdDSAPublicKeySpec pubKeySpec = new EdDSAPublicKeySpec(pubEncoded, EdDSANamedCurveTable.getByName(EdDSAParameterSpecName));
-        return kf.generatePublic(pubKeySpec);
+    private PublicKey deserializePubKey(byte[] pubEncoded) throws InvalidKeySpecException {
+        X509EncodedKeySpec encoded = new X509EncodedKeySpec(pubEncoded);
+        return new EdDSAPublicKey(encoded);
     }
 }
