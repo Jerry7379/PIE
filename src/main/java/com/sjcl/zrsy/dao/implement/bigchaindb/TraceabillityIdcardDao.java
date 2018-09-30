@@ -1,5 +1,7 @@
 package com.sjcl.zrsy.dao.implement.bigchaindb;
 
+import com.bigchaindb.api.TransactionsApi;
+import com.bigchaindb.constants.Operations;
 import com.sjcl.zrsy.bigchaindb.BigchaindbUtil;
 import com.sjcl.zrsy.dao.ITraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.dto.AssetData;
@@ -21,6 +23,8 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
     @Override
     public boolean exsits(String id) {
         try {
+//            TransactionsApi.getTransactionsByAssetId(id, Operations.CREATE);
+
             if(AssetsApi.getAssets(id).size()!=0) {
                 Map<String, Object> data = (Map<String, Object>) AssetsApi.getAssets(id).getAssets().get(0).getData();
                 if(data.get("type").equals("pig")){
