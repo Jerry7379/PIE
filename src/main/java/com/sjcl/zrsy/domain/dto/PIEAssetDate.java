@@ -1,10 +1,12 @@
 package com.sjcl.zrsy.domain.dto;
 
+import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
+
 public class PIEAssetDate {
     String type;
-    Object object;
+    TraceabilityIdcard object;
 
-    public PIEAssetDate(String type, Object object) {
+    public PIEAssetDate(String type, TraceabilityIdcard object) {
         this.type = type;
         this.object = object;
     }
@@ -17,11 +19,11 @@ public class PIEAssetDate {
         this.type = type;
     }
 
-    public Object getObject() {
+    public TraceabilityIdcard getObject() {
         return object;
     }
 
-    public void setObject(Object object) {
+    public void setObject(TraceabilityIdcard object) {
         this.object = object;
     }
 }
