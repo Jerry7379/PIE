@@ -76,18 +76,15 @@ public class OperationDao implements com.sjcl.zrsy.dao.IOperationDao {
         }
     }
 
-    @Override
-    public List<Operation> findFarmOperationByPigid(String pigId) {
+    private List<Operation> findFarmOperationByPigid(String pigId) {
         return findOperation(TABLE_NAME_FARM_OPERATION, pigId);
     }
 
-    @Override
-    public List<Operation> findMarketOperationByPigid(String pigId) {
+    private List<Operation> findMarketOperationByPigid(String pigId) {
         return findOperation(TABLE_NAME_MARKET_OPERATION, pigId);
     }
 
-    @Override
-    public List<Operation> findSlaughterOperationByPigid(String pigId) {
+    private List<Operation> findSlaughterOperationByPigid(String pigId) {
         return findOperation(TABLE_NAME_SLAUGHTER_OPERATION, pigId);
     }
 

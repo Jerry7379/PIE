@@ -11,11 +11,5 @@ public interface IOperationDao {
 
     boolean insertSlaughteroperartion(Operation operation);
 
-    List<Operation> findFarmOperationByPigid(String pigId);
-
-    List<Operation> findMarketOperationByPigid(String pigId);
-
-    List<Operation> findSlaughterOperationByPigid(String pigId);
-
     List<Operation> findallOperationByPigid(String pigId);
 }
