@@ -81,48 +81,6 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     }
 
     /**
-     * 获得猪的养殖场操作
-     * @param pigId
-     * @return
-     */
-    @Override
-    public List<Operation> findFarmOperationByPigid(String pigId) {
-        try {
-            return transactionTransfers(FARM_ROLE,pigId);
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    /**
-     * 获得猪的超市操作
-     * @param pigId
-     * @return
-     */
-    @Override
-    public List<Operation> findMarketOperationByPigid(String pigId) {
-        try {
-            return transactionTransfers(MARKET_ROLE,pigId);
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    /**
-     * 获得猪的屠宰场操作
-     * @param pigId
-     * @return
-     */
-    @Override
-    public List<Operation> findSlaughterOperationByPigid(String pigId) {
-        try {
-            return transactionTransfers(SLAUGHTER_ROLE,pigId);
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    /**
      * 获得猪的所有操作
      * @param pigId
      * @return
