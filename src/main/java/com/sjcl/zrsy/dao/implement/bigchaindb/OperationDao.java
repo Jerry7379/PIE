@@ -29,7 +29,7 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     @Override
     public boolean insertFarmOperation(Operation operation) {
         try {
-            BigchaindbUtil.transferIdCardAndOperation(operationMetaData(FARM_ROLE, operation),operation.getId());
+            BigchaindbUtil.transferToSelf(operationMetaData(FARM_ROLE, operation),operation.getId());
         }catch (Exception e){
             return false;
         }
@@ -44,7 +44,7 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     @Override
     public boolean insertMarketOperation(Operation operation) {
         try {
-            BigchaindbUtil.transferIdCardAndOperation(operationMetaData(MARKET_ROLE, operation),operation.getId());
+            BigchaindbUtil.transferToSelf(operationMetaData(MARKET_ROLE, operation),operation.getId());
         }catch (Exception e){
             return false;
         }
@@ -59,7 +59,7 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     @Override
     public boolean insertSlaughteroperartion(Operation operation) {
         try {
-            BigchaindbUtil.transferIdCardAndOperation(operationMetaData(SLAUGHTER_ROLE, operation),operation.getId());
+            BigchaindbUtil.transferToSelf(operationMetaData(SLAUGHTER_ROLE, operation),operation.getId());
         }catch (Exception e){
             return false;
         }
@@ -69,7 +69,7 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     @Override
     public boolean insertLogisticsOperation(LogisticsOperation logisticsOperation) {
         try {
-            BigchaindbUtil.transferIdCardAndOperation(operationMetaData(LOGISTICS_ROLE,logisticsOperation),logisticsOperation.getId());
+            BigchaindbUtil.transferToSelf(operationMetaData(LOGISTICS_ROLE,logisticsOperation),logisticsOperation.getId());
         }catch (Exception e){
             return false;
         }

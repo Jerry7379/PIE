@@ -37,7 +37,7 @@ public class BigchaindbUtil {
         return createTransaction.getId();
     }
 
-    public static String transferIdCardAndOperation(Object metaData, String assetId) throws Exception {
+    public static String transferToSelf(Object metaData, String assetId) throws Exception {
 
         Transaction transferTransaction = BigchainDbTransactionBuilder
                 .init()
@@ -75,7 +75,7 @@ public class BigchaindbUtil {
         spendFrom.setOutputIndex(0);
         return spendFrom;
     }
-    
+
     /**
      * 获得某只猪的在某场的操作
      *

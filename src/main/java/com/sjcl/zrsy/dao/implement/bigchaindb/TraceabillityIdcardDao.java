@@ -108,7 +108,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
         if(exsits(traceabilityIdcard.getId())) {
             PIEMetaData metaData=new PIEMetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD,role,traceabilityIdcard);
             try {
-                BigchaindbUtil.transferIdCardAndOperation(metaData,traceabilityIdcard.getId());
+                BigchaindbUtil.transferToSelf(metaData,traceabilityIdcard.getId());
             } catch (Exception e) {
                 return false;
             }
