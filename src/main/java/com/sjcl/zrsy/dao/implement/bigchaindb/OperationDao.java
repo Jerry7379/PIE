@@ -9,7 +9,7 @@ import com.sjcl.zrsy.bigchaindb.BigchaindbUtil;
 import com.sjcl.zrsy.dao.ILogisticsOperationDao;
 import com.sjcl.zrsy.dao.IOperationDao;
 import com.sjcl.zrsy.domain.dto.LogisticsOperation;
-import com.sjcl.zrsy.domain.dto.PIEMetaData;
+import com.sjcl.zrsy.domain.dto.MetaData;
 import com.sjcl.zrsy.domain.po.Operation;
 
 import java.io.IOException;
@@ -142,8 +142,8 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
      * @param object
      * @return
      */
-    private PIEMetaData operationMetaData(String role, Object object){
-        return  new PIEMetaData(OPERATION_OPERATION,role,object);
+    private MetaData operationMetaData(String role, Object object){
+        return  new MetaData(OPERATION_OPERATION,role,object);
     }
 
     /**

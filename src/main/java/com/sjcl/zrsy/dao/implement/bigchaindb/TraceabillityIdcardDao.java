@@ -2,8 +2,8 @@ package com.sjcl.zrsy.dao.implement.bigchaindb;
 
 import com.sjcl.zrsy.bigchaindb.BigchaindbUtil;
 import com.sjcl.zrsy.dao.ITraceabilityIdcardDao;
-import com.sjcl.zrsy.domain.dto.PIEAssetDate;
-import com.sjcl.zrsy.domain.dto.PIEMetaData;
+import com.sjcl.zrsy.domain.dto.AssetData;
+import com.sjcl.zrsy.domain.dto.MetaData;
 
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import java.io.IOException;
@@ -47,11 +47,11 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean insert(TraceabilityIdcard initialFarm) {
-        PIEMetaData metaData=new PIEMetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, OperationDao.FARM_ROLE,initialFarm);
-        PIEAssetDate assetDate=new PIEAssetDate("pig",initialFarm);
+        MetaData metaData=new MetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, OperationDao.FARM_ROLE,initialFarm);
+        AssetData assetData =new AssetData("pig",initialFarm);
 
         try {
-            BigchaindbUtil.createAsset(assetDate, metaData);//返回tansaction id/asset id
+            BigchaindbUtil.createAsset(assetData, metaData);//返回tansaction id/asset id
         }catch (Exception e)
         {
             return false;
@@ -106,7 +106,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
 
     private boolean updateTraceabilityIdcard(TraceabilityIdcard traceabilityIdcard,String role){
         if(exsits(traceabilityIdcard.getId())) {
-            PIEMetaData metaData=new PIEMetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD,role,traceabilityIdcard);
+            MetaData metaData=new MetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD,role,traceabilityIdcard);
             try {
                 BigchaindbUtil.transferToSelf(metaData,traceabilityIdcard.getId());
             } catch (Exception e) {
