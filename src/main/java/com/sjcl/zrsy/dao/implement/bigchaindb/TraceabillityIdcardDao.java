@@ -2,12 +2,14 @@ package com.sjcl.zrsy.dao.implement.bigchaindb;
 
 import com.sjcl.zrsy.bigchaindb.BigchaindbUtil;
 import com.sjcl.zrsy.dao.ITraceabilityIdcardDao;
+import com.sjcl.zrsy.domain.dto.PIEAssetDate;
+import com.sjcl.zrsy.domain.dto.PIEMetaData;
+
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
-import static com.bigchaindb.api.AssetsApi.getAssets;
+import com.bigchaindb.api.AssetsApi;
 
 public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
     /**
@@ -19,8 +21,8 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
     @Override
     public boolean exsits(String id) {
         try {
-            if(getAssets(id).size()!=0) {
-                Map<String, Object> data = (Map<String, Object>) getAssets(id).getAssets().get(0).getData();
+            if(AssetsApi.getAssets(id).size()!=0) {
+                Map<String, Object> data = (Map<String, Object>) AssetsApi.getAssets(id).getAssets().get(0).getData();
                 if(data.get("type").equals("pig")){
                     return true;
                 }
@@ -45,17 +47,11 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean insert(TraceabilityIdcard initialFarm) {
-        Map<String,Object>idCard=new HashMap<String,Object>();
-        idCard.put("id",initialFarm.getId());
-        idCard.put("birthday",initialFarm.getBirthday());
-        idCard.put("breed",initialFarm.getBreed());
-        idCard.put("gender",initialFarm.getGender());
-        idCard.put("birthweight",initialFarm.getBirthweight());
-        Map<String,Object> metadata=new HashMap<>();
-        metadata.put("traceabilityIdCard",idCard);
-        idCard.put("type","pig");
+        PIEMetaData metaData=new PIEMetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, OperationDao.FARM_ROLE,initialFarm);
+        PIEAssetDate assetDate=new PIEAssetDate("pig",initialFarm);
+
         try {
-            BigchaindbUtil.createAsset(idCard, metadata);//返回tansaction id/asset id
+            BigchaindbUtil.createAsset(assetDate, metaData);//返回tansaction id/asset id
         }catch (Exception e)
         {
             return false;
@@ -71,24 +67,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean updateLogistics(TraceabilityIdcard logistics) {
-        if(exsits(logistics.getId())) {
-            Map<String, Object> idCard = new HashMap<>();
-            idCard.put("id", logistics.getId());
-            idCard.put("logisticsId", logistics.getLogisticsId());
-            idCard.put("carId", logistics.getCarId());
-            idCard.put("driverId", logistics.getDriverId());
-            Map<String, Object> metadata = new HashMap<>();
-            metadata.put("traceabilityIdCard", idCard);
-            try {
-                BigchaindbUtil.transferIdCardAndOperation(metadata);
-            } catch (Exception e) {
-                return false;
-            }
-            return true;
-        }
-        else {
-            return false;
-        }
+        return updateTraceabilityIdcard(logistics,OperationDao.LOGISTICS_ROLE);
 
     }
 
@@ -100,22 +79,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean updateMarket(TraceabilityIdcard market)  {
-        if(exsits(market.getId())) {
-            Map<String, Object> idCard = new HashMap<>();
-            idCard.put("id", market.getId());
-            idCard.put("supermarketId", market.getSupermarketId());
-            Map<String, Object> metadata = new HashMap<>();
-            metadata.put("traceabilityIdCard", idCard);
-            try {
-                BigchaindbUtil.transferIdCardAndOperation(metadata);
-            } catch (Exception e) {
-                return false;
-            }
-            return true;
-        }
-        else {
-            return false;
-        }
+        return updateTraceabilityIdcard(market,OperationDao.MARKET_ROLE);
     }
 
     /**
@@ -126,24 +90,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean updateQuarantine(TraceabilityIdcard quarantine)  {
-        if(exsits(quarantine.getId())) {
-            Map<String, Object> idCard = new HashMap<>();
-            idCard.put("id", quarantine.getId());
-            idCard.put("checkerId", quarantine.getCheckerId());
-            idCard.put("slaughterhouseId", quarantine.getSlaughterhouseId());
-            idCard.put("isCheck", quarantine.getIscheck());
-            Map<String, Object> metadata = new HashMap<>();
-            metadata.put("traceabilityIdCard", idCard);
-            try {
-                BigchaindbUtil.transferIdCardAndOperation(metadata);
-            } catch (Exception e) {
-                return false;
-            }
-            return true;
-        }
-        else {
-            return false;
-        }
+        return updateTraceabilityIdcard(quarantine,OperationDao.SLAUGHTER_ROLE);
     }
 
     /**
@@ -154,15 +101,14 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean updateAcid(TraceabilityIdcard acid)  {
-        if(exsits(acid.getId())) {
-            Map<String, Object> idCard = new HashMap<>();
-            idCard.put("id", acid.getId());
-            idCard.put("aciderId", acid.getAciderId());
-            idCard.put("isAcid", acid.getIsacid());
-            Map<String, Object> metadata = new HashMap<>();
-            metadata.put("traceabilityIdCard", idCard);
+        return updateTraceabilityIdcard(acid,OperationDao.SLAUGHTER_ROLE);
+    }
+
+    private boolean updateTraceabilityIdcard(TraceabilityIdcard traceabilityIdcard,String role){
+        if(exsits(traceabilityIdcard.getId())) {
+            PIEMetaData metaData=new PIEMetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD,role,traceabilityIdcard);
             try {
-                BigchaindbUtil.transferIdCardAndOperation(metadata);
+                BigchaindbUtil.transferIdCardAndOperation(metaData,traceabilityIdcard.getId());
             } catch (Exception e) {
                 return false;
             }

@@ -72,11 +72,13 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.47</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.bigchaindb/bigchaindb-driver -->
         <dependency>
             <groupId>com.bigchaindb</groupId>
             <artifactId>bigchaindb-driver</artifactId>
             <version>1.2</version>
         </dependency>
+
 
     </dependencies>
 
