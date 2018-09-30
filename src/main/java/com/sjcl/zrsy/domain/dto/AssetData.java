@@ -1,5 +1,7 @@
 package com.sjcl.zrsy.domain.dto;
 
+import java.util.Optional;
+
 public class AssetData<T> {
     private T data;
     private String type;
@@ -20,5 +22,9 @@ public class AssetData<T> {
 
     public void setData(T object) {
         this.data = object;
+    }
+
+    public Optional optional() {
+        return Optional.ofNullable(data);
     }
 }
