@@ -1,21 +1,15 @@
 package com.sjcl.zrsy.dao.implement.bigchaindb;
 
-import com.bigchaindb.model.Assets;
 import com.sjcl.zrsy.bigchaindb.BigchaindbUtil;
-import com.sjcl.zrsy.bigchaindb.KeyPairHolder;
 import com.sjcl.zrsy.dao.ITraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import java.io.IOException;
-import java.security.KeyPair;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.bigchaindb.api.AssetsApi.getAssets;
 
 public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
-
-    KeyPair keyPair= KeyPairHolder.getKeyPair();
-
     /**
      * 判断猪id是否存在
      * @param id

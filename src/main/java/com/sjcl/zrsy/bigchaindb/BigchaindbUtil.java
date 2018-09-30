@@ -10,7 +10,7 @@ import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
 
 import java.io.IOException;
-import java.security.KeyPair;
+
 
 import java.util.List;
 import java.util.Map;
@@ -51,9 +51,7 @@ public class BigchaindbUtil {
      * @return
      * @throws Exception
      */
-    public static String transferIdCardAndOperation(Map metaData) throws Exception {
-        Object object = metaData.get("id");
-        String assetId = getAssets(object.toString()).getAssets().get(0).getId();
+    public static String transferIdCardAndOperation(Object metaData,String assetId) throws Exception {
 
         Transaction transferTransaction = BigchainDbTransactionBuilder
                 .init()
@@ -99,13 +97,12 @@ public class BigchaindbUtil {
     /**
      *获得某只猪的在某场的操作
      * @param role
-     * @param pigid
+     * @param assetid
      * @return
      * @throws IOException
      */
-    public static List<Operation> transactionTransfers(String role,String pigid) throws IOException {
+    public static List<Operation> transactionTransfers(String role,String assetid) throws IOException {
         List<Operation> operations = null;
-        String assetid=getAssets(pigid).getAssets().get(0).getId();
         Transactions transactions=getTransactionsByAssetId(assetid,Operations.TRANSFER);
         for (int i=0;i<transactions.getTransactions().size();i++) {
             JSONObject jsonObject= (JSONObject)transactions.getTransactions().get(i).getMetaData();
@@ -128,13 +125,12 @@ public class BigchaindbUtil {
 
     /**
      * 获得猪的全部操作
-     * @param pigid
+     * @param assetid
      * @return
      * @throws IOException
      */
-    public static List<Operation> transactionAllTransfers(String pigid) throws IOException {
+    public static List<Operation> transactionAllTransfers(String assetid) throws IOException {//
         List<Operation> operations = null;
-        String assetid=getAssets(pigid).getAssets().get(0).getId();
         Transactions transactions=getTransactionsByAssetId(assetid,Operations.TRANSFER);
         for (int i=0;i<transactions.getTransactions().size();i++) {
             JSONObject jsonObject= (JSONObject)transactions.getTransactions().get(i).getMetaData();
