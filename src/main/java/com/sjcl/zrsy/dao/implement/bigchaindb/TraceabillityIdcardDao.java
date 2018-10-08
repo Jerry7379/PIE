@@ -33,15 +33,13 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean insert(TraceabilityIdcard initialFarm) {
-        MetaData metaData = new MetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, initialFarm);
-        AssetData assetData = new AssetData("pig");
-
         try {
-            BigchaindbUtil.createAsset(assetData, metaData);//返回tansaction id/asset id
+            MetaData metaData = new MetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, initialFarm);
+            BigchaindbUtil.createAsset("pig", metaData);
+            return true;
         } catch (Exception e) {
             return false;
         }
-        return true;
     }
 
     /**
@@ -95,13 +93,13 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
 
     private boolean updateTraceabilityIdcard(TraceabilityIdcard traceabilityIdcard) {
         if (exsits(traceabilityIdcard.getId())) {
-            MetaData metaData = new MetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, traceabilityIdcard);
             try {
+                MetaData metaData = new MetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, traceabilityIdcard);
                 BigchaindbUtil.transferToSelf(metaData, traceabilityIdcard.getId());
+                return true;
             } catch (Exception e) {
                 return false;
             }
-            return true;
         } else {
             return false;
         }
