@@ -11,6 +11,7 @@ import com.bigchaindb.model.Transactions;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LinkedTreeMap;
 import com.sjcl.zrsy.domain.dto.AssetData;
+import com.sjcl.zrsy.domain.dto.MetaData;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.ClassUtils;
 
@@ -111,7 +112,7 @@ public class BigchaindbUtil {
         }
     }
 
-    public static String transferToSelf(Object metaData, String assetId) throws Exception {
+    public static String transferToSelf(MetaData metaData, String assetId) throws Exception {
 
         Transaction transferTransaction = BigchainDbTransactionBuilder
                 .init()
