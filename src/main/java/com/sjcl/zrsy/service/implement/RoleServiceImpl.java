@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 
-@Repository
 public class RoleServiceImpl implements IRoleService {
 
     @Autowired
