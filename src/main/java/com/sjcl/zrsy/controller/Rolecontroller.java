@@ -1,5 +1,7 @@
 package com.sjcl.zrsy.controller;
 
+import com.sjcl.zrsy.bigchaindb.KeyPairHolder;
+import com.sjcl.zrsy.bigchaindb.KeyPairService;
 import com.sjcl.zrsy.domain.po.Registration;
 import com.sjcl.zrsy.domain.dto.RoleLogin;
 import com.sjcl.zrsy.service.IRoleService;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.security.KeyPair;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -16,6 +19,9 @@ import java.util.ResourceBundle;
 public class Rolecontroller {
     @Autowired
     IRoleService roleService;
+
+    @Autowired
+    KeyPairService keyPairService;
 
     ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", Locale.US);
 
@@ -41,21 +47,22 @@ public class Rolecontroller {
         if (user == null) {
             return resourceBundle.getString("AccountNotExist");
         } else {
-            String password = user.getPassword();
-            if (Objects.equals(password, roleLogin.getPassword())) {
+            String password = roleLogin.getPassword();
+            KeyPair keyPair = keyPairService.get(password);
+            if (keyPair != null) {
+                KeyPairHolder.setKeyPair(keyPair);
                 session.setAttribute("userInfo", roleLogin.getName());
                 session.setAttribute("type", user.getType());
                 return user.getType();
-            } else {
-                return resourceBundle.getString("IncorrectPassword");
             }
+
+            return resourceBundle.getString("IncorrectPassword");
         }
     }
 
     @GetMapping("/logout")
     public void logout(HttpSession session) {
-        session.setAttribute("userInfo", null);
-        session.setAttribute("type", null);
+        session.invalidate();
     }
 
 

@@ -13,35 +13,35 @@ import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.util.Arrays;
 
-public class KeyPairDaoTest {
+public class KeyPairServiceTest {
     private static KeyPair keyPair;
 
-    private static KeyPairDao keyPairDao;
+    private static KeyPairService keyPairService;
 
 
     private static final String password = "hellobb";
     @BeforeClass
     public static void prepare() {
         keyPair = new net.i2p.crypto.eddsa.KeyPairGenerator().generateKeyPair();
-        keyPairDao = new KeyPairDaoStub();
+        keyPairService = new KeyPairServiceStub();
     }
 
     @Test
     public void testSave() {
-        keyPairDao.save(keyPair, password);
-        Assert.assertTrue(new File(KeyPairDao.PRIKEY_FILE).exists());
-        Assert.assertTrue(new File(KeyPairDao.PUBKEY_FILE).exists());
+        keyPairService.save(keyPair, password);
+        Assert.assertTrue(new File(KeyPairService.PRIKEY_FILE).exists());
+        Assert.assertTrue(new File(KeyPairService.PUBKEY_FILE).exists());
     }
 
     @Test
     public void testGet() {
-        KeyPair keyPair =  keyPairDao.get(password);
+        KeyPair keyPair =  keyPairService.get(password);
         Assert.assertTrue(keyPair != null);
-        Assert.assertTrue(Arrays.equals(keyPair.getPrivate().getEncoded(), KeyPairDaoTest.keyPair.getPrivate().getEncoded()));
-        Assert.assertTrue(Arrays.equals(keyPair.getPublic().getEncoded(), KeyPairDaoTest.keyPair.getPublic().getEncoded()));
+        Assert.assertTrue(Arrays.equals(keyPair.getPrivate().getEncoded(), KeyPairServiceTest.keyPair.getPrivate().getEncoded()));
+        Assert.assertTrue(Arrays.equals(keyPair.getPublic().getEncoded(), KeyPairServiceTest.keyPair.getPublic().getEncoded()));
     }
 
-    public static class KeyPairDaoStub extends KeyPairDao {
+    public static class KeyPairServiceStub extends KeyPairService {
         @Override
         protected byte[] getPubEncoded() throws IOException {
             return keyPair.getPublic().getEncoded();
@@ -55,7 +55,7 @@ public class KeyPairDaoTest {
 
     @AfterClass
     public static void clear() {
-        new File(KeyPairDao.PRIKEY_FILE).delete();
-        new File(KeyPairDao.PUBKEY_FILE).delete();
+        new File(KeyPairService.PRIKEY_FILE).delete();
+        new File(KeyPairService.PUBKEY_FILE).delete();
     }
 }

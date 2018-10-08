@@ -4,6 +4,7 @@ package com.sjcl.zrsy.bigchaindb;
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import net.i2p.crypto.eddsa.EdDSASecurityProvider;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -15,12 +16,13 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-public class KeyPairDao {
+@Service
+public class KeyPairService {
     public static final String PRIKEY_FILE = "keystore_prikey.ks";
     public static final String PUBKEY_FILE = "keystore_pubkey.ks";
 
 
-    public KeyPairDao() {
+    public KeyPairService() {
     }
 
     public boolean save(KeyPair keyPair, String password) {
