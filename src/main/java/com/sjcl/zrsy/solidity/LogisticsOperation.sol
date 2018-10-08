@@ -8,11 +8,10 @@ contract LogisticsOperation {
         bytes32[] temperature;
         bytes32[] CO2;
         bytes32[] location;
-        uint[] timestamps;//时间戳
     }
 
     struct Pork{
-        bytes32[] porkID;//小猪id
+        bytes32 porkID;//小猪id
         Operation[] operation;
     }
 
@@ -24,18 +23,19 @@ contract LogisticsOperation {
         _;
     }
 
-    function insertLogisticsOperation(bytes32[] porkID, bytes32[] carID, bytes32[] humidity,
-            bytes32[] temperature, bytes32 CO2, bytes32 location)external onlyLogistics returns (bool,bytes32){
-        bytes32[] pork = porkMap[porkID];
+    function insertLogisticsOperation(bytes32 porkID, bytes32[] carID, bytes32[] humidity,
+        bytes32[] temperature, bytes32[] CO2, bytes32[] location)external onlyLogistics returns (bool,bytes32){
+        Pork pork = porkMap[porkID];
         if (pork.porkID == 0x0 ){
             return (false,"porkID存在错误");
         }
 
-        porkMap[pork.porkID].insertLogisticsOperation.push(Operation({
-            operation : operation,
-            content : content,
-            remark : remark,
-            timestamps : timestamps
+        porkMap[pork.porkID].operation.push(Operation({
+            carID : carID,
+            humidity : humidity,
+            temperature : temperature,
+            CO2 : CO2,
+            location : location
             }));
         return(true,"成功");
     }

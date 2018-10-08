@@ -5,7 +5,6 @@ contract Operation {
         bytes32[] operation;
         bytes32[] content;
         bytes32[] remark;
-        uint[] timestamps;//时间戳
     }
 
     struct Pork{
@@ -35,16 +34,15 @@ contract Operation {
 
     function insertFarmOperation(bytes32 porkID,bytes32[] operation, bytes32[] content,
         bytes32[] remark, uint[] timestamps)external onlyFarm returns(bool,bytes32){
-        bytes32 pork = porkMap[porkID];
+        Pork pork = porkMap[porkID];
         if (pork.porkID == 0x0 ){
             return (false,"porkID存在错误");
         }
 
-        porkMap[pork.porkID].insertFarmOperation.push(Operation({
+        porkMap[pork.porkID].operation.push(Operation({
             operation : operation,
             content : content,
-            remark : remark,
-            timestamps : timestamps
+            remark : remark
             }));
         return(true,"成功");
 
@@ -58,12 +56,11 @@ contract Operation {
             return (false,"porkID存在错误");
         }
 
-        porkMap[pork.porkID].insertSlaughterOperation.push(Operation({
+        porkMap[pork.porkID].operation.push(Operation({
 
             operation : operation,
             content : content,
-            remark : remark,
-            timestamps : timestamps
+            remark : remark
             }));
 
         return(true,"成功");
@@ -76,11 +73,10 @@ contract Operation {
         if (pork.porkID == 0x0 ){
             return (false,"porkID存在错误");
         }
-        porkMap[pork.porkID].insertMarketOperation.push(Operation({
+        porkMap[pork.porkID].operation.push(Operation({
             operation : operation,
             content : content,
-            remark : remark,
-            timestamps : timestamps
+            remark : remark
             }));
         return(true,"success");
 
