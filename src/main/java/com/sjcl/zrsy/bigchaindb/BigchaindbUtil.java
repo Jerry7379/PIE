@@ -171,6 +171,9 @@ public class BigchaindbUtil {
         }
     }
 
+    public static <T> T getWholeMetaData(String assetId) {
+        return null;
+    }
     private static FulFill transferToSelfFulFill(String assetId) throws IOException {
         final FulFill spendFrom = new FulFill();
         String transactionId = getLastTransactonId(assetId);
