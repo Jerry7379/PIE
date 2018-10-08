@@ -17,6 +17,10 @@ public class KeyPairHolder {
         return KEYPAIR;
     }
 
+    public static boolean isLogin() {
+        return KEYPAIR != null;
+    }
+
     public static EdDSAPublicKey getPublic() {
         return (EdDSAPublicKey) KEYPAIR.getPublic();
     }
