@@ -104,34 +104,6 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     }
 
     /**
-     * 获得某只猪的在某场的操作
-     *
-     * @param role
-     * @param assetid
-     * @return
-     * @throws IOException
-     */
-    private static List<Operation> transactionTransfers(String role, String assetid) throws IOException {
-        List<Operation> operations = null;
-        Transactions transactions = TransactionsApi.getTransactionsByAssetId(assetid, Operations.TRANSFER);
-        for (int i = 0; i < transactions.getTransactions().size(); i++) {
-            JSONObject jsonObject = (JSONObject) transactions.getTransactions().get(i).getMetaData();
-            if (jsonObject.get("operation") != null) {
-                JSONObject metaDataOperation = (JSONObject) jsonObject.get("operation");
-                if (metaDataOperation.get("role").equals(role)) {
-                    Operation operation = new Operation(metaDataOperation.get("id").toString(), metaDataOperation.get("operation").toString(), metaDataOperation.get("content").toString(), metaDataOperation.get("remark").toString(), metaDataOperation.get("time").toString());
-                    operations.add(operation);
-                } else {
-                    continue;
-                }
-            } else {
-                continue;
-            }
-        }
-        return operations;
-    }
-
-    /**
      * 获得猪的全部操作
      *
      * @param assetid
