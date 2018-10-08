@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
 public class OperationDao implements com.sjcl.zrsy.dao.IOperationDao {
     private static final String TABLE_NAME_FARM_OPERATION = "farm_operation";
     private static final String TABLE_NAME_SLAUGHTER_OPERATION = "slaughter_operation";

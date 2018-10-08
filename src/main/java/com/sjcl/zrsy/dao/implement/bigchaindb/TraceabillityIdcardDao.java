@@ -1,18 +1,17 @@
 package com.sjcl.zrsy.dao.implement.bigchaindb;
 
-import com.bigchaindb.api.TransactionsApi;
-import com.bigchaindb.constants.Operations;
+import com.bigchaindb.api.AssetsApi;
 import com.sjcl.zrsy.bigchaindb.BigchaindbUtil;
 import com.sjcl.zrsy.dao.ITraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.dto.AssetData;
 import com.sjcl.zrsy.domain.dto.MetaData;
-
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
+import org.springframework.stereotype.Repository;
+
 import java.io.IOException;
 import java.util.Map;
 
-import com.bigchaindb.api.AssetsApi;
-
+@Repository
 public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
     /**
      * 判断猪id是否存在

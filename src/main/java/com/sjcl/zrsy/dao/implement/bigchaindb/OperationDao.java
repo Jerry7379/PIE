@@ -11,12 +11,13 @@ import com.sjcl.zrsy.dao.IOperationDao;
 import com.sjcl.zrsy.domain.dto.LogisticsOperation;
 import com.sjcl.zrsy.domain.dto.MetaData;
 import com.sjcl.zrsy.domain.po.Operation;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 
 import java.util.List;
 
-
+@Repository
 public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     public static final String FARM_ROLE = "farm";
     public static final String SLAUGHTER_ROLE = "slaughter";

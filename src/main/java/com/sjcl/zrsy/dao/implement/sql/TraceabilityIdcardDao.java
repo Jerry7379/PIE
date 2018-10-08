@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-@Component
 public class TraceabilityIdcardDao implements ITraceabilityIdcardDao {
 
     @Autowired

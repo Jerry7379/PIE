@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-@Component
+
 public class RegistrationDao implements com.sjcl.zrsy.dao.IRegistrationDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
