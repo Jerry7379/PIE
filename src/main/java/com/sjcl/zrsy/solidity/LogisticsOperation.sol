@@ -24,7 +24,7 @@ contract LogisticsOperation {
     }
 
     function insertLogisticsOperation(bytes32 porkID, bytes32[] carID, bytes32[] humidity,
-        bytes32[] temperature, bytes32[] CO2, bytes32[] location)external onlyLogistics returns (bool,bytes32){
+        bytes32[] temperature, bytes32[] CO2, bytes32[] location)public view onlyLogistics returns (bool,bytes32){
         Pork pork = porkMap[porkID];
         if (pork.porkID == 0x0 ){
             return (false,"porkID存在错误");

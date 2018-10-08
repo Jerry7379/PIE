@@ -1,0 +1,45 @@
+[
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "porkID",
+				"type": "bytes32"
+			},
+			{
+				"name": "carID",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "humidity",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "temperature",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "CO2",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "location",
+				"type": "bytes32[]"
+			}
+		],
+		"name": "insertLogisticsOperation",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			},
+			{
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
