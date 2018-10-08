@@ -93,6 +93,24 @@ public class BigchaindbUtil {
         return bean;
     }
 
+    public static boolean assetIsExist(String assetId) {
+        try {
+            Object asset = getAsset(assetId);
+            return asset != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static <T> boolean assetIsExist(String assetId, Class<T> type) {
+        try {
+            T asset = getAsset(assetId, type);
+            return asset != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public static String transferToSelf(Object metaData, String assetId) throws Exception {
 
         Transaction transferTransaction = BigchainDbTransactionBuilder
