@@ -27,7 +27,6 @@ public class Rolecontroller {
      */
     @PostMapping("/registration")
     public String registration(@RequestBody Registration registration) {
-        registration.setPicture(roleService.picturechange(registration.getRegistrationId(), registration.getPicture()));
         if (roleService.registration(registration)) {
             return resourceBundle.getString("RegistrationSuccessful");
         } else {

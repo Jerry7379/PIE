@@ -3,10 +3,15 @@ package com.sjcl.zrsy.domain.po;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
+import sun.misc.BASE64Decoder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Past;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Date;
 
 public class Registration {    //注册模块
@@ -42,6 +47,32 @@ public class Registration {    //注册模块
 
     public Registration()
     {
+
+    }
+
+    public void picturechange() throws IOException {
+        //        //照片生成
+        String path="img/"+ registrationId +".jpg";//图片路径
+        File file=new File(path);
+        String str64= picture;
+        BASE64Decoder decoder = new BASE64Decoder();
+        try {
+            // Base64解码
+            byte[] bytes = decoder.decodeBuffer(str64);
+            for (int i = 0; i < bytes.length; ++i) {
+                if (bytes[i] < 0) {// 调整异常数据
+                    bytes[i] += 256;
+                }
+            }
+            // 生成jpeg图片
+            OutputStream out = new FileOutputStream(file);
+            out.write(bytes);
+            out.flush();
+            out.close();
+            this.setPicture(path);
+        } catch (Exception e) {
+            throw e;
+        }
 
     }
 
