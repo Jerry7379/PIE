@@ -24,16 +24,27 @@ import java.util.Objects;
  */
 public class BigchaindbUtil {
 
-    public static String createAsset(AssetData assetObject) throws Exception {
-        return createAsset(assetObject, null);
+
+    public static String createAsset(Object assetObject) throws Exception {
+        AssetData assetData = new AssetData(assetObject);
+        return createAsset(assetData);
     }
 
-    public static String createAsset(AssetData assetObject, Object metadateObject) throws Exception {
+    public static String createAsset(Object assetObject, Object metadataObject) throws Exception {
+        AssetData assetData = new AssetData(assetObject);
+        return createAsset(assetData, null);
+    }
+
+    public static String createAsset(AssetData assetWrapper) throws Exception {
+        return createAsset(assetWrapper, null);
+    }
+
+    public static String createAsset(AssetData assetWrapper, Object metadateObject) throws Exception {
 
         Transaction createTransaction = BigchainDbTransactionBuilder
                 .init()
                 .operation(Operations.CREATE)
-                .addAssets(assetObject, assetObject.getClass())
+                .addAssets(assetWrapper, assetWrapper.getClass())
                 .addMetaData(metadateObject)
                 .buildAndSign(
                         KeyPairHolder.getPublic(),

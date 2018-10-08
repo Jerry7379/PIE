@@ -1,23 +1,43 @@
 package com.sjcl.zrsy.dao.implement.bigchaindb;
 
+import com.bigchaindb.api.AssetsApi;
+import com.bigchaindb.model.Asset;
+import com.bigchaindb.model.Assets;
+import com.sjcl.zrsy.bigchaindb.BigchaindbUtil;
 import com.sjcl.zrsy.domain.po.Registration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class RegistrationDao implements com.sjcl.zrsy.dao.IRegistrationDao {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
     @Override
     public Registration getLoginByRegistrationId(String registrationId){
+        try {
+            Assets assets = AssetsApi.getAssetsWithLimit(registrationId, "1");
+            if (assets != null && assets.size() == 1) {
+                Asset asset = assets.getAssets().get(0);
+                Object actualAsset = BigchaindbUtil.getAsset(asset.getId());
+                if (actualAsset instanceof Registration
+                        && StringUtils.equals(registrationId, ((Registration) actualAsset).getRegistrationId())) {
+                    return (Registration) actualAsset;
+                }
+            }
 
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public boolean insertRegistration(Registration registration){
-
+        try {
+            String assetId = BigchaindbUtil.createAsset(registration);
+            return assetId != null;
+        } catch (Exception e) {
+            return false;
+        }
 
     }
 
