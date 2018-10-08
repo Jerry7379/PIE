@@ -62,6 +62,7 @@ public class Rolecontroller {
     @GetMapping("/logout")
     public void logout(HttpSession session) {
         session.invalidate();
+        KeyPairHolder.setKeyPair(null);
     }
 
 
