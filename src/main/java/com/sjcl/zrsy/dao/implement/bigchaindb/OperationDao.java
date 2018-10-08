@@ -1,25 +1,23 @@
 package com.sjcl.zrsy.dao.implement.bigchaindb;
 
-import com.alibaba.fastjson.JSONObject;
 import com.bigchaindb.api.TransactionsApi;
 import com.bigchaindb.constants.Operations;
+import com.bigchaindb.model.Transaction;
 import com.bigchaindb.model.Transactions;
+import com.google.gson.internal.LinkedTreeMap;
 import com.sjcl.zrsy.bigchaindb.BigchaindbUtil;
 import com.sjcl.zrsy.dao.ILogisticsOperationDao;
 import com.sjcl.zrsy.dao.IOperationDao;
+import com.sjcl.zrsy.domain.dto.BigchaindbData;
 import com.sjcl.zrsy.domain.dto.LogisticsOperation;
-import com.sjcl.zrsy.domain.dto.MetaData;
 import com.sjcl.zrsy.domain.po.Operation;
 import org.springframework.stereotype.Repository;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class OperationDao implements IOperationDao, ILogisticsOperationDao {
-    public static final String OPERATION_OPERATION = "operation";
-    public static final String OPERATION_TRACEABILLITYIDCARD = "traceabillityidcard";
-
     /**
      * 养殖场增加操作
      *
@@ -87,8 +85,19 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     @Override
     public List<Operation> findallOperationByPigid(String pigId) {
         try {
-            return transactionAllTransfers(pigId);
-        } catch (IOException e) {
+            List<Operation> operations = new ArrayList<>();
+            Transactions transactions = TransactionsApi.getTransactionsByAssetId(pigId, Operations.TRANSFER);
+
+            for (Transaction transaction : transactions.getTransactions()) {
+                LinkedTreeMap metaDataMap = (LinkedTreeMap) transaction.getMetaData();
+                Object metadata = BigchaindbUtil.bigchaindbDataToBean(metaDataMap);
+                if (metadata instanceof Operation) {
+                    Operation operation = (Operation) metadata;
+                    operations.add(operation);
+                }
+            }
+            return operations;
+        } catch (Exception e) {
             return null;
         }
     }
@@ -99,31 +108,8 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
      * @param object
      * @return
      */
-    private MetaData operationMetaData(Object object) {
-        return new MetaData(OPERATION_OPERATION, object);
-    }
-
-    /**
-     * 获得猪的全部操作
-     *
-     * @param assetid
-     * @return
-     * @throws IOException
-     */
-    private static List<Operation> transactionAllTransfers(String assetid) throws IOException {//
-        List<Operation> operations = null;
-        Transactions transactions = TransactionsApi.getTransactionsByAssetId(assetid, Operations.TRANSFER);
-        for (int i = 0; i < transactions.getTransactions().size(); i++) {
-            JSONObject jsonObject = (JSONObject) transactions.getTransactions().get(i).getMetaData();
-            if (jsonObject.get("operation") != null) {
-                JSONObject metaDataOperation = (JSONObject) jsonObject.get("operation");
-                Operation operation = new Operation(metaDataOperation.get("id").toString(), metaDataOperation.get("operation").toString(), metaDataOperation.get("content").toString(), metaDataOperation.get("remark").toString(), metaDataOperation.get("time").toString());
-                operations.add(operation);
-            } else {
-                continue;
-            }
-        }
-        return operations;
+    private BigchaindbData operationMetaData(Object object) {
+        return new BigchaindbData(object);
     }
 
 }

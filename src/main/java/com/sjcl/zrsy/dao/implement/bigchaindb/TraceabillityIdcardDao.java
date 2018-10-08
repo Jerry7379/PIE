@@ -1,15 +1,12 @@
 package com.sjcl.zrsy.dao.implement.bigchaindb;
 
-import com.bigchaindb.api.AssetsApi;
 import com.sjcl.zrsy.bigchaindb.BigchaindbUtil;
 import com.sjcl.zrsy.dao.ITraceabilityIdcardDao;
-import com.sjcl.zrsy.domain.dto.AssetData;
-import com.sjcl.zrsy.domain.dto.MetaData;
+import com.sjcl.zrsy.domain.dto.BigchaindbData;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
-import java.util.Map;
 
 @Repository
 public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
@@ -34,8 +31,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
     @Override
     public boolean insert(TraceabilityIdcard initialFarm) {
         try {
-            MetaData metaData = new MetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, initialFarm);
-            BigchaindbUtil.createAsset("pig", metaData);
+            BigchaindbUtil.createAsset("pig", initialFarm);
             return true;
         } catch (Exception e) {
             return false;
@@ -94,7 +90,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
     private boolean updateTraceabilityIdcard(TraceabilityIdcard traceabilityIdcard) {
         if (exsits(traceabilityIdcard.getId())) {
             try {
-                MetaData metaData = new MetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, traceabilityIdcard);
+                BigchaindbData metaData = new BigchaindbData(traceabilityIdcard);
                 BigchaindbUtil.transferToSelf(metaData, traceabilityIdcard.getId());
                 return true;
             } catch (Exception e) {

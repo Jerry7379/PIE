@@ -2,11 +2,11 @@ package com.sjcl.zrsy.domain.dto;
 
 import java.util.Optional;
 
-public class AssetData<T> {
+public class BigchaindbData<T> {
     private T data;
     private String type;
 
-    public AssetData(T data) {
+    public BigchaindbData(T data) {
         this.data = data;
         this.type = data.getClass().getCanonicalName();
     }

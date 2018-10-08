@@ -10,8 +10,7 @@ import com.bigchaindb.model.Transaction;
 import com.bigchaindb.model.Transactions;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LinkedTreeMap;
-import com.sjcl.zrsy.domain.dto.AssetData;
-import com.sjcl.zrsy.domain.dto.MetaData;
+import com.sjcl.zrsy.domain.dto.BigchaindbData;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.ClassUtils;
 
@@ -27,26 +26,27 @@ public class BigchaindbUtil {
 
 
     public static String createAsset(Object assetObject) throws Exception {
-        AssetData assetData = new AssetData(assetObject);
+        BigchaindbData assetData = new BigchaindbData(assetObject);
         return createAsset(assetData);
     }
 
     public static String createAsset(Object assetObject, Object metadataObject) throws Exception {
-        AssetData assetData = new AssetData(assetObject);
-        return createAsset(assetData, null);
+        BigchaindbData assetData = new BigchaindbData(assetObject);
+        BigchaindbData metaData = new BigchaindbData(metadataObject);
+        return createAsset(assetData, metaData);
     }
 
-    public static String createAsset(AssetData assetWrapper) throws Exception {
+    public static String createAsset(BigchaindbData assetWrapper) throws Exception {
         return createAsset(assetWrapper, null);
     }
 
-    public static String createAsset(AssetData assetWrapper, Object metadateObject) throws Exception {
+    public static String createAsset(BigchaindbData assetWrapper, BigchaindbData metadataWrapper) throws Exception {
 
         Transaction createTransaction = BigchainDbTransactionBuilder
                 .init()
                 .operation(Operations.CREATE)
                 .addAssets(assetWrapper, assetWrapper.getClass())
-                .addMetaData(metadateObject)
+                .addMetaData(metadataWrapper)
                 .buildAndSign(
                         KeyPairHolder.getPublic(),
                         KeyPairHolder.getPrivate())
@@ -62,13 +62,7 @@ public class BigchaindbUtil {
         Asset asset = createTransaction.getAsset();
         com.google.gson.internal.LinkedTreeMap assetData = (LinkedTreeMap) asset.getData();
 
-        String type = (String) assetData.get("type");
-        com.google.gson.internal.LinkedTreeMap properties = (LinkedTreeMap) assetData.get("data");
-        
-        Class beanClass = ClassUtils.getClass(type);
-        Object bean = beanClass.newInstance();
-        BeanUtils.populate(bean, properties);
-        return bean;
+        return bigchaindbDataToBean(assetData);
     }
 
     public static <T> T getAsset(String assetId, Class<T> type) throws IOException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
@@ -94,6 +88,16 @@ public class BigchaindbUtil {
         return bean;
     }
 
+    public static Object bigchaindbDataToBean(LinkedTreeMap bigchaindbData) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
+        String type = (String) bigchaindbData.get("type");
+        com.google.gson.internal.LinkedTreeMap properties = (LinkedTreeMap) bigchaindbData.get("data");
+
+        Class beanClass = ClassUtils.getClass(type);
+        Object bean = beanClass.newInstance();
+        BeanUtils.populate(bean, properties);
+        return bean;
+    }
+
     public static boolean assetIsExist(String assetId) {
         try {
             Object asset = getAsset(assetId);
@@ -112,7 +116,7 @@ public class BigchaindbUtil {
         }
     }
 
-    public static String transferToSelf(MetaData metaData, String assetId) throws Exception {
+    public static String transferToSelf(BigchaindbData metaData, String assetId) throws Exception {
 
         Transaction transferTransaction = BigchainDbTransactionBuilder
                 .init()

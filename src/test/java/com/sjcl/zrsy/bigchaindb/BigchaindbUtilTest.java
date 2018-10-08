@@ -3,9 +3,8 @@ package com.sjcl.zrsy.bigchaindb;
 import com.bigchaindb.builders.BigchainDbConfigBuilder;
 import com.bigchaindb.model.Transaction;
 import com.bigchaindb.util.KeyPairUtils;
-import com.sjcl.zrsy.domain.dto.AssetData;
+import com.sjcl.zrsy.domain.dto.BigchaindbData;
 import com.sjcl.zrsy.domain.dto.RoleLogin;
-import com.sjcl.zrsy.domain.po.Operation;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,7 +34,7 @@ public class BigchaindbUtilTest {
         RoleLogin login = new RoleLogin();
         login.setName("zanghongfei");
         login.setPassword("zanghongfei");
-        AssetData data = new AssetData(login);
+        BigchaindbData data = new BigchaindbData(login);
 
         String id = BigchaindbUtil.createAsset(data);
 
