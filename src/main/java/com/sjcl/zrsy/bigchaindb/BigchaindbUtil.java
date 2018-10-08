@@ -148,6 +148,19 @@ public class BigchaindbUtil {
         }
     }
 
+    public static Transactions getTransactionsByAssetId(String assetId) throws IOException {
+        Transactions transactions = new Transactions();
+        Transactions createTransactions = TransactionsApi.getTransactionsByAssetId(assetId, Operations.CREATE);
+        for (Transaction create : createTransactions.getTransactions()) {
+            transactions.addTransaction(create);
+        }
+        Transactions transfers = TransactionsApi.getTransactionsByAssetId(assetId, Operations.TRANSFER);
+        for (Transaction transfer : transfers.getTransactions()) {
+            transactions.addTransaction(transfer);
+        }
+        return transactions;
+    }
+
     public static String getLastTransactonId(String assetId) throws IOException {
         List<Transaction> transfers = TransactionsApi.getTransactionsByAssetId(assetId, Operations.TRANSFER).getTransactions();
 
