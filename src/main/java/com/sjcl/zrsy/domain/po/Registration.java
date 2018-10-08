@@ -50,7 +50,7 @@ public class Registration {    //注册模块
 
     }
 
-    public void picturechange() throws IOException {
+    public void pictureChange() throws IOException {
         //        //照片生成
         String path="img/"+ registrationId +".jpg";//图片路径
         File file=new File(path);
