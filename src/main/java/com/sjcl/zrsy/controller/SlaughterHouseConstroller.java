@@ -1,8 +1,8 @@
 package com.sjcl.zrsy.controller;
 
-import com.sjcl.zrsy.domain.SlaughterReception;
-import com.sjcl.zrsy.domain.SlaughterOperation;
-import com.sjcl.zrsy.service.implement.ISlaughterHouseService;
+import com.sjcl.zrsy.domain.dto.SlaughterOperation;
+import com.sjcl.zrsy.domain.dto.SlaughterReception;
+import com.sjcl.zrsy.service.ISlaughterHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,17 +13,18 @@ import java.util.ResourceBundle;
 
 @RestController
 public class SlaughterHouseConstroller {
+
     @Autowired
     ISlaughterHouseService slaughterreceiver;
+
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.US);
-    @PostMapping("/slaughterreception")//屠宰检查
+
+    @PostMapping("/slaughterreception")
     public String  slaughterreception(@RequestBody SlaughterReception checker){
         if(slaughterreceiver.slaughterreception(checker)) {
-            //return "操作成功";
             return resourceBundle.getString("SuccessfulOperation");
         }
         else {
-            //return "操作失败,重新输入";
             return resourceBundle.getString("OperationFailed,re-enter");
         }
     }
@@ -33,18 +34,16 @@ public class SlaughterHouseConstroller {
         String info[]=slaughterAcid.getContent().split(";");
         if(info.length==2){
             slaughterAcid.setContent(info[0]);
-            slaughterAcid.setIsAcid(info[1]);
+            slaughterAcid.setIsAcid(Integer.parseInt(info[1]));
         }
         else {
             slaughterAcid.setContent(info[0]);
         }
 
         if(slaughterreceiver.slaughteroperation(slaughterAcid)) {
-            //return "操作成功";
             return resourceBundle.getString("SuccessfulOperation");
         }
         else {
-            //return "操作失败,重新输入";
             return resourceBundle.getString("OperationFailed,re-enter");
         }
     }

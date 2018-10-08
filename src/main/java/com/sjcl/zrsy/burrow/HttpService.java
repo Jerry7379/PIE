@@ -12,7 +12,7 @@ public class HttpService {
     public static final MediaType JSON_MEDIA_TYPE
             = MediaType.parse("application/json; charset=utf-8");
 
-    public static final String DEFAULT_URL = "http://localhost:1337/rpc";
+    public static final String DEFAULT_URL = "http://192.168.234.133:1337/rpc";
 
 
     private OkHttpClient httpClient;

@@ -59,7 +59,7 @@
         </dependency>
         <dependency>
             <groupId>org.web3j</groupId>
-            <artifactId>abi</artifactId>
+            <artifactId>core</artifactId>
             <version>3.4.0</version>
         </dependency>
         <dependency>
