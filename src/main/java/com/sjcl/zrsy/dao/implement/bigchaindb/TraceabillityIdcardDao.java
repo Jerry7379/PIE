@@ -33,7 +33,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean insert(TraceabilityIdcard initialFarm) {
-        MetaData metaData = new MetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, OperationDao.FARM_ROLE, initialFarm);
+        MetaData metaData = new MetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, initialFarm);
         AssetData assetData = new AssetData("pig");
 
         try {
@@ -53,7 +53,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean updateLogistics(TraceabilityIdcard logistics) {
-        return updateTraceabilityIdcard(logistics, OperationDao.LOGISTICS_ROLE);
+        return updateTraceabilityIdcard(logistics);
 
     }
 
@@ -66,7 +66,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean updateMarket(TraceabilityIdcard market) {
-        return updateTraceabilityIdcard(market, OperationDao.MARKET_ROLE);
+        return updateTraceabilityIdcard(market);
     }
 
     /**
@@ -78,7 +78,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean updateQuarantine(TraceabilityIdcard quarantine) {
-        return updateTraceabilityIdcard(quarantine, OperationDao.SLAUGHTER_ROLE);
+        return updateTraceabilityIdcard(quarantine);
     }
 
     /**
@@ -90,12 +90,12 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean updateAcid(TraceabilityIdcard acid) {
-        return updateTraceabilityIdcard(acid, OperationDao.SLAUGHTER_ROLE);
+        return updateTraceabilityIdcard(acid);
     }
 
-    private boolean updateTraceabilityIdcard(TraceabilityIdcard traceabilityIdcard, String role) {
+    private boolean updateTraceabilityIdcard(TraceabilityIdcard traceabilityIdcard) {
         if (exsits(traceabilityIdcard.getId())) {
-            MetaData metaData = new MetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, role, traceabilityIdcard);
+            MetaData metaData = new MetaData(OperationDao.OPERATION_TRACEABILLITYIDCARD, traceabilityIdcard);
             try {
                 BigchaindbUtil.transferToSelf(metaData, traceabilityIdcard.getId());
             } catch (Exception e) {
