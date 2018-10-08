@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-@Repository
 public class LogisticsOperationDao implements com.sjcl.zrsy.dao.ILogisticsOperationDao {
     @Autowired
     JdbcTemplate jdbcTemplate;

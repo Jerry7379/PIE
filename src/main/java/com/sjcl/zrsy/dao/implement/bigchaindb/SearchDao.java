@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@Component
 public class SearchDao implements com.sjcl.zrsy.dao.ISearchDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
