@@ -36,7 +36,7 @@ public class Rolecontroller {
 
         Registration user = roleService.login(registration.getRegistrationId());
 
-        if (user != null && keyPairService.isExist()) {
+        if (user != null || keyPairService.isExist()) {
             return resourceBundle.getString("AccountAreadyExist");
         }
 
