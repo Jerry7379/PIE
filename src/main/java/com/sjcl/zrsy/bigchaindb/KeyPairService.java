@@ -12,8 +12,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -41,7 +39,7 @@ public class KeyPairService {
                 pubKeyOut.write(pubKeyCode);
             }
             return true;
-        } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | IOException e) {
+        } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -67,14 +65,14 @@ public class KeyPairService {
             PublicKey publicKey = deserializePubKey(pubEncoded);
 
             return new KeyPair(publicKey, privateKey);
-        } catch (InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | InvalidKeySpecException e) {
+        } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();
             return null;
         }
     }
 
     // protected for unit test
-    protected byte[] getPriEncoded(String password) throws IOException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
+    protected byte[] getPriEncoded(String password) throws GeneralSecurityException, IOException {
         byte[] priEncryptEncoded = getEncryptPriEncoded();
         return CipherUtil.decrypt(priEncryptEncoded, password);
     }
