@@ -8,6 +8,7 @@ import com.bigchaindb.model.Asset;
 import com.bigchaindb.model.FulFill;
 import com.bigchaindb.model.Transaction;
 import com.bigchaindb.model.Transactions;
+import com.bigchaindb.util.JsonUtils;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LinkedTreeMap;
 import com.sjcl.zrsy.domain.dto.BigchaindbData;
@@ -100,9 +101,9 @@ public class BigchaindbUtil {
         String type = (String) bigchaindbData.get("type");
         com.google.gson.internal.LinkedTreeMap properties = (LinkedTreeMap) bigchaindbData.get("data");
 
-        Class beanClass = ClassUtils.getClass(type);
-        Object bean = beanClass.newInstance();
-        BeanUtils.populate(bean, properties);
+        String json = JsonUtils.toJson(properties);
+
+        Object bean = JsonUtils.fromJson(json, ClassUtils.getClass(type));
         return bean;
     }
 
