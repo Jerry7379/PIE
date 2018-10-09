@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -42,6 +45,10 @@ public class KeyPairService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean isExist() {
+        return new File(PUBKEY_FILE).exists() && new File(PRIKEY_FILE).exists();
     }
 
     private static byte[] encoded(Key key) {
