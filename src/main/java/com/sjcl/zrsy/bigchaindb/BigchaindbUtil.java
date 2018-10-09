@@ -11,11 +11,19 @@ import com.bigchaindb.model.Transactions;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LinkedTreeMap;
 import com.sjcl.zrsy.domain.dto.BigchaindbData;
+import com.sjcl.zrsy.domain.po.Operation;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ClassUtils;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -171,9 +179,47 @@ public class BigchaindbUtil {
         }
     }
 
-    public static <T> T getWholeMetaData(String assetId) {
-        return null;
+    public static <T> T getWholeMetaData(String assetId, Class<T> type) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, IntrospectionException {
+
+        List<T> metadatas = getMetaDatas(assetId, type);
+        if (CollectionUtils.isEmpty(metadatas)) {
+            return null;
+        }
+
+        BeanInfo beanInfo = Introspector.getBeanInfo(type);
+        PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
+
+        T bean = type.newInstance();
+        for (T data : metadatas) {
+            for (PropertyDescriptor pd : pds) {
+                if (pd.getWriteMethod() == null || pd.getWriteMethod() == null) {
+                    continue;
+                }
+                Object retVal = pd.getReadMethod().invoke(data);
+                if (retVal != null) {
+                    pd.getWriteMethod().invoke(bean, retVal);
+                }
+            }
+        }
+        return bean;
     }
+
+    public static <T> List<T> getMetaDatas(String assetId, Class<T> type) throws IOException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        List<T> metadatas = new ArrayList<>();
+
+        Transactions transactions = getTransactionsByAssetId(assetId);
+        for (Transaction transaction : transactions.getTransactions()) {
+            LinkedTreeMap metaDataMap = (LinkedTreeMap) transaction.getMetaData();
+            if (metaDataMap != null) {
+                Object bean = BigchaindbUtil.bigchaindbDataToBean(metaDataMap);
+                if (bean != null && type.isInstance(bean)) {
+                    metadatas.add((T) bean);
+                }
+            }
+        }
+        return metadatas;
+    }
+
     private static FulFill transferToSelfFulFill(String assetId) throws IOException {
         final FulFill spendFrom = new FulFill();
         String transactionId = getLastTransactonId(assetId);
