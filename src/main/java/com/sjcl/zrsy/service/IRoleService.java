@@ -8,5 +8,5 @@ public interface IRoleService {
 
     boolean registration(Registration registration);
 
-    Registration login(RoleLogin roleLogin) ;
+    Registration login(String  registrationId) ;
 }
