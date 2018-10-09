@@ -1,5 +1,6 @@
 package com.sjcl.zrsy.service.implement;
 
+import com.sjcl.zrsy.bigchaindb.KeyPairHolder;
 import com.sjcl.zrsy.bigchaindb.KeyPairService;
 import com.sjcl.zrsy.domain.po.Registration;
 import net.i2p.crypto.eddsa.KeyPairGenerator;
@@ -17,9 +18,11 @@ public class BigchaindbRoleServiceImpl extends RoleServiceImpl {
     public boolean registration(Registration registration) {
         KeyPairGenerator keyPairGenerator = new KeyPairGenerator();
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
-        keyPairService.save(keyPair, registration.getPassword());
+        KeyPairHolder.setKeyPair(keyPair);
+        String password = registration.getPassword();
         registration.setPassword(null);
-
-        return super.registration(registration);
+        boolean superRet = super.registration(registration);
+        boolean saveRet = keyPairService.save(KeyPairHolder.getKeyPair(), password);
+        return superRet && saveRet;
     }
 }
