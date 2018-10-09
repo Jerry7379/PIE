@@ -18,7 +18,7 @@ public class BigchaindbRoleServiceImpl extends RoleServiceImpl {
         KeyPairGenerator keyPairGenerator = new KeyPairGenerator();
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
         keyPairService.save(keyPair, registration.getPassword());
-        registration.setPicture(null);
+        registration.setPassword(null);
 
         return super.registration(registration);
     }
