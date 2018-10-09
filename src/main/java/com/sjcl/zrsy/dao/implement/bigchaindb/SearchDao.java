@@ -2,13 +2,14 @@ package com.sjcl.zrsy.dao.implement.bigchaindb;
 
 import com.sjcl.zrsy.bigchaindb.BigchaindbUtil;
 import com.sjcl.zrsy.dao.IOperationDao;
+import com.sjcl.zrsy.dao.IRegistrationDao;
 import com.sjcl.zrsy.domain.dto.SearchId;
 import com.sjcl.zrsy.domain.po.Operation;
+import com.sjcl.zrsy.domain.po.Registration;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.io.IOException;
 import java.util.List;
 
 @Repository
@@ -16,6 +17,9 @@ public class SearchDao implements com.sjcl.zrsy.dao.ISearchDao {
 
     @Autowired
     private IOperationDao operationDao;
+
+    @Autowired
+    private IRegistrationDao registrationDao;
 
     @Override
     public SearchId select(String id) {
@@ -32,6 +36,10 @@ public class SearchDao implements com.sjcl.zrsy.dao.ISearchDao {
     private SearchId getSearchId(String id) {
         try {
             TraceabilityIdcard traceabilityIdcard = BigchaindbUtil.getWholeMetaData(id, TraceabilityIdcard.class);
+            if (traceabilityIdcard == null) {
+                return null;
+            }
+
             SearchId searchId = new SearchId();
             searchId.setId(traceabilityIdcard.getId());
             searchId.setBirthday(traceabilityIdcard.getBirthday().toString());
@@ -39,24 +47,37 @@ public class SearchDao implements com.sjcl.zrsy.dao.ISearchDao {
             searchId.setGender(traceabilityIdcard.getGender());
             searchId.setIsacid(String.valueOf(traceabilityIdcard.getIsacid()));
             searchId.setIscheck(String.valueOf(traceabilityIdcard.getIscheck()));
-            searchId.setFarmId(traceabilityIdcard.getFarmId());
 
-            searchId.setFarmLocation("farmlocation");
-            searchId.setFarmName("farmName");
-            searchId.setSlaughterhouseLocation("slaughterhouse_location");
-            searchId.setSlaughterhouseName("slaughterhouse_name");
-            searchId.setLogisticsName("logistics_name");
-            searchId.setLogisticsLocation("logistics_location");
-            searchId.setSupermarketName("supermarket_name");
-            searchId.setSupermarketLocation("supermarket_location");
+            Registration farm = registrationDao.getLoginByRegistrationId(traceabilityIdcard.getFarmId());
+            searchId.setFarmId(traceabilityIdcard.getFarmId());
+            searchId.setFarmLocation(farm.getLocation());
+            searchId.setFarmName(farm.getName());
+
+            searchId.setSlaughterhouseId(traceabilityIdcard.getSlaughterhouseId());
+            Registration slaughterhouse = registrationDao.getLoginByRegistrationId(traceabilityIdcard.getSlaughterhouseId());
+            if (slaughterhouse != null) {
+                searchId.setSlaughterhouseLocation(slaughterhouse.getLocation());
+                searchId.setSlaughterhouseName(slaughterhouse.getName());
+            }
+
+            searchId.setLogisticsId(traceabilityIdcard.getLogisticsId());
+            Registration logistics = registrationDao.getLoginByRegistrationId(traceabilityIdcard.getLogisticsId());
+            if (logistics != null) {
+                searchId.setLogisticsName(logistics.getName());
+                searchId.setLogisticsLocation(logistics.getLocation());
+            }
+
+            searchId.setSupermarketId(traceabilityIdcard.getSupermarketId());
+            Registration superMarket = registrationDao.getLoginByRegistrationId(traceabilityIdcard.getSupermarketId());
+            if (superMarket != null) {
+                searchId.setSupermarketName(superMarket.getName());
+                searchId.setSupermarketLocation(superMarket.getLocation());
+            }
 
             searchId.setBreederId(traceabilityIdcard.getBreederId());
-            searchId.setSlaughterhouseId(traceabilityIdcard.getSlaughterhouseId());
             searchId.setCheckerId(traceabilityIdcard.getCheckerId());
             searchId.setAciderId(traceabilityIdcard.getAciderId());
-            searchId.setLogisticsId(traceabilityIdcard.getLogisticsId());
-            searchId.setSupermarketId(traceabilityIdcard.getSupermarketId());
-//        searchId.setSalespersonId(traceabilityIdcard.gets ("salesperson_id"));
+//        searchId.setSalespersonId(superMarket.gets);
             return searchId;
         } catch (Exception e) {
             return null;
