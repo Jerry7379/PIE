@@ -21,8 +21,10 @@ public class BigchaindbRoleServiceImpl extends RoleServiceImpl {
         KeyPairHolder.setKeyPair(keyPair);
         String password = registration.getPassword();
         registration.setPassword(null);
-        boolean superRet = super.registration(registration);
-        boolean saveRet = keyPairService.save(KeyPairHolder.getKeyPair(), password);
-        return superRet && saveRet;
+        boolean ret = super.registration(registration);
+        if (ret) {
+            ret = keyPairService.save(KeyPairHolder.getKeyPair(), password);
+        }
+        return ret;
     }
 }
