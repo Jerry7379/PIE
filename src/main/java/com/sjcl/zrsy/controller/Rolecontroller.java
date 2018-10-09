@@ -33,6 +33,13 @@ public class Rolecontroller {
      */
     @PostMapping("/registration")
     public String registration(@RequestBody Registration registration) {
+
+        Registration user = roleService.login(registration.getRegistrationId());
+
+        if (user != null && keyPairService.isExist()) {
+            return resourceBundle.getString("AccountAreadyExist");
+        }
+
         if (roleService.registration(registration)) {
             return resourceBundle.getString("RegistrationSuccessful");
         } else {
@@ -43,7 +50,7 @@ public class Rolecontroller {
     @PostMapping("/login")
     @ResponseBody
     public String login(@RequestBody RoleLogin roleLogin, HttpSession session) {
-        Registration user = roleService.login(roleLogin);
+        Registration user = roleService.login(roleLogin.getName());
         if (user == null) {
             return resourceBundle.getString("AccountNotExist");
         } else {
