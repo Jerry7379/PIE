@@ -15,7 +15,7 @@ public class RegistrationDao implements com.sjcl.zrsy.dao.IRegistrationDao {
     public Registration getLoginByRegistrationId(String registrationId){
         try {
             Assets assets = AssetsApi.getAssetsWithLimit(registrationId, "1");
-            if (assets != null && assets.size() == 1) {
+            if (assets != null && assets.size() >= 1) {
                 Asset asset = assets.getAssets().get(0);
                 Object actualAsset = BigchaindbUtil.getAsset(asset.getId());
                 if (actualAsset instanceof Registration
