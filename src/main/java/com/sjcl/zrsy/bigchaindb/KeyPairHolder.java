@@ -9,6 +9,8 @@ import java.security.KeyPair;
 public class KeyPairHolder {
     public static java.security.KeyPair KEYPAIR;
 
+    private static boolean isLogin = false;
+
     public static void setKeyPair(java.security.KeyPair keyPair) {
         KEYPAIR = keyPair;
     }
@@ -17,8 +19,15 @@ public class KeyPairHolder {
         return KEYPAIR;
     }
 
-    public static boolean isLogin() {
-        return KEYPAIR != null;
+    public static boolean isLogined() {
+        return isLogin;
+    }
+
+    public static void login(KeyPair keyPair) {
+        if (keyPair != null) {
+            KEYPAIR = keyPair;
+            isLogin = true;
+        }
     }
 
     public static EdDSAPublicKey getPublic() {

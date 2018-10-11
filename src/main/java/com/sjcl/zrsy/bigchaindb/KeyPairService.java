@@ -16,6 +16,7 @@ import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
 @Service
 public class KeyPairService {
@@ -24,6 +25,11 @@ public class KeyPairService {
 
 
     public KeyPairService() {
+    }
+
+    public static PublicKey decodePublicKey(String pubKeyStr) throws InvalidKeySpecException {
+        byte[] pubEncoded = Base64.getDecoder().decode(pubKeyStr);
+        return deserializePubKey(pubEncoded);
     }
 
     public boolean save(KeyPair keyPair, String password) {
@@ -100,7 +106,7 @@ public class KeyPairService {
         return new EdDSAPrivateKey(encoded);
     }
 
-    private PublicKey deserializePubKey(byte[] pubEncoded) throws InvalidKeySpecException {
+    private static PublicKey deserializePubKey(byte[] pubEncoded) throws InvalidKeySpecException {
         X509EncodedKeySpec encoded = new X509EncodedKeySpec(pubEncoded);
         return new EdDSAPublicKey(encoded);
     }
