@@ -17,7 +17,7 @@ public interface ITraceabilityIdcardDao {
      * @param initialFarm
      * @return
      */
-    boolean insert(TraceabilityIdcard initialFarm);
+    String insert(TraceabilityIdcard initialFarm);
 
     /**
      * update logistics

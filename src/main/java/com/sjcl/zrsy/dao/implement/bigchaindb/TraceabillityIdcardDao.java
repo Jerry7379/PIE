@@ -29,12 +29,11 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      * @return
      */
     @Override
-    public boolean insert(TraceabilityIdcard initialFarm) {
+    public String insert(TraceabilityIdcard initialFarm) {
         try {
-            BigchaindbUtil.createAsset("pig", initialFarm);
-            return true;
+            return BigchaindbUtil.createAsset("pig", initialFarm);
         } catch (Exception e) {
-            return false;
+            return null;
         }
     }
 

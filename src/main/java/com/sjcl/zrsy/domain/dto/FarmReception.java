@@ -1,6 +1,7 @@
 package com.sjcl.zrsy.domain.dto;
 
 
+import com.sjcl.zrsy.bigchaindb.KeyPairHolder;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.hibernate.validator.constraints.Length;
 
@@ -12,8 +13,6 @@ import java.sql.Date;
 public class FarmReception {
     @Length(min = 13, max = 13, message = "猪id为13位")
     private String id;
-
-    private String farmId;
 
     @Length(min = 6, max = 6, message = "饲养员id")
     private String breederId;
@@ -34,7 +33,7 @@ public class FarmReception {
     public TraceabilityIdcard toFarm() {
         TraceabilityIdcard farm = new TraceabilityIdcard();
         farm.setId(this.id);
-        farm.setFarmId(this.farmId);
+        farm.setFarmId(KeyPairHolder.getUser().getRegistrationId());
         farm.setBreederId(this.breederId);
         farm.setBreed(this.breed);
         farm.setBirthday(this.date);
@@ -49,14 +48,6 @@ public class FarmReception {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getFarmId() {
-        return farmId;
-    }
-
-    public void setFarmId(String farmId) {
-        this.farmId = farmId;
     }
 
     public String getBreederId() {

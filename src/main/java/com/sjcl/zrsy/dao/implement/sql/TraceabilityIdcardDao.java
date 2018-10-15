@@ -40,7 +40,7 @@ public class TraceabilityIdcardDao implements ITraceabilityIdcardDao {
      * @return
      */
     @Override
-    public boolean insert(TraceabilityIdcard initialFarm) {
+    public String insert(TraceabilityIdcard initialFarm) {
         try {
             //insert语句使用 insert into 表名 set 字段名=‘’形式，插入主键的放在 set后第一个位置。
             jdbcTemplate.update("insert into  traceability_idcard set id=?,farm_id=?,breeder_id=?,birthday=?,breed=?,gender=?,birthweight=?",
@@ -51,9 +51,10 @@ public class TraceabilityIdcardDao implements ITraceabilityIdcardDao {
                     initialFarm.getBreed(),
                     initialFarm.getGender(),
                     initialFarm.getBirthweight());
-            return true;
+            // TODO
+            return null;
         } catch (Exception e) {
-            return false;
+            return null;
         }
     }
 

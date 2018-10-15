@@ -1,6 +1,5 @@
 package com.sjcl.zrsy.service.implement;
 
-import com.sjcl.zrsy.bigchaindb.KeyPairHolder;
 import com.sjcl.zrsy.dao.IOperationDao;
 import com.sjcl.zrsy.dao.ITraceabilityIdcardDao;
 import com.sjcl.zrsy.domain.dto.FarmReception;
@@ -21,8 +20,8 @@ public class FarmServiceImpl implements IFarmService {
     IOperationDao operationDao;
     //养殖场接受新猪
     @Override
-    public boolean farmReception(FarmReception farmReception){
-        farmReception.setFarmId(KeyPairHolder.getUser().getRegistrationId());
+    public String farmReception(FarmReception farmReception){
+
         return traceabilityIdcardDao.insert(farmReception.toFarm());
     }
     //养殖场操作
