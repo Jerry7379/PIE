@@ -48,6 +48,9 @@ public class SignatureAuthenticateWay implements Authenticator.AuthenticateWay {
 
     private PublicKey getPublicKey(HttpServletRequest request) {
         String pubKeyStr = request.getHeader(HEADER_AUTH_PUBKEY);
+        if (pubKeyStr == null) {
+            return null;
+        }
         try {
             return KeyPairService.decodePublicKey(pubKeyStr);
         } catch (InvalidKeySpecException e) {
@@ -57,6 +60,9 @@ public class SignatureAuthenticateWay implements Authenticator.AuthenticateWay {
 
     private byte[] getSign(HttpServletRequest request) {
         String base64Sign = request.getHeader(HEADER_AUTH_SIGNATURE);
+        if (base64Sign == null) {
+            return null;
+        }
         return Base64.getDecoder().decode(base64Sign);
     }
 
