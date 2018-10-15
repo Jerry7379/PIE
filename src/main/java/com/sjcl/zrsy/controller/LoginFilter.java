@@ -12,9 +12,10 @@ import java.util.*;
 public class LoginFilter implements Filter {
     private Authenticator authenticator;
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<>(
-                    Arrays.asList("http://localhost:8080/search",
-                            "http://localhost:8080/register",
-                            "http://localhost:8080/Login.html")
+                    Arrays.asList("/search",
+                            "/register",
+                            "/login",
+                            "/Login.html")
             )
     );
 
@@ -22,6 +23,7 @@ public class LoginFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         authenticator = new Authenticator();
         authenticator.addWay(new SessionAuthenticateWay());
+        authenticator.addWay(new SignatureAuthenticateWay());
     }
 
     @Override
@@ -29,22 +31,17 @@ public class LoginFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
-        String path = req.getRequestURL().substring(req.getContextPath().length()).replaceAll("[/]+$", "");
 
+        String path = req.getServletPath();
 
-        System.out.println(req.getRequestURI());
-        System.out.println(req.getRequestURL());
 
         if (ALLOWED_PATHS.contains(path)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else if (authenticator.authenticate(req)) {
-
             filterChain.doFilter(servletRequest, servletResponse);
-
-
         } else {
             resp.getOutputStream().write("请先登录".getBytes());
-            resp.sendRedirect("http://localhost:8080/PorkTraceability/login/Login.html");
+            resp.sendRedirect("/PorkTraceability/login/Login.html");
         }
 
     }
