@@ -102,7 +102,7 @@
                 var PigMwork=JSON.stringify(pigMwork);
                 alert(PigMwork);
                 $.post({
-                    url: "http://localhost:8080/marketoperation",
+                    url: "/marketoperation",
                     headers: {
                         "Content-Type": "application/json; charset=utf-8"
                     }
@@ -110,7 +110,7 @@
                     if(data=="请先登录")
                     {
                         alert(data);
-                        location.assign("http://localhost:8080/PorkTraceability/login/Login.html");
+                        location.assign("/PorkTraceability/login/Login.html");
                     }
                     else {
                         alert(data);
@@ -149,8 +149,8 @@
 </script>
 <script>
     $("#logout").click(function(){
-        $.get("http://localhost:8080/logout",function () {
-            location.assign("http://localhost:8080/PorkTraceability/login/Login.html");
+        $.get("/logout",function () {
+            location.assign("/PorkTraceability/login/Login.html");
         })
     })
 </script>

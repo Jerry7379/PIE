@@ -53,7 +53,7 @@
             var Date=JSON.stringify(date)
             alert(Date);
             $.post({
-                url: "http://localhost:8080/login",
+                url: "/login",
                 headers: {
                     "content-Type": "application/json;charset=utf-8"
                 }
@@ -61,16 +61,16 @@
                 var info=jQuery.trim(data)
                 switch (info) {
                     case "屠宰场":
-                        location.assign("http://localhost:8080/PorkTraceability/Slaughter/Slaughter_navigation.html")
+                        location.assign("/PorkTraceability/Slaughter/Slaughter_navigation.html")
                         break;
                     case "养殖场":
-                        location.assign("http://localhost:8080/PorkTraceability/Farm/Farm_navigation.html")
+                        location.assign("/PorkTraceability/Farm/Farm_navigation.html")
                         break;
                     case "物流":
-                        location.assign("http://localhost:8080/PorkTraceability/Logistics/Logistics_navigation.html")
+                        location.assign("/PorkTraceability/Logistics/Logistics_navigation.html")
                         break;
                     case "超市":
-                        location.assign("http://localhost:8080/PorkTraceability/Market/Market_navigation.html")
+                        location.assign("/PorkTraceability/Market/Market_navigation.html")
                         break;
                     default :
                         alert(info)

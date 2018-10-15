@@ -112,7 +112,7 @@
                 var F_operation=JSON.stringify(f_operation);
                 //alert(Pig);
                 $.post({
-                    url: "http://localhost:8080/farmoperation",
+                    url: "/farmoperation",
                     headers: {
                         "Content-Type": "application/json; charset=utf-8"
                     }
@@ -120,7 +120,7 @@
                     if(data=="请先登录")
                     {
                         alert(data);
-                        location.assign("http://localhost:8080/login/Login.html");
+                        location.assign("/login/Login.html");
                     }
                     else {
                         alert(data);
@@ -158,8 +158,8 @@
 </script>
 <script>
     $("#logout").click(function(){
-        $.get("http://localhost:8080/logout",function () {
-            location.assign("http://localhost:8080/PorkTraceability/login/Login.html");
+        $.get("/logout",function () {
+            location.assign("/PorkTraceability/login/Login.html");
         })
     })
 </script>

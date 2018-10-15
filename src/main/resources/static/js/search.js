@@ -10,7 +10,7 @@ var vm =new Vue({
 
 $("#btnS").click(function(){
     var searchId =  $("#searchId").val();
-    $.getJSON("http://localhost:8080/searchid?id="+searchId, function (result, status) {
+    $.getJSON("/searchid?id="+searchId, function (result, status) {
         vm.status = result.status;
         vm.msg = result.msg;
         vm.result = result.data;
