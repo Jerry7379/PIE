@@ -126,7 +126,6 @@
         {
             //获取文件
             var file = $("#form").find("input")[1].files[0];
-            // alert(file);
 
             //创建读取文件的对象
 
@@ -140,7 +139,6 @@
 
             //为文件读取成功设置事件
             reader.onload = function (e) {
-                //alert('文件读取完成');
                 //截取字符串base64
                 imgFile=reader.result.substring(reader.result.indexOf(",") + 1,reader.result.length);
 
