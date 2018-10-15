@@ -1,5 +1,6 @@
 package com.sjcl.zrsy.bigchaindb;
 
+import com.sjcl.zrsy.domain.po.Registration;
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import net.i2p.crypto.eddsa.Utils;
@@ -10,6 +11,8 @@ public class KeyPairHolder {
     public static java.security.KeyPair KEYPAIR;
 
     private static boolean isLogin = false;
+
+    private static Registration user;
 
     public static void setKeyPair(java.security.KeyPair keyPair) {
         KEYPAIR = keyPair;
@@ -23,9 +26,14 @@ public class KeyPairHolder {
         return isLogin;
     }
 
-    public static void login(KeyPair keyPair) {
-        if (keyPair != null) {
+    public static Registration getUser() {
+        return user;
+    }
+
+    public static void login(KeyPair keyPair, Registration user) {
+        if (keyPair != null && user != null) {
             KEYPAIR = keyPair;
+            KeyPairHolder.user = user;
             isLogin = true;
         }
     }

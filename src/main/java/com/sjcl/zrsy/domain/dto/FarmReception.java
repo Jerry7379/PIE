@@ -13,7 +13,6 @@ public class FarmReception {
     @Length(min = 13, max = 13, message = "猪id为13位")
     private String id;
 
-    @Length(min = 6, max = 6, message = "养殖场id为6位")
     private String farmId;
 
     @Length(min = 6, max = 6, message = "饲养员id")

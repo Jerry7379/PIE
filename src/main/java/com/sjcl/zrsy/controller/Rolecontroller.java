@@ -57,8 +57,8 @@ public class Rolecontroller {
             String password = roleLogin.getPassword();
             KeyPair keyPair = keyPairService.get(password);
             if (keyPair != null) {
-                KeyPairHolder.login(keyPair);
-                session.setAttribute("type", user.getType());
+                KeyPairHolder.login(keyPair, user);
+                session.setAttribute("type", user);
                 session.setAttribute("userInfo", roleLogin.getName());
                 return user.getType();
             }
