@@ -40,7 +40,6 @@ public class LoginFilter implements Filter {
         } else if (authenticator.authenticate(req)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            resp.getOutputStream().write("请先登录".getBytes());
             resp.sendRedirect("/PorkTraceability/login/Login.html");
         }
 
