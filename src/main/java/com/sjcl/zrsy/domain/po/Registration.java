@@ -8,6 +8,7 @@ import sun.misc.BASE64Decoder;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -43,6 +44,7 @@ public class Registration {    //注册模块
     private Date destablishment;//成立日期 date
 
     private String account;//账号 255
+    @Size(min = 6, max = 18, message = "密码长度必须位于6-18之间")
     private String password;//密码 255
 
     public Registration()
