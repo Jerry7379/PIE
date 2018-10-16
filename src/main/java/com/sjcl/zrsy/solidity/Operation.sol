@@ -50,7 +50,7 @@ contract Operation {
 
 
     function insertSlaughterOperation(bytes32 porkID,bytes32[] operation, bytes32[] content,
-        bytes32[] remark, bytes32 isacid, bytes32 acider_id, uint[] timestamps) external onlySlaughterhouse returns(bool,bytes32){
+        bytes32[] remark, uint[] timestamps) external onlySlaughterhouse returns(bool,bytes32){
         Pork pork = porkMap[porkID];
         if (pork.porkID == 0x0 ){
             return (false,"porkID存在错误");

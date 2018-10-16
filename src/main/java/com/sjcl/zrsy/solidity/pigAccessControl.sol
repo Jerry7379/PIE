@@ -28,7 +28,7 @@ contract pigAccessControl {
         _;
     }
 
-    modifier onlyMarker(){
+    modifier onlyMarket(){
         require(msg.sender == marketAdddress);
         _;
     }
@@ -38,22 +38,22 @@ contract pigAccessControl {
         govenmentAdddress = _newGovenment;
     }
 
-    function setFarm(address _newFarm) external onlyFarm{
+    function setFarm(address _newFarm) external onlyGovenmnet{
         require(_newFarm != address(0));
         farmAdddress = _newFarm;
     }
 
-    function setSlaughterhouse(address _newSlaughterhouse)external onlySlaughterhouse{
+    function setSlaughterhouse(address _newSlaughterhouse)external onlyGovenmnet{
         require(_newSlaughterhouse != address(0));
         slaughterhouseAdddress = _newSlaughterhouse;
     }
 
-    function setLogistics(address _newLogistics)external onlyLogistics{
+    function setLogistics(address _newLogistics)external onlyGovenmnet{
         require(_newLogistics != address(0));
         logisticsAdddress = _newLogistics;
     }
 
-    function setMarket(address _newMarket)external onlyMarker{
+    function setMarket(address _newMarket)external onlyGovenmnet{
         require(_newMarket != address(0));
         marketAdddress = _newMarket;
     }
