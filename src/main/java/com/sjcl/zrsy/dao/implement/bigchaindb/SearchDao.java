@@ -36,6 +36,7 @@ public class SearchDao implements com.sjcl.zrsy.dao.ISearchDao {
     private SearchId getSearchId(String id) {
         try {
             TraceabilityIdcard traceabilityIdcard = BigchaindbUtil.getWholeMetaData(id, TraceabilityIdcard.class);
+            traceabilityIdcard.setId(id);
             if (traceabilityIdcard == null) {
                 return null;
             }
