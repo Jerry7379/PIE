@@ -16,7 +16,8 @@
         <div class="row border-bottom white-bg">
             <nav class="navbar navbar-static-top" role="navigation">
                 <div class="navbar-header">
-                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse"
+                            class="navbar-toggle collapsed" type="button">
                         <i class="fa fa-reorder"></i>
                     </button>
                     <a href="index_4.html#" class="navbar-brand">PIE</a>
@@ -45,9 +46,10 @@
                     <h3 class="">日常操作</h3>
                 </div>
 
-                <form class="m-t" role="form" id="form" >
-                    <div class="form-group" >
-                        <input type="text" class="form-control" placeholder="请输入13位小猪标号" required="" id="id" name="pigId">
+                <form class="m-t" role="form" id="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="请输入13位小猪标号" required="" id="id"
+                               name="pigId">
                     </div>
                     <div class="form-group draggable">
                         <div class="">
@@ -61,11 +63,13 @@
                     </div>
                     <div class="form-group">
                         <label for="content">主要内容</label>
-                        <textarea class="form-control col-lg-8" id="content" name="Content" rows="3" placeholder="请输入操作内容(50字以内)..."></textarea>
+                        <textarea class="form-control col-lg-8" id="content" name="Content" rows="3"
+                                  placeholder="请输入操作内容(50字以内)..."></textarea>
                     </div>
                     <div class="form-group">
                         <label for="remark">备注</label>
-                        <textarea class="form-control" id="remark" name="Remark" rows="3" placeholder="请输入备注信息(50字以内)..."></textarea>
+                        <textarea class="form-control" id="remark" name="Remark" rows="3"
+                                  placeholder="请输入备注信息(50字以内)..."></textarea>
                     </div>
 
                     <button type="button" class="btn btn-primary block full-width m-b" id="btnfo">提交</button>
@@ -85,8 +89,6 @@
 </div>
 
 
-
-
 <!-- Mainly scripts -->
 <script src="../../js/jquery-3.3.1.js"></script>
 <script src="../../js/bootstrap.min.js?v=3.4.0"></script>
@@ -94,11 +96,11 @@
 <script src="../../js/plugins/validate/messages_zh.min.js"></script>
 
 <script>
-    $(function(){
-        $(document).ready(function(){
-            $("#btnfo").click(function(){
-                var transportTime=new Date();
-                var t=transportTime.toLocaleString();
+    $(function () {
+        $(document).ready(function () {
+            $("#btnfo").click(function () {
+                var transportTime = new Date();
+                var t = transportTime.toLocaleString();
                 //alert(str);
 
                 var f_operation = {
@@ -109,16 +111,15 @@
                     transportTime: t
 
                 }
-                var F_operation=JSON.stringify(f_operation);
+                var F_operation = JSON.stringify(f_operation);
                 //alert(Pig);
                 $.post({
                     url: "/farmoperation",
                     headers: {
                         "Content-Type": "application/json; charset=utf-8"
                     }
-                }, F_operation,function (data){
-                    if(data=="请先登录")
-                    {
+                }, F_operation, function (data) {
+                    if (data == "请先登录") {
                         alert(data);
                         location.assign("/login/Login.html");
                     }
@@ -134,31 +135,30 @@
 </script>
 
 
-
 <script>
     $(document).ready(function () {
         $("#form").validate({
-            rules:{
-                pigId:{
-                    required:true,
-                    number:true,
-                    maxlength:13
+            rules: {
+                pigId: {
+                    required: true,
+                    maxlength: 64,
+                    minlength: 64
                 },
-                Content:{
-                    required:true,
-                    maxlength:50
+                Content: {
+                    required: true,
+                    maxlength: 50
                 },
-                Remark:{
-                    required:true,
-                    maxlength:50
+                Remark: {
+                    required: true,
+                    maxlength: 50
                 }
             }
         })
     })
 </script>
 <script>
-    $("#logout").click(function(){
-        $.get("/logout",function () {
+    $("#logout").click(function () {
+        $.get("/logout", function () {
             location.assign("/PorkTraceability/login/Login.html");
         })
     })
