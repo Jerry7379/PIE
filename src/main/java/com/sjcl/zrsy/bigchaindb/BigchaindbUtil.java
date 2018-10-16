@@ -178,9 +178,9 @@ public class BigchaindbUtil {
         List<Transaction> transfers = TransactionsApi.getTransactionsByAssetId(assetId, Operations.TRANSFER).getTransactions();
 
         if (transfers != null && transfers.size() > 0) {
-            return transfers.get(transfers.size() - 1).getId();
+            return getTransactionId(transfers.get(transfers.size() - 1));
         } else {
-            return getCreateTransaction(assetId).getId();
+            return getTransactionId(getCreateTransaction(assetId));
         }
     }
 
@@ -231,5 +231,10 @@ public class BigchaindbUtil {
         spendFrom.setTransactionId(transactionId);
         spendFrom.setOutputIndex(0);
         return spendFrom;
+    }
+
+    private static String getTransactionId(Transaction transaction) {
+        String withQuotationId = transaction.getId();
+        return withQuotationId.substring(1, withQuotationId.length() -1);
     }
 }
