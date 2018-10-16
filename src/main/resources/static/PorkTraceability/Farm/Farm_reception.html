@@ -156,8 +156,10 @@
                         "Content-Type": "application/json; charset=utf-8"
                     }
                 }, Pig,function (data){
-                        console.log(data);
-                        location.reload();
+                    if (data.status == 200) {
+                        alert("溯源号码:" + data.data);
+                        $("#form").reset();
+                    }
                 })
             });
         });
