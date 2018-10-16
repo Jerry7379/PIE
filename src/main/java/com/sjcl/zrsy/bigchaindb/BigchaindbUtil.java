@@ -90,11 +90,15 @@ public class BigchaindbUtil {
         }
 
 
-        com.google.gson.internal.LinkedTreeMap properties = (LinkedTreeMap) assetData.get("data");
-
-        T bean = type.newInstance();
-        BeanUtils.populate(bean, properties);
-        return bean;
+        Object data = assetData.get("data");
+        if (data instanceof LinkedTreeMap) {
+            com.google.gson.internal.LinkedTreeMap properties = (LinkedTreeMap) data;
+            T bean = type.newInstance();
+            BeanUtils.populate(bean, properties);
+            return bean;
+        } else {
+            return (T) data;
+        }
     }
 
     public static Object bigchaindbDataToBean(LinkedTreeMap bigchaindbData) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
