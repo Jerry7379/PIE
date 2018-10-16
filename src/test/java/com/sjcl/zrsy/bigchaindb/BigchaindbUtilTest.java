@@ -68,7 +68,7 @@ public class BigchaindbUtilTest {
 
     @Test
     public void testGetLasetTransactionId() throws IOException {
-        String id = BigchaindbUtil.getLastTransactonId(assetId);
+        String id = BigchaindbUtil.getLastTransactionId(assetId);
 
         Assert.assertNotNull(id);
     }

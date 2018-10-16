@@ -9,10 +9,11 @@ import com.bigchaindb.model.FulFill;
 import com.bigchaindb.model.Transaction;
 import com.bigchaindb.model.Transactions;
 import com.bigchaindb.util.JsonUtils;
+import com.bigchaindb.util.KeyPairUtils;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LinkedTreeMap;
 import com.sjcl.zrsy.domain.dto.BigchaindbData;
-import com.sjcl.zrsy.domain.po.Operation;
+import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ClassUtils;
@@ -23,8 +24,8 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -101,6 +102,16 @@ public class BigchaindbUtil {
         }
     }
 
+    public static EdDSAPublicKey getOwner(String assetId) throws IOException, InvalidKeySpecException {
+        if (BigchaindbUtil.assetIsExist(assetId)) {
+            Transaction transaction = BigchaindbUtil.getLastTransaction(assetId);
+            String pubKeyStr = transaction.getOutputs().get(0).getPublicKeys().get(0);
+            return (EdDSAPublicKey) KeyPairService.decodePublicKey(pubKeyStr);
+        } else {
+            return null;
+        }
+    }
+
     public static Object bigchaindbDataToBean(LinkedTreeMap bigchaindbData) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
         String type = (String) bigchaindbData.get("type");
         com.google.gson.internal.LinkedTreeMap properties = (LinkedTreeMap) bigchaindbData.get("data");
@@ -145,6 +156,21 @@ public class BigchaindbUtil {
         return transferTransaction.getId();
     }
 
+    public static String transferTo(String assetId, EdDSAPublicKey to) throws Exception {
+
+        Transaction transferTransaction = BigchainDbTransactionBuilder
+                .init()
+                .operation(Operations.TRANSFER)
+                .addAssets(assetId, String.class)
+                .addInput(null, transferToSelfFulFill(assetId), KeyPairHolder.getPublic())
+                .addOutput("1", to)
+                .buildAndSign(
+                        KeyPairHolder.getPublic(),
+                        KeyPairHolder.getPrivate())
+                .sendTransaction();
+        return transferTransaction.getId();
+    }
+
     public static Transaction getCreateTransaction(String assetId) throws IOException {
         try {
             Transactions apiTransactions = TransactionsApi.getTransactionsByAssetId(assetId, Operations.CREATE);
@@ -174,14 +200,18 @@ public class BigchaindbUtil {
         return transactions;
     }
 
-    public static String getLastTransactonId(String assetId) throws IOException {
+    public static Transaction getLastTransaction(String assetId) throws IOException {
         List<Transaction> transfers = TransactionsApi.getTransactionsByAssetId(assetId, Operations.TRANSFER).getTransactions();
 
         if (transfers != null && transfers.size() > 0) {
-            return getTransactionId(transfers.get(transfers.size() - 1));
+            return transfers.get(transfers.size() - 1);
         } else {
-            return getTransactionId(getCreateTransaction(assetId));
+            return getCreateTransaction(assetId);
         }
+    }
+
+    public static String getLastTransactionId(String assetId) throws IOException {
+        return getTransactionId(getLastTransaction(assetId));
     }
 
     public static <T> T getWholeMetaData(String assetId, Class<T> type) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, IntrospectionException {
@@ -227,7 +257,7 @@ public class BigchaindbUtil {
 
     private static FulFill transferToSelfFulFill(String assetId) throws IOException {
         final FulFill spendFrom = new FulFill();
-        String transactionId = getLastTransactonId(assetId);
+        String transactionId = getLastTransactionId(assetId);
         spendFrom.setTransactionId(transactionId);
         spendFrom.setOutputIndex(0);
         return spendFrom;

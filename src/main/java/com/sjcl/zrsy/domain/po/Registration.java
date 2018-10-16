@@ -1,6 +1,8 @@
 package com.sjcl.zrsy.domain.po;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import net.i2p.crypto.eddsa.EdDSAPublicKey;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import sun.misc.BASE64Decoder;
@@ -14,8 +16,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Registration {    //注册模块
+    private static final Map<String, String> NEXT_RELATIONSHIP;
+
+    static {
+        NEXT_RELATIONSHIP = new HashMap<>();
+        NEXT_RELATIONSHIP.put("养殖场", "屠宰场");
+        NEXT_RELATIONSHIP.put("屠宰场", "物流");
+        NEXT_RELATIONSHIP.put("物流", "超市");
+    }
+
     @Length(min = 6,max=6,message = "注册号为6位")
     private String registrationId;
 
@@ -46,6 +59,8 @@ public class Registration {    //注册模块
     private String account;//账号 255
     @Size(min = 6, max = 18, message = "密码长度必须位于6-18之间")
     private String password;//密码 255
+
+    private EdDSAPublicKey publicKey;
 
     public Registration()
     {
@@ -88,6 +103,10 @@ public class Registration {    //注册模块
 
     public String getType() {
         return type;
+    }
+
+    public String getNextType() {
+        return NEXT_RELATIONSHIP.get(getType());
     }
 
     public void setType(String type) {
@@ -164,5 +183,22 @@ public class Registration {    //注册模块
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public EdDSAPublicKey getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(EdDSAPublicKey publicKey) {
+        this.publicKey = publicKey;
+    }
+
+    public boolean isNext(Registration nextCandidate) {
+        if (nextCandidate == null) {
+            return false;
+        }
+        String candidateType = nextCandidate.getType();
+
+        return StringUtils.equals(NEXT_RELATIONSHIP.get(getType()), candidateType);
     }
 }
