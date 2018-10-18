@@ -28,25 +28,55 @@ import java.util.Objects;
 
 /**
  * used for interactive with bigchaindb.
+ *
+ * signature using keypair KeyPairHolder.getKeyPair()
  */
 public class BigchaindbUtil {
 
-
+    /**
+     * create a asset.
+     *
+     * metadata is null
+     *
+     * @param assetObject asset
+     * @return asset Id
+     * @throws Exception
+     */
     public static String createAsset(Object assetObject) throws Exception {
         BigchaindbData assetData = new BigchaindbData(assetObject);
         return createAsset(assetData);
     }
 
+    /**
+     * create a asset with metadata.
+     * @param assetObject asset
+     * @param metadataObject metadata
+     * @return asset Id
+     * @throws Exception
+     */
     public static String createAsset(Object assetObject, Object metadataObject) throws Exception {
         BigchaindbData assetData = new BigchaindbData(assetObject);
         BigchaindbData metaData = new BigchaindbData(metadataObject);
         return createAsset(assetData, metaData);
     }
 
+    /**
+     * create a asset use assetWrapper.
+     * @param assetWrapper assetWrapper
+     * @return asset Id
+     * @throws Exception
+     */
     public static String createAsset(BigchaindbData assetWrapper) throws Exception {
         return createAsset(assetWrapper, null);
     }
 
+    /**
+     * create a asset use assetWrapper and metadataWrapper.
+     * @param assetWrapper assetWrapper
+     * @param metadataWrapper metadataWrapper
+     * @return asset Id
+     * @throws Exception
+     */
     public static String createAsset(BigchaindbData assetWrapper, BigchaindbData metadataWrapper) throws Exception {
 
         Transaction createTransaction = BigchainDbTransactionBuilder
@@ -61,6 +91,16 @@ public class BigchaindbUtil {
         return createTransaction.getId();
     }
 
+    /**
+     * obtain a asset use assetId.
+     * @param assetId  aseetId
+     * @return assetObject
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
     public static Object getAsset(String assetId) throws IOException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
         Transaction createTransaction = getCreateTransaction(assetId);
         if (createTransaction == null) {
@@ -72,6 +112,18 @@ public class BigchaindbUtil {
         return bigchaindbDataToBean(assetData);
     }
 
+    /**
+     * obtain a explicit type asset use assetId.
+     * @param assetId assetId
+     * @param type asset Type class
+     * @param <T> asset Type
+     * @return assetObject
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
     public static <T> T getAsset(String assetId, Class<T> type) throws IOException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
         Objects.requireNonNull(type);
 
@@ -99,16 +151,15 @@ public class BigchaindbUtil {
         }
     }
 
-    public static EdDSAPublicKey getOwner(String assetId) throws IOException, InvalidKeySpecException {
-        if (BigchaindbUtil.assetIsExist(assetId)) {
-            Transaction transaction = BigchaindbUtil.getLastTransaction(assetId);
-            String pubKeyStr = transaction.getOutputs().get(0).getPublicKeys().get(0);
-            return (EdDSAPublicKey) KeyPairService.decodePublicKey(pubKeyStr);
-        } else {
-            return null;
-        }
-    }
-
+    /**
+     * convert bigchaindb LinkedTreeMap data to java object.
+     * @param bigchaindbData
+     * @return
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     * @throws InvocationTargetException
+     */
     public static Object bigchaindbDataToBean(LinkedTreeMap bigchaindbData) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
         String type = (String) bigchaindbData.get("type");
         com.google.gson.internal.LinkedTreeMap properties = (LinkedTreeMap) bigchaindbData.get("data");
@@ -119,6 +170,12 @@ public class BigchaindbUtil {
         return bean;
     }
 
+    /**
+     * determine whether asset exist.
+     *
+     * @param assetId asset Id
+     * @return whether asset exist
+     */
     public static boolean assetIsExist(String assetId) {
         try {
             Object asset = getAsset(assetId);
@@ -128,6 +185,13 @@ public class BigchaindbUtil {
         }
     }
 
+    /**
+     * determine whether asset with specify type exist.
+     * @param assetId asset Id
+     * @param type type class
+     * @param <T> type
+     * @return
+     */
     public static <T> boolean assetIsExist(String assetId, Class<T> type) {
         try {
             T asset = getAsset(assetId, type);
@@ -137,6 +201,15 @@ public class BigchaindbUtil {
         }
     }
 
+    /**
+     * transfer asset to youself.
+     *
+     * youself is KeyPairHolder.getKeyPair() representive
+     * @param metaData
+     * @param assetId
+     * @return
+     * @throws Exception
+     */
     public static String transferToSelf(BigchaindbData metaData, String assetId) throws Exception {
 
         Transaction transferTransaction = BigchainDbTransactionBuilder
@@ -153,6 +226,13 @@ public class BigchaindbUtil {
         return transferTransaction.getId();
     }
 
+    /**
+     * transfer asset to publicKeyHexTo.
+     * @param assetId asset Id
+     * @param publicKeyHexTo transferTo
+     * @return transferTransactionId
+     * @throws Exception
+     */
     public static String transferTo(String assetId, String publicKeyHexTo) throws Exception {
 
         Transaction transferTransaction = BigchainDbTransactionBuilder
@@ -168,6 +248,12 @@ public class BigchaindbUtil {
         return transferTransaction.getId();
     }
 
+    /**
+     * obtain asset's create transaction
+     * @param assetId
+     * @return
+     * @throws IOException
+     */
     public static Transaction getCreateTransaction(String assetId) throws IOException {
         try {
             Transactions apiTransactions = TransactionsApi.getTransactionsByAssetId(assetId, Operations.CREATE);
@@ -184,6 +270,13 @@ public class BigchaindbUtil {
         }
     }
 
+    /**
+     * obtain all asset's all transaction.
+     * sort by transfer order
+     * @param assetId asset Id
+     * @return transactions
+     * @throws IOException
+     */
     public static Transactions getTransactionsByAssetId(String assetId) throws IOException {
         Transactions transactions = new Transactions();
         Transactions createTransactions = TransactionsApi.getTransactionsByAssetId(assetId, Operations.CREATE);
@@ -197,6 +290,12 @@ public class BigchaindbUtil {
         return transactions;
     }
 
+    /**
+     * obtain last transaction of asset
+     * @param assetId assetId
+     * @return last transaction
+     * @throws IOException
+     */
     public static Transaction getLastTransaction(String assetId) throws IOException {
         List<Transaction> transfers = TransactionsApi.getTransactionsByAssetId(assetId, Operations.TRANSFER).getTransactions();
 
@@ -207,10 +306,59 @@ public class BigchaindbUtil {
         }
     }
 
+    /**
+     * obtain last transaction id of asset.
+     * @param assetId asset Id
+     * @return last transaction id
+     * @throws IOException
+     */
     public static String getLastTransactionId(String assetId) throws IOException {
         return getTransactionId(getLastTransaction(assetId));
     }
 
+    /**
+     * obtain whole metadata.
+     *
+     * integrate ont asset's all transactions's metadata into one metadataObject.
+     * when duplicate attributes appear, use the first one.
+     *
+     * for example:
+     * 1.
+     * {
+     *     name: 'tom'
+     * }
+     * 2.
+     * {
+     *     age: 22
+     * }
+     * 3.
+     * {
+     *     gender: 'male'
+     * }
+     * 4.
+     * {
+     *     age: 44,
+     *     height: 172
+     * }
+     * In the end, the object is:
+     * {
+     *     name: 'tom',
+     *     age: 22,
+     *     gender: 'male',
+     *     height: 172
+     * }
+     *
+     * @param assetId asset Id
+     * @param type type class
+     * @param <T> type
+     * @return metadataObject
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     * @throws IntrospectionException
+     */
     public static <T> T getWholeMetaData(String assetId, Class<T> type) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, IntrospectionException {
 
         List<T> metadatas = getMetaDatas(assetId, type);
@@ -236,6 +384,18 @@ public class BigchaindbUtil {
         return bean;
     }
 
+    /**
+     * obtain metadatas
+     * @param assetId asset Id
+     * @param type type class
+     * @param <T> type
+     * @return metadataObjects
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
     public static <T> List<T> getMetaDatas(String assetId, Class<T> type) throws IOException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
         List<T> metadatas = new ArrayList<>();
 
