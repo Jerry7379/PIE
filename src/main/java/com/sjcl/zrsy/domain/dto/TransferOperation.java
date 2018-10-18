@@ -6,7 +6,7 @@ public class TransferOperation {
     @NotNull
     private String pigId;
     @NotNull
-    private String registrationId;
+    private String publicKeyInHex;
 
     public TransferOperation() {}
 
@@ -14,15 +14,15 @@ public class TransferOperation {
         this.pigId = pigId;
     }
 
-    public void setRegistrationId(String registrationId) {
-        this.registrationId = registrationId;
-    }
-
     public String getPigId() {
         return pigId;
     }
 
-    public String getRegistrationId() {
-        return registrationId;
+    public String getPublicKeyInHex() {
+        return publicKeyInHex;
+    }
+
+    public void setPublicKeyInHex(String publicKeyInHex) {
+        this.publicKeyInHex = publicKeyInHex;
     }
 }

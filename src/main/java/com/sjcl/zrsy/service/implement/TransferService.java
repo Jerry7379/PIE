@@ -1,5 +1,7 @@
 package com.sjcl.zrsy.service.implement;
 
+import com.bigchaindb.api.AssetsApi;
+import com.bigchaindb.api.TransactionsApi;
 import com.sjcl.zrsy.bigchaindb.KeyPairHolder;
 import com.sjcl.zrsy.dao.ITransferDao;
 import com.sjcl.zrsy.domain.po.Registration;
@@ -18,14 +20,7 @@ public class TransferService implements ITransferService {
     private ITransferDao transferDao;
 
     @Override
-    public boolean isNext(String registrationId) {
-        Registration nextCandidate = roleService.login(registrationId);
-        Registration user = KeyPairHolder.getUser();
-        return (user.isNext(nextCandidate));
-    }
-
-    @Override
-    public void transfer(String pigId, String registrationId) throws Exception {
-        transferDao.transfer(pigId, registrationId);
+    public void transfer(String pigId, String publicKeyHex) throws Exception {
+        transferDao.transfer(pigId, publicKeyHex);
     }
 }

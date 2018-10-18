@@ -4,10 +4,7 @@ package com.sjcl.zrsy.bigchaindb;
 import com.bigchaindb.api.TransactionsApi;
 import com.bigchaindb.builders.BigchainDbTransactionBuilder;
 import com.bigchaindb.constants.Operations;
-import com.bigchaindb.model.Asset;
-import com.bigchaindb.model.FulFill;
-import com.bigchaindb.model.Transaction;
-import com.bigchaindb.model.Transactions;
+import com.bigchaindb.model.*;
 import com.bigchaindb.util.JsonUtils;
 import com.bigchaindb.util.KeyPairUtils;
 import com.google.gson.JsonSyntaxException;
@@ -156,14 +153,14 @@ public class BigchaindbUtil {
         return transferTransaction.getId();
     }
 
-    public static String transferTo(String assetId, EdDSAPublicKey to) throws Exception {
+    public static String transferTo(String assetId, String publicKeyHexTo) throws Exception {
 
         Transaction transferTransaction = BigchainDbTransactionBuilder
                 .init()
                 .operation(Operations.TRANSFER)
                 .addAssets(assetId, String.class)
                 .addInput(null, transferToSelfFulFill(assetId), KeyPairHolder.getPublic())
-                .addOutput("1", to)
+                .addOutput("1", (EdDSAPublicKey) Account.publicKeyFromHex(publicKeyHexTo))
                 .buildAndSign(
                         KeyPairHolder.getPublic(),
                         KeyPairHolder.getPrivate())

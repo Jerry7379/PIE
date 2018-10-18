@@ -20,8 +20,6 @@ public class RegistrationDao implements com.sjcl.zrsy.dao.IRegistrationDao {
                 Object actualAsset = BigchaindbUtil.getAsset(asset.getId());
                 if (actualAsset instanceof Registration
                         && StringUtils.equals(registrationId, ((Registration) actualAsset).getRegistrationId())) {
-                    Registration registration = (Registration) actualAsset;
-                    registration.setPublicKey(BigchaindbUtil.getOwner(asset.getId()));
                     return (Registration) actualAsset;
                 }
             }

@@ -52,8 +52,8 @@
                                name="pigId">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="物流注册号" required="" id="registrationId"
-                               name="registrationId">
+                        <input type="text" class="form-control" placeholder="物流" required="" id="publicKeyInHex"
+                               name="publicKeyInHex">
                     </div>
                     <button type="button" class="btn btn-primary block full-width m-b" id="btnfo">提交</button>
                 </form>
@@ -84,7 +84,7 @@
             $("#btnfo").click(function () {
                 var transfer_operation = {
                     pigId: $("#id").val(),
-                    registrationId: $("#registrationId").val();
+                    publicKeyInHex: $("#publicKeyInHex").val();
                 }
                 var transferOperationJson = JSON.stringify(transfer_operation);
                 //alert(Pig);
@@ -113,7 +113,7 @@
                     maxlength: 64,
                     minlength: 64
                 },
-                registrationId: {
+                publicKeyInHex: {
                     required: true,
                     maxlength: 50
                 }

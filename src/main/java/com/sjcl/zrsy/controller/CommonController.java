@@ -1,6 +1,5 @@
 package com.sjcl.zrsy.controller;
 
-import com.sjcl.zrsy.bigchaindb.KeyPairHolder;
 import com.sjcl.zrsy.domain.dto.RestfulResult;
 import com.sjcl.zrsy.domain.dto.TransferOperation;
 import com.sjcl.zrsy.service.ITransferService;
@@ -16,12 +15,8 @@ public class CommonController {
 
     @PostMapping("/transfer")
     public RestfulResult farmoperation(@RequestBody TransferOperation operation) {
-        if (!transferService.isNext(operation.getRegistrationId())) {
-            return RestfulResult.errorMsg("您输入的不是" + KeyPairHolder.getUser().getNextType());
-        }
-
         try {
-            transferService.transfer(operation.getPigId(), operation.getRegistrationId());
+            transferService.transfer(operation.getPigId(), operation.getPublicKeyInHex());
             return RestfulResult.ok();
         } catch (Exception e) {
             return RestfulResult.errorMsg(e.getMessage());
