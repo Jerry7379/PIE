@@ -4,6 +4,9 @@ import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 
 import java.io.IOException;
 
+/**
+ * TraceabilityIdcard data access object
+ */
 public interface ITraceabilityIdcardDao {
     /**
      * check is exsits
