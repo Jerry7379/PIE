@@ -4,12 +4,21 @@ import com.sjcl.zrsy.domain.dto.LogisticsOperation;
 import com.sjcl.zrsy.domain.dto.LogisticsReception;
 
 /**
- * 物流接口
+ * logistics service
  */
 
 public interface ILogisticsService {
-    //物流接受货物
+    /**
+     * logistics receive a pig
+     * @param logisticsReception receive object
+     * @return <tt>true</tt> if seccess
+     */
     boolean logisticsreception(LogisticsReception logisticsReception);
-    //物流货物操作
+
+    /**
+     * logistics operation a pig
+     * @param logisticsOperation
+     * @return <tt>true</tt> if seccess
+     */
     boolean logisticsoperation(LogisticsOperation logisticsOperation);
 }
