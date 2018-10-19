@@ -16,7 +16,7 @@ public class RegistrationDao implements com.sjcl.zrsy.dao.IRegistrationDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public Registration getLoginByRegistrationId(String registrationId){
+    public Registration getRegistrationByRegistrationId(String registrationId){
         List<Registration> registrations =jdbcTemplate.query("select * from registration where registration_id= ?", new Object[]{registrationId}, new RowMapper<Registration>(){
             @Override
             public Registration mapRow(ResultSet resultSet, int i) throws SQLException {

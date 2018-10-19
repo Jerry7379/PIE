@@ -11,7 +11,7 @@ public interface IRegistrationDao {
      * @param registrationId registration id
      * @return registration
      */
-    Registration getLoginByRegistrationId(String registrationId);
+    Registration getRegistrationByRegistrationId(String registrationId);
 
     /**
      * insert registration to database

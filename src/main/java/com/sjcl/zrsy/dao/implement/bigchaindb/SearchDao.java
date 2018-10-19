@@ -49,27 +49,27 @@ public class SearchDao implements com.sjcl.zrsy.dao.ISearchDao {
             searchId.setIsacid(String.valueOf(traceabilityIdcard.getIsacid()));
             searchId.setIscheck(String.valueOf(traceabilityIdcard.getIscheck()));
 
-            Registration farm = registrationDao.getLoginByRegistrationId(traceabilityIdcard.getFarmId());
+            Registration farm = registrationDao.getRegistrationByRegistrationId(traceabilityIdcard.getFarmId());
             searchId.setFarmId(traceabilityIdcard.getFarmId());
             searchId.setFarmLocation(farm.getLocation());
             searchId.setFarmName(farm.getName());
 
             searchId.setSlaughterhouseId(traceabilityIdcard.getSlaughterhouseId());
-            Registration slaughterhouse = registrationDao.getLoginByRegistrationId(traceabilityIdcard.getSlaughterhouseId());
+            Registration slaughterhouse = registrationDao.getRegistrationByRegistrationId(traceabilityIdcard.getSlaughterhouseId());
             if (slaughterhouse != null) {
                 searchId.setSlaughterhouseLocation(slaughterhouse.getLocation());
                 searchId.setSlaughterhouseName(slaughterhouse.getName());
             }
 
             searchId.setLogisticsId(traceabilityIdcard.getLogisticsId());
-            Registration logistics = registrationDao.getLoginByRegistrationId(traceabilityIdcard.getLogisticsId());
+            Registration logistics = registrationDao.getRegistrationByRegistrationId(traceabilityIdcard.getLogisticsId());
             if (logistics != null) {
                 searchId.setLogisticsName(logistics.getName());
                 searchId.setLogisticsLocation(logistics.getLocation());
             }
 
             searchId.setSupermarketId(traceabilityIdcard.getSupermarketId());
-            Registration superMarket = registrationDao.getLoginByRegistrationId(traceabilityIdcard.getSupermarketId());
+            Registration superMarket = registrationDao.getRegistrationByRegistrationId(traceabilityIdcard.getSupermarketId());
             if (superMarket != null) {
                 searchId.setSupermarketName(superMarket.getName());
                 searchId.setSupermarketLocation(superMarket.getLocation());

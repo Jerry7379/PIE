@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public class RegistrationDao implements com.sjcl.zrsy.dao.IRegistrationDao {
 
     @Override
-    public Registration getLoginByRegistrationId(String registrationId){
+    public Registration getRegistrationByRegistrationId(String registrationId){
         try {
             Assets assets = AssetsApi.getAssetsWithLimit(registrationId, "1");
             if (assets != null && assets.size() >= 1) {
