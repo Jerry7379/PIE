@@ -132,22 +132,48 @@ public class BigchaindbUtil {
         Asset asset = createTransaction.getAsset();
         com.google.gson.internal.LinkedTreeMap assetData = (LinkedTreeMap) asset.getData();
 
-        String typeName = (String) assetData.get("type");
-        if (!type.getCanonicalName().equals(typeName)) {
+
+        Object bean = bigchaindbDataToBean(assetData);
+
+        if (type.isInstance(bean)) {
+            return (T) bean;
+        } else {
             return null;
         }
+    }
 
+    /**
+     * obtain a explicit type asset use assetId.
+     * @param transactionId assetId
+     * @param type asset Type class
+     * @param <T> asset Type
+     * @return assetObject
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
+    public static <T> T getAssetByTransactionId(String transactionId, Class<T> type) throws IOException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
+        Objects.requireNonNull(type);
 
-        Object data = assetData.get("data");
-        if (data instanceof LinkedTreeMap) {
-            com.google.gson.internal.LinkedTreeMap properties = (LinkedTreeMap) data;
-            T bean = type.newInstance();
-            BeanUtils.populate(bean, properties);
-            return bean;
+        Transaction transaction = TransactionsApi.getTransactionById(transactionId);
+        if (transaction == null) {
+            return null;
+        }
+        Asset asset = transaction.getAsset();
+        com.google.gson.internal.LinkedTreeMap assetData = (LinkedTreeMap) asset.getData();
+
+        Object bean = bigchaindbDataToBean(assetData);
+
+        if (type.isInstance(bean)) {
+            return (T) bean;
         } else {
-            return (T) data;
+            return null;
         }
     }
+
+
 
     /**
      * convert bigchaindb LinkedTreeMap data to java object.
@@ -160,12 +186,15 @@ public class BigchaindbUtil {
      */
     public static Object bigchaindbDataToBean(LinkedTreeMap bigchaindbData) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
         String type = (String) bigchaindbData.get("type");
-        com.google.gson.internal.LinkedTreeMap properties = (LinkedTreeMap) bigchaindbData.get("data");
-
-        String json = JsonUtils.toJson(properties);
-
-        Object bean = JsonUtils.fromJson(json, ClassUtils.getClass(type));
-        return bean;
+        Object data = bigchaindbData.get("data");
+        if (data instanceof com.google.gson.internal.LinkedTreeMap) {
+            com.google.gson.internal.LinkedTreeMap properties = (LinkedTreeMap) bigchaindbData.get("data");
+            String json = JsonUtils.toJson(properties);
+            Object bean = JsonUtils.fromJson(json, ClassUtils.getClass(type));
+            return bean;
+        } else {
+            return data;
+        }
     }
 
     /**
