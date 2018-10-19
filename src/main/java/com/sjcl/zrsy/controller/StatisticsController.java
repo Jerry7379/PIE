@@ -14,9 +14,18 @@ public class StatisticsController {
 
     @GetMapping("/counts")
     public RestfulResult counts() {
-        return RestfulResult.ok(pigService.getCountCurrentRegistration());
+        return RestfulResult.ok(pigService.getUnspentCountCurrentRegistration());
     }
 
 
+    @GetMapping("/allData")
+    public RestfulResult allData() {
+        return RestfulResult.ok(pigService.getAllData());
+    }
+
+//    @GetMapping("/currentWeek")
+//    public RestfulResult currentWeek() {
+//
+//    }
 
 }
