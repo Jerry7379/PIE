@@ -1,5 +1,6 @@
 package com.sjcl.zrsy.bigchaindb;
 
+import com.bigchaindb.util.KeyPairUtils;
 import com.sjcl.zrsy.domain.po.Registration;
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
@@ -46,11 +47,15 @@ public class KeyPairHolder {
         return (EdDSAPrivateKey) KEYPAIR.getPrivate();
     }
 
-    public static String hexstrPrivateKey() {
+    public static String base58PublicKey() {
+        return KeyPairUtils.encodePublicKeyInBase58((EdDSAPublicKey) KEYPAIR.getPublic());
+    }
+
+    public static String hexPrivateKey() {
         return Utils.bytesToHex(KEYPAIR.getPrivate().getEncoded());
     }
 
-    public static String hexstrPublicKey() {
+    public static String hexPublicKey() {
         return Utils.bytesToHex(KEYPAIR.getPublic().getEncoded());
     }
 
