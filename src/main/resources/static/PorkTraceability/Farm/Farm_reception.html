@@ -19,7 +19,7 @@
         <div class="row border-bottom white-bg">
             <nav class="navbar navbar-static-top" role="navigation">
                 <div class="navbar-header">
-                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                    <button aria-controls="navbar" aria-expanded="false" allData-target="#navbar" allData-toggle="collapse" class="navbar-toggle collapsed" type="button">
                         <i class="fa fa-reorder"></i>
                     </button>
                     <a href="Farm_navigation.html#" class="navbar-brand">PIE</a>
@@ -155,9 +155,9 @@
                     headers: {
                         "Content-Type": "application/json; charset=utf-8"
                     }
-                }, Pig,function (data){
-                    if (data.status == 200) {
-                        alert("溯源号码:" + data.data);
+                }, Pig,function (allData){
+                    if (allData.status == 200) {
+                        alert("溯源号码:" + allData.allData);
                         $("#form").reset();
                     }
                 })

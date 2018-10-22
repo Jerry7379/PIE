@@ -1,6 +1,7 @@
 package com.sjcl.zrsy.service;
 
-import com.sjcl.zrsy.domain.dto.Data;
+import com.sjcl.zrsy.domain.dto.AllData;
+import com.sjcl.zrsy.domain.dto.CurrentWeekData;
 
 /**
  * pig service
@@ -17,5 +18,7 @@ public interface IPigService {
      * get all data
      * @return
      */
-    Data getAllData();
+    AllData getAllData();
+
+    CurrentWeekData getCurrentWeekData();
 }

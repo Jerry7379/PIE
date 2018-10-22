@@ -1,13 +1,13 @@
 package com.sjcl.zrsy.domain.dto;
 
-public class Data {
+public class AllData {
     private int totalCount;
     private int outBarCount;
     private double outBarAvgWeight;
 
-    public Data(){}
+    public AllData(){}
 
-    public Data(int totalCount, int outBarCount, int outBarAvgWeight) {
+    public AllData(int totalCount, int outBarCount, int outBarAvgWeight) {
         this.totalCount = totalCount;
         this.outBarCount = outBarCount;
         this.outBarAvgWeight = outBarAvgWeight;

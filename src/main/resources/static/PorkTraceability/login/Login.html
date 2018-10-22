@@ -57,8 +57,8 @@
                 headers: {
                     "content-Type": "application/json;charset=utf-8"
                 }
-            },Date,function (data) {
-                var info=jQuery.trim(data)
+            },Date,function (allData) {
+                var info=jQuery.trim(allData)
                 switch (info) {
                     case "屠宰场":
                         location.assign("/PorkTraceability/Slaughter/Slaughter_navigation.html")

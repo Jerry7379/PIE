@@ -16,7 +16,7 @@
         <div class="row border-bottom white-bg">
             <nav class="navbar navbar-static-top" role="navigation">
                 <div class="navbar-header">
-                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse"
+                    <button aria-controls="navbar" aria-expanded="false" allData-target="#navbar" allData-toggle="collapse"
                             class="navbar-toggle collapsed" type="button">
                         <i class="fa fa-reorder"></i>
                     </button>
@@ -93,8 +93,8 @@
                     headers: {
                         "Content-Type": "application/json; charset=utf-8"
                     }
-                }, transferOperationJson, function (data) {
-                        alert(data);
+                }, transferOperationJson, function (allData) {
+                        alert(allData);
                         location.reload();
                 })
             });

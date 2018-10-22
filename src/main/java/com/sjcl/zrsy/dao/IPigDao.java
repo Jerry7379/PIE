@@ -1,5 +1,7 @@
 package com.sjcl.zrsy.dao;
 
+import java.time.LocalDate;
+
 /**
  * pig dao
  */
@@ -17,4 +19,10 @@ public interface IPigDao {
     int getSpentCountCurrentRegistration();
 
     double getSpentAvgWeightCurrentRegistration();
+
+    int getBirthCountCurrentRegistration(LocalDate start, LocalDate end);
+
+    double getSpentAvgWeightCurrentRegistration(LocalDate start, LocalDate end);
+
+    int getSpentCountCurrentRegistration(LocalDate start, LocalDate end);
 }

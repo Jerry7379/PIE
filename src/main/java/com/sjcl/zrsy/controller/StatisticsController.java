@@ -23,9 +23,9 @@ public class StatisticsController {
         return RestfulResult.ok(pigService.getAllData());
     }
 
-//    @GetMapping("/currentWeek")
-//    public RestfulResult currentWeek() {
-//
-//    }
+    @GetMapping("/currentWeek")
+    public RestfulResult currentWeek() {
+        return RestfulResult.ok(pigService.getCurrentWeekData());
+    }
 
 }

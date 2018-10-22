@@ -19,7 +19,7 @@
         <div class="row border-bottom white-bg">
             <nav class="navbar navbar-static-top" role="navigation">
                 <div class="navbar-header">
-                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                    <button aria-controls="navbar" aria-expanded="false" allData-target="#navbar" allData-toggle="collapse" class="navbar-toggle collapsed" type="button">
                         <i class="fa fa-reorder"></i>
                     </button>
                     <a href="search.html#" class="navbar-brand">PIE</a>
@@ -273,7 +273,7 @@
             trigger: 'axis'
         },
         legend: {
-            data:['CO2','温度','湿度']
+            allData:['CO2','温度','湿度']
         },
         grid: {
             left: '3%',
@@ -289,7 +289,7 @@
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['周一','周二','周三','周四','周五','周六','周日']
+            allData: ['周一','周二','周三','周四','周五','周六','周日']
         },
         yAxis: {
             type: 'value'
@@ -299,19 +299,19 @@
                 name:'CO2',
                 type:'line',
                 stack: '总量',
-                data:[120, 132, 101, 134, 90, 230, 210]
+                allData:[120, 132, 101, 134, 90, 230, 210]
             },
             {
                 name:'温度',
                 type:'line',
                 stack: '总量',
-                data:[220, 182, 191, 234, 290, 330, 310]
+                allData:[220, 182, 191, 234, 290, 330, 310]
             },
             {
                 name:'湿度',
                 type:'line',
                 stack: '总量',
-                data:[150, 232, 201, 154, 190, 330, 410]
+                allData:[150, 232, 201, 154, 190, 330, 410]
             }
         ]
     };

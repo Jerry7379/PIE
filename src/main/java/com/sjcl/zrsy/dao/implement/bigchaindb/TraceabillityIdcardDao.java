@@ -10,6 +10,7 @@ import java.io.IOException;
 
 @Repository
 public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
+    public static final String ASSET_OBJECT = "pig";
     /**
      * 判断猪id是否存在
      *
@@ -31,7 +32,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
     @Override
     public String insert(TraceabilityIdcard initialFarm) {
         try {
-            return BigchaindbUtil.createAsset("pig", initialFarm);
+            return BigchaindbUtil.createAsset(ASSET_OBJECT, initialFarm);
         } catch (Exception e) {
             return null;
         }
