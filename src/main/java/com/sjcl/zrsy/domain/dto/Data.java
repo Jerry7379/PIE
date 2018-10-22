@@ -3,7 +3,7 @@ package com.sjcl.zrsy.domain.dto;
 public class Data {
     private int totalCount;
     private int outBarCount;
-    private int outBarAvgWeight;
+    private double outBarAvgWeight;
 
     public Data(){}
 
@@ -29,11 +29,11 @@ public class Data {
         this.outBarCount = outBarCount;
     }
 
-    public int getOutBarAvgWeight() {
+    public double getOutBarAvgWeight() {
         return outBarAvgWeight;
     }
 
-    public void setOutBarAvgWeight(int outBarAvgWeight) {
+    public void setOutBarAvgWeight(double outBarAvgWeight) {
         this.outBarAvgWeight = outBarAvgWeight;
     }
 }

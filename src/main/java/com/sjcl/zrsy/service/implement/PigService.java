@@ -4,7 +4,9 @@ import com.sjcl.zrsy.dao.IPigDao;
 import com.sjcl.zrsy.domain.dto.Data;
 import com.sjcl.zrsy.service.IPigService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PigService implements IPigService {
 
     @Autowired
@@ -20,7 +22,7 @@ public class PigService implements IPigService {
         Data data = new Data();
         data.setTotalCount(getUnspentCountCurrentRegistration());
         data.setOutBarCount(pigDao.getSpentCountCurrentRegistration());
-//        data.setOutBarAvgWeight();
+        data.setOutBarAvgWeight(pigDao.getSpentAvgWeightCurrentRegistration());
         return data;
     }
 }
