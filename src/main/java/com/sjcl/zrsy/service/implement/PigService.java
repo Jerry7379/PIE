@@ -1,14 +1,17 @@
 package com.sjcl.zrsy.service.implement;
 
 import com.sjcl.zrsy.dao.IPigDao;
+import com.sjcl.zrsy.dao.implement.bigchaindb.PigDao;
 import com.sjcl.zrsy.domain.dto.AllData;
 import com.sjcl.zrsy.domain.dto.CurrentWeekData;
+import com.sjcl.zrsy.domain.dto.Ratio;
 import com.sjcl.zrsy.service.IPigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
+import java.util.List;
 
 @Service
 public class PigService implements IPigService {
@@ -40,5 +43,20 @@ public class PigService implements IPigService {
         currentWeekData.setOutBar(pigDao.getSpentCountCurrentRegistration(start, end));
         currentWeekData.setOutBarAvgWeight(pigDao.getSpentAvgWeightCurrentRegistration(start, end));
         return currentWeekData;
+    }
+
+    @Override
+    public List<Ratio> getVarietyRatio(String scope) {
+        return pigDao.getRatio(PigDao.RADIO_VARIETY, scope);
+    }
+
+    @Override
+    public List<Ratio> getGenderRatio(String scope) {
+        return pigDao.getRatio(PigDao.RADIO_GENDER, scope);
+    }
+
+    @Override
+    public List<Ratio> getOutBarRatio(String scope) {
+        return pigDao.getRatio(PigDao.RADIO_OUTBAR, scope);
     }
 }

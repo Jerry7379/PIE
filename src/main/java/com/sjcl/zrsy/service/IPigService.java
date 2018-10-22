@@ -2,6 +2,9 @@ package com.sjcl.zrsy.service;
 
 import com.sjcl.zrsy.domain.dto.AllData;
 import com.sjcl.zrsy.domain.dto.CurrentWeekData;
+import com.sjcl.zrsy.domain.dto.Ratio;
+
+import java.util.List;
 
 /**
  * pig service
@@ -21,4 +24,10 @@ public interface IPigService {
     AllData getAllData();
 
     CurrentWeekData getCurrentWeekData();
+
+    List<Ratio> getVarietyRatio(String scope);
+
+    List<Ratio> getGenderRatio(String scope);
+
+    List<Ratio> getOutBarRatio(String scope);
 }

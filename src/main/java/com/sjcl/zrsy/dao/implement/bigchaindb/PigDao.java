@@ -2,7 +2,6 @@ package com.sjcl.zrsy.dao.implement.bigchaindb;
 
 import com.bigchaindb.api.OutputsApi;
 import com.bigchaindb.api.TransactionsApi;
-import com.bigchaindb.model.Asset;
 import com.bigchaindb.model.Output;
 import com.bigchaindb.model.Outputs;
 import com.bigchaindb.model.Transaction;
@@ -12,6 +11,7 @@ import com.sjcl.zrsy.bigchaindb.KeyPairHolder;
 import com.sjcl.zrsy.dao.IOperationDao;
 import com.sjcl.zrsy.dao.IPigDao;
 import com.sjcl.zrsy.dao.ITraceabilityIdcardDao;
+import com.sjcl.zrsy.domain.dto.Ratio;
 import com.sjcl.zrsy.domain.po.Operation;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +20,7 @@ import org.springframework.stereotype.Repository;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public class PigDao implements IPigDao {
@@ -85,7 +83,7 @@ public class PigDao implements IPigDao {
             Set<String> pigIds = getAllPigIds();
             for (String pigId : pigIds) {
                 TraceabilityIdcard idcard = BigchaindbUtil.getWholeMetaData(pigId, TraceabilityIdcard.class);
-                LocalDate birthDay =  getBirthDay(idcard);
+                LocalDate birthDay = getBirthDay(idcard);
                 if (birthDay.isAfter(start) && birthDay.isBefore(end)) {
                     count++;
                 }
@@ -160,14 +158,67 @@ public class PigDao implements IPigDao {
         }
     }
 
+    @Override
+    public List<Ratio> getRatio(String category, String scope) {
+        try {
+
+
+            Set<String> pigIds = getAllPigIds();
+
+            Map<String, Integer> map = new HashMap<>();
+            for (String pigId : pigIds) {
+                TraceabilityIdcard idcard = BigchaindbUtil.getWholeMetaData(pigId, TraceabilityIdcard.class);
+
+                String categoryItem = getCategoryItem(idcard, category);
+                Integer categoryItemCount = map.get(categoryItem);
+
+                Integer newCount;
+                if (categoryItemCount == null) {
+                    newCount = 1;
+                } else {
+                    newCount = categoryItemCount + 1;
+                }
+                map.put(categoryItem, newCount);
+            }
+
+            return translateToList(map);
+
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
+
+    private List<Ratio> translateToList(Map<String, Integer> map) {
+        List<Ratio> ratios = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            String categoryItem = entry.getKey();
+            Integer count = entry.getValue();
+            Ratio ratio = new Ratio(categoryItem, count);
+            ratios.add(ratio);
+        }
+        return ratios;
+    }
+
+    private String getCategoryItem(TraceabilityIdcard idcard, String category) {
+        if (RADIO_GENDER.equals(category)) {
+            return idcard.getGender();
+        } else if (RADIO_VARIETY.equals(category)) {
+            return idcard.getBreed();
+        } else {
+            return "";//TODO 年龄段
+        }
+    }
+
     private Set<String> getSpentPigIds() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Outputs outputs = OutputsApi.getSpentOutputs(KeyPairHolder.base58PublicKey());
         return extractPigId(outputs);
     }
+
     private Set<String> getUnspentPigIds() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Outputs outputs = OutputsApi.getUnspentOutputs(KeyPairHolder.base58PublicKey());
         return extractPigId(outputs);
     }
+
     private Set<String> getAllPigIds() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Outputs outputs = OutputsApi.getOutputs(KeyPairHolder.base58PublicKey());
         return extractPigId(outputs);
