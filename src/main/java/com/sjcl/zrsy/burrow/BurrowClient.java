@@ -71,7 +71,11 @@ public class BurrowClient {
         params.put("gasLimit", gasLimit);
         params.put("fee", fee);
 
+
+
+        //发送请求，返回response的body
         InputStream result = httpService.performIO(request.toJSONString());
+
         if (result != null) {
             String response = getResponse(result);
             JSONObject resp = JSON.parseObject(response);
