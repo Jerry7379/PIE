@@ -14,7 +14,7 @@ public class KeyPairHolder {
     private static boolean isLogin = false;
 
     private static Registration user;
-
+    //
     public static void setKeyPair(java.security.KeyPair keyPair) {
         KEYPAIR = keyPair;
     }
@@ -39,22 +39,42 @@ public class KeyPairHolder {
         }
     }
 
+    /**
+     * 获得公钥
+     * @return
+     */
     public static EdDSAPublicKey getPublic() {
         return (EdDSAPublicKey) KEYPAIR.getPublic();
     }
 
+    /**
+     * 获得私钥
+     * @return
+     */
     public static EdDSAPrivateKey getPrivate() {
         return (EdDSAPrivateKey) KEYPAIR.getPrivate();
     }
 
+    /**
+     * 公钥进行base58 转码
+     * @return
+     */
     public static String base58PublicKey() {
         return KeyPairUtils.encodePublicKeyInBase58((EdDSAPublicKey) KEYPAIR.getPublic());
     }
 
+    /**
+     * 私钥字节转换为哈希
+     * @return
+     */
     public static String hexPrivateKey() {
         return Utils.bytesToHex(KEYPAIR.getPrivate().getEncoded());
     }
 
+    /**
+     * 公钥字节转换为哈希
+     * @return
+     */
     public static String hexPublicKey() {
         return Utils.bytesToHex(KEYPAIR.getPublic().getEncoded());
     }

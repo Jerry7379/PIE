@@ -10,7 +10,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LinkedTreeMap;
 import com.sjcl.zrsy.domain.dto.BigchaindbData;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
-import org.apache.commons.beanutils.BeanUtils;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ClassUtils;
 

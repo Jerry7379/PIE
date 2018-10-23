@@ -96,9 +96,9 @@ public class PigDao implements IPigDao {
 
     }
 
-    //TODO
+
     private LocalDate getBirthDay(TraceabilityIdcard idcard) {
-        return null;
+        return  idcard.getBirthday().toLocalDate();
     }
 
     @Override

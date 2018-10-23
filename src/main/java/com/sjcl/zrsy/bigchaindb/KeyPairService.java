@@ -5,9 +5,6 @@ import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import net.i2p.crypto.eddsa.EdDSASecurityProvider;
 import org.springframework.stereotype.Service;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,8 +17,8 @@ import java.util.Base64;
 
 @Service
 public class KeyPairService {
-    public static final String PRIKEY_FILE = "keystore_prikey.ks";
-    public static final String PUBKEY_FILE = "keystore_pubkey.ks";
+    public static final String PRIKEY_FILE = "farm/keystore_prikey.ks";
+    public static final String PUBKEY_FILE = "farm/keystore_pubkey.ks";
 
 
     public KeyPairService() {
@@ -32,6 +29,12 @@ public class KeyPairService {
         return deserializePubKey(pubEncoded);
     }
 
+    /**
+     *通过密钥对和密码转换为文件的形式
+     * @param keyPair
+     * @param password
+     * @return
+     */
     public boolean save(KeyPair keyPair, String password) {
 
         try {
@@ -51,6 +54,10 @@ public class KeyPairService {
         }
     }
 
+    /**
+     * 查看公私钥是否存在
+     * @return
+     */
     public boolean isExist() {
         return new File(PUBKEY_FILE).exists() && new File(PRIKEY_FILE).exists();
     }
@@ -59,6 +66,11 @@ public class KeyPairService {
         return key.getEncoded();
     }
 
+    /**
+     *使用密码获得公私钥
+     * @param password
+     * @return
+     */
     public KeyPair get(String password) {
 
         try {
