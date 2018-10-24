@@ -38,19 +38,33 @@ public class ContractFactory {
         return (T) Proxy.newProxyInstance(ContractFactory.class.getClassLoader(), new Class[]{contractClass}, new ContractInvocationHandler(abi, address));
     }
 
-
+    /***
+     * 创建一个与代理对象相关的ContractInvocationHandler类
+     */
     private class ContractInvocationHandler implements InvocationHandler {
-
+        //合约的abi字符串
         private String abi;
-
+        //合约地址
         private String address;
 
+        /**
+         * 构造函数
+         * @param abi
+         * @param address
+         */
         public ContractInvocationHandler(String abi, String address) {
             this.abi = abi;
             this.address = address;
         }
 
-
+        /**
+         * 重写了InvocationHandler中的invoke方法
+         * @param proxy
+         * @param method
+         * @param args
+         * @return
+         * @throws Throwable
+         */
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             JSONArray abiInfo = JSON.parseArray(abi);
@@ -61,16 +75,18 @@ public class ContractFactory {
             if (abiFunction == null) {
                 throw new RuntimeException("");
             }
-
+            //获取方法名
             String functionName = abiFunction.getString("name");
+            //获取方法参数类型和值的集合
             List<Type> inputs = extractInputs(abiFunction, args);
+            //提取返回值
             List<TypeReference<?>> outputs = extractPreinvokeOutputs(abiFunction);
             Function function = new Function(functionName, inputs, outputs);
 
             String data = FunctionEncoder.encode(function);
             data = data.substring(2);
 
-            boolean constant = abiFunction.getBoolean("constant");
+            boolean constant = abiFunction.getBoolean("constant");//TODO
 
             return invokeContractFunction(constant, abiFunction, data);
         }
@@ -86,6 +102,12 @@ public class ContractFactory {
             return obj.getValue();
         }
 
+        /**
+         * 从abi中Json数组中找到与methodName相同的方法
+         * @param abiInfo   json数组
+         * @param methodName  需要调用的方法
+         * @return 返回abi中方法的json
+         */
         private JSONObject findAbiFunction(JSONArray abiInfo, String methodName) {
             for (int i = 0; i < abiInfo.size(); i++) {
                 JSONObject abiFunction = abiInfo.getJSONObject(i);
@@ -97,6 +119,17 @@ public class ContractFactory {
             return null;
         }
 
+        /**
+         * 获取方法的参数类型和值
+         * @param abiFunction
+         * @param args
+         * @return
+         * @throws ClassNotFoundException
+         * @throws NoSuchMethodException
+         * @throws IllegalAccessException
+         * @throws InvocationTargetException
+         * @throws InstantiationException
+         */
         private List<Type> extractInputs(JSONObject abiFunction, Object[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
             JSONArray abiFunctionInputs = abiFunction.getJSONArray("inputs");
             List<Type> solidityFunctionParams = new ArrayList<>();
@@ -106,11 +139,18 @@ public class ContractFactory {
                 Constructor paramConstructor = javaParamClass.getConstructor(args[j].getClass());
                 Type solidityFunctionParam = (Type) paramConstructor.newInstance(args[j]);
                 solidityFunctionParams.add(solidityFunctionParam);
-
             }
             return solidityFunctionParams;
         }
 
+        /**
+         * 提取返回值的类型和值的集合
+         * @param abiFunction
+         * @return
+         * @throws ClassNotFoundException
+         * @throws IllegalAccessException
+         * @throws InstantiationException
+         */
         private List<TypeReference<?>> extractPreinvokeOutputs(JSONObject abiFunction) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
             JSONArray abiFunctionOutputs = abiFunction.getJSONArray("outputs");
             List<TypeReference<?>> solidityFunctionReturns = new ArrayList<>();
@@ -135,6 +175,12 @@ public class ContractFactory {
             return solidityFunctionReturns;
         }
 
+        /**
+         * 获取方法参数的类型
+         * @param put
+         * @return
+         * @throws ClassNotFoundException
+         */
         private Class getTypeClass(JSONObject put) throws ClassNotFoundException {
             String abiFunctionType = put.getString("type");
 
