@@ -3,9 +3,12 @@
 		"constant": true,
 		"inputs": [
 			{
-				"name": "porkID",
-				"type": "bytes32"
-			},
+				"name": "_pigID",
+				"type": "uint256"
+			}
+		],
+		"name": "getOperation",
+		"outputs": [
 			{
 				"name": "operation",
 				"type": "bytes32[]"
@@ -17,21 +20,6 @@
 			{
 				"name": "remark",
 				"type": "bytes32[]"
-			},
-			{
-				"name": "timestamps",
-				"type": "uint256[]"
-			}
-		],
-		"name": "insertMarketOperation",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			},
-			{
-				"name": "",
-				"type": "bytes32"
 			}
 		],
 		"payable": false,
@@ -43,7 +31,7 @@
 		"inputs": [
 			{
 				"name": "porkID",
-				"type": "bytes32"
+				"type": "uint256"
 			},
 			{
 				"name": "operation",
@@ -82,7 +70,7 @@
 		"inputs": [
 			{
 				"name": "porkID",
-				"type": "bytes32"
+				"type": "uint256"
 			},
 			{
 				"name": "operation",
@@ -97,12 +85,43 @@
 				"type": "bytes32[]"
 			},
 			{
-				"name": "isacid",
-				"type": "bytes32"
+				"name": "timestamps",
+				"type": "uint256[]"
+			}
+		],
+		"name": "insertMarketOperation",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
 			},
 			{
-				"name": "acider_id",
+				"name": "",
 				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "porkID",
+				"type": "uint256"
+			},
+			{
+				"name": "operation",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "content",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "remark",
+				"type": "bytes32[]"
 			},
 			{
 				"name": "timestamps",

@@ -182,7 +182,12 @@
 			}
 		],
 		"name": "createPigSale",
-		"outputs": [],
+		"outputs": [
+			{
+				"name": "_pigID",
+				"type": "uint256"
+			}
+		],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
