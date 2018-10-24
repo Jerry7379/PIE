@@ -219,6 +219,15 @@ public class PigDao implements IPigDao {
         return extractPigId(outputs);
     }
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     */
     private Set<String> getAllPigIds() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Outputs outputs = OutputsApi.getOutputs(KeyPairHolder.base58PublicKey());
         return extractPigId(outputs);
