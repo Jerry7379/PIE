@@ -8,11 +8,13 @@ contract Operation {
     }
 
     struct Pork{
-        bytes32 porkID;//小猪id
+        uint256 porkID;//小猪id
         Operation[] operation;
     }
 
-    mapping(bytes32 => Pork) porkMap;
+    Pork[] porks;
+
+    mapping(uint256 => Pork) porkMap;
     address FarmID; //养殖场id
     address SlaughterhouseID; //屠宰场id
     address MarketID; //超市id
@@ -32,9 +34,9 @@ contract Operation {
         _;
     }
 
-    function insertFarmOperation(bytes32 porkID,bytes32[] operation, bytes32[] content,
-        bytes32[] remark, uint[] timestamps)external onlyFarm returns(bool,bytes32){
-        Pork pork = porkMap[porkID];
+    function insertFarmOperation(uint256 porkID,bytes32[] operation, bytes32[] content,
+        bytes32[] remark, uint[] timestamps)public view onlyFarm returns(bool,bytes32){
+        Pork storage pork = porkMap[porkID];
         if (pork.porkID == 0x0 ){
             return (false,"porkID存在错误");
         }
@@ -49,9 +51,9 @@ contract Operation {
     }
 
 
-    function insertSlaughterOperation(bytes32 porkID,bytes32[] operation, bytes32[] content,
-        bytes32[] remark, uint[] timestamps) external onlySlaughterhouse returns(bool,bytes32){
-        Pork pork = porkMap[porkID];
+    function insertSlaughterOperation(uint256 porkID,bytes32[] operation, bytes32[] content,
+        bytes32[] remark,uint[] timestamps)public view onlySlaughterhouse returns(bool,bytes32){
+        Pork storage pork = porkMap[porkID];
         if (pork.porkID == 0x0 ){
             return (false,"porkID存在错误");
         }
@@ -67,9 +69,9 @@ contract Operation {
 
     }
 
-    function insertMarketOperation(bytes32 porkID,bytes32[] operation, bytes32[] content,
-        bytes32[] remark,uint[] timestamps)external onlyMarket returns(bool,bytes32){
-        Pork pork = porkMap[porkID];
+    function insertMarketOperation(uint256 porkID,bytes32[] operation, bytes32[] content,
+        bytes32[] remark,uint[] timestamps)public view onlyMarket returns(bool,bytes32){
+        Pork storage pork = porkMap[porkID];
         if (pork.porkID == 0x0 ){
             return (false,"porkID存在错误");
         }
@@ -80,6 +82,20 @@ contract Operation {
             }));
         return(true,"success");
 
+    }
+
+    function getOperation(uint256 _pigID)external view
+    returns(
+        bytes32[] operation,
+        bytes32[] content,
+        bytes32[] remark
+    ){
+        Pork storage pork = porkMap[_pigID];
+        porkMap[pork.porkID].operation.push(Operation({
+            operation : operation,
+            content : content,
+            remark : remark
+            }));
     }
 
 }
