@@ -27,8 +27,8 @@ public class BigchaindbSetupRunner implements CommandLineRunner {
 
         BigchainDbConfigBuilder
                 .baseUrl(baseUrl)
-                .addToken(BLOCKCHAINDB_APPID_KEY, appId)
-                .addToken(BLOCKCHAINDB_APPKEY_KEY, appKey)
+                //.addToken(BLOCKCHAINDB_APPID_KEY, appId)
+                //.addToken(BLOCKCHAINDB_APPKEY_KEY, appKey)
                 .setup();
     }
 }

@@ -69,7 +69,19 @@ public class Registration {    //注册模块
 
     public void pictureChange() throws IOException {
         //        //照片生成
-        String path="img/"+ registrationId +".jpg";//图片路径
+        String path="";
+        if(this.type.equals("养殖场")){
+            path="info/farm/"+this.registrationId+".jpg";
+        }
+        if(this.type.equals("屠宰场")){
+            path="info/slaughter/"+this.registrationId+".jpg";
+        }
+        if(this.type.equals("物流")){
+            path="info/logistics/"+this.registrationId+".jpg";
+        }
+        if(this.type.equals("超市")){
+            path="info/market/"+this.registrationId+".jpg";
+        }
         File file=new File(path);
         String str64= picture;
         BASE64Decoder decoder = new BASE64Decoder();

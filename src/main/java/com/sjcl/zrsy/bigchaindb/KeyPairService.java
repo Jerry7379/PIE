@@ -17,8 +17,8 @@ import java.util.Base64;
 
 @Service
 public class KeyPairService {
-    public static final String PRIKEY_FILE = "farm/keystore_prikey.ks";
-    public static final String PUBKEY_FILE = "farm/keystore_pubkey.ks";
+    public static final String PRIKEY_FILE = "info/farm/keystore_prikey.ks";
+    public static final String PUBKEY_FILE = "info/farm/keystore_pubkey.ks";
 
 
     public KeyPairService() {
@@ -92,7 +92,7 @@ public class KeyPairService {
     // protected for unit test
     protected byte[] getPriEncoded(String password) throws GeneralSecurityException, IOException {
         byte[] priEncryptEncoded = getEncryptPriEncoded();
-        return CipherUtil.decrypt(priEncryptEncoded, password);
+        return CipherUtil.decrypt(priEncryptEncoded, password);///
     }
 
     // protected for unit test
