@@ -22,6 +22,11 @@ public class FarmController {
     //i18n
     ResourceBundle resourceBundle=ResourceBundle.getBundle("messages", Locale.getDefault());
 
+    /**
+     * 养殖场有新猪出生:首先判断新猪ID是否存在，不存在则插入，存在返回错误
+     * @param farmReception
+     * @return
+     */
     @PostMapping("/farmreception")
     public RestfulResult farmreception(@RequestBody FarmReception farmReception) {
         if(!farmService.idCardExists(farmReception.getId())){
@@ -39,6 +44,11 @@ public class FarmController {
         }
     }
 
+    /**
+     * 养殖场日常操作：首先判断操作的ID是否存在，不存在则返回错误
+     * @param operation
+     * @return
+     */
     @PostMapping("/farmoperation")
     public String farmoperation(@RequestBody Operation operation) {
         if(farmService.idCardExists(operation.getId())) {
