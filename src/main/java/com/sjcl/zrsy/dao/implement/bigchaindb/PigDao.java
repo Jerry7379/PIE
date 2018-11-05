@@ -172,6 +172,7 @@ public class PigDao implements IPigDao {
                 String categoryItem = getCategoryItem(idcard, category);
                 Integer categoryItemCount = map.get(categoryItem);
 
+
                 Integer newCount;
                 if (categoryItemCount == null) {
                     newCount = 1;

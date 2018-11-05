@@ -1,6 +1,7 @@
 package com.sjcl.zrsy.bigchaindb;
 
 
+import com.bigchaindb.api.AssetsApi;
 import com.bigchaindb.api.TransactionsApi;
 import com.bigchaindb.builders.BigchainDbTransactionBuilder;
 import com.bigchaindb.constants.Operations;
@@ -220,8 +221,9 @@ public class BigchaindbUtil {
      * @return
      */
     public static <T> boolean assetIsExist(String assetId, Class<T> type) {
+
         try {
-            T asset = getAsset(assetId, type);
+            T asset = getAsset(getAssetId(assetId), type);
             return asset != null;
         } catch (Exception e) {
             return false;
@@ -450,5 +452,20 @@ public class BigchaindbUtil {
     private static String getTransactionId(Transaction transaction) {
         String withQuotationId = transaction.getId();
         return withQuotationId.substring(1, withQuotationId.length() -1);
+    }
+
+    /**
+     * use pig id get asset id
+     * @param pigId
+     * @return
+     */
+    public static String getAssetId(String pigId){
+        try {
+            return AssetsApi.getAssets(pigId).getAssets().get(0).getId();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }

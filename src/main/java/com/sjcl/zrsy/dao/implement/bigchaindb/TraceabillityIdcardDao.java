@@ -22,7 +22,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
      */
     @Override
     public boolean exsits(String id) {
-        return BigchaindbUtil.assetIsExist(id, String.class);
+        return BigchaindbUtil.assetIsExist(id, HashMap.class);
     }
 
     /**
