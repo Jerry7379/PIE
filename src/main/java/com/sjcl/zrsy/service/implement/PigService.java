@@ -3,6 +3,7 @@ package com.sjcl.zrsy.service.implement;
 import com.sjcl.zrsy.dao.IPigDao;
 import com.sjcl.zrsy.dao.implement.bigchaindb.PigDao;
 import com.sjcl.zrsy.domain.dto.AllData;
+import com.sjcl.zrsy.domain.dto.Current;
 import com.sjcl.zrsy.domain.dto.CurrentWeekData;
 import com.sjcl.zrsy.domain.dto.Ratio;
 import com.sjcl.zrsy.service.IPigService;
@@ -45,6 +46,13 @@ public class PigService implements IPigService {
         return currentWeekData;
     }
 
+    @Override
+    public Current getCurrentData(){
+        Current current=new Current();
+        current.setAllData(getAllData());
+        current.setCurrentWeekData(getCurrentWeekData());
+        return current;
+    }
     @Override
     public List<Ratio> getVarietyRatio(String scope) {
         return pigDao.getRatio(PigDao.RADIO_VARIETY, scope);

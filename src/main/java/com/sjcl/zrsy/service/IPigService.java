@@ -1,6 +1,7 @@
 package com.sjcl.zrsy.service;
 
 import com.sjcl.zrsy.domain.dto.AllData;
+import com.sjcl.zrsy.domain.dto.Current;
 import com.sjcl.zrsy.domain.dto.CurrentWeekData;
 import com.sjcl.zrsy.domain.dto.Ratio;
 
@@ -23,7 +24,17 @@ public interface IPigService {
      */
     AllData getAllData();
 
+    /**
+     * get current week data
+     * @return
+     */
     CurrentWeekData getCurrentWeekData();
+
+    /**
+     * get alldata and currentweekdata
+     * @return
+     */
+    Current getCurrentData();
 
     List<Ratio> getVarietyRatio(String scope);
 

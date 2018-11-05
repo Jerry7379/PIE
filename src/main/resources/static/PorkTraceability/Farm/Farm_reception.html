@@ -51,6 +51,9 @@
 
                     </div>
                     <div class="form-group">
+                        <input type="text" class="form-control" placeholder="请输入13位猪ID" required="" id="pigId" name="bid">
+                    </div>
+                    <div class="form-group">
                         <input type="text" class="form-control" placeholder="请输入18位饲养员ID" required="" id="Bid" name="bid">
                     </div>
                     <div class="form-group" >
@@ -142,6 +145,7 @@
         $(document).ready(function(){
             $("#btnpb").click(function(){
                 var pig = {
+                    id:$("#pigId").val(),
                     breederId: $("#Bid").val(),
                     date: $("#hello").val(),
                     breed: $("#breed").val(),

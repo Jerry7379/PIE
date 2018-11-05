@@ -7,6 +7,8 @@ import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
@@ -24,15 +26,18 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
     }
 
     /**
-     * 新猪出生，创建资产，
+     * 新猪出生，创建资产
      *
      * @param initialFarm
      * @return
      */
     @Override
     public String insert(TraceabilityIdcard initialFarm) {
+        Map asset=new HashMap();
+        asset.put("type",ASSET_OBJECT);
+        asset.put("pigid",initialFarm.getId());
         try {
-            return BigchaindbUtil.createAsset(ASSET_OBJECT, initialFarm);
+            return BigchaindbUtil.createAsset(asset, initialFarm);
         } catch (Exception e) {
             return null;
         }

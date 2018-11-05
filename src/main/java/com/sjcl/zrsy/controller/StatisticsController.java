@@ -18,16 +18,15 @@ public class StatisticsController {
         return RestfulResult.ok(pigService.getUnspentCountCurrentRegistration());
     }
 
-
-    @GetMapping("/allData")
-    public RestfulResult allData() {
-        return RestfulResult.ok(pigService.getAllData());
+    /**
+     * get alldata and currentWeekDate
+     * @return
+     */
+    @GetMapping("/current")
+    public RestfulResult CurrentData() {
+        return RestfulResult.ok(pigService.getCurrentData());
     }
 
-    @GetMapping("/currentWeek")
-    public RestfulResult currentWeek() {
-        return RestfulResult.ok(pigService.getCurrentWeekData());
-    }
 
     @GetMapping("/varietyRatio")
     public RestfulResult varietyRatio(@RequestParam(name = "scope") String scope) {
