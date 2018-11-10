@@ -100,7 +100,7 @@
         $(document).ready(function () {
             $("#btnfo").click(function () {
                 var transportTime = new Date();
-                var t = transportTime.toLocaleString();
+                var t = transportTime.toISOString();
                 //alert(str);
 
                 var f_operation = {
@@ -108,8 +108,7 @@
                     operation: $("#operation").val(),
                     content: $("#content").val(),
                     remark: $("#remark").val(),
-                    transportTime: t
-
+                    time: t
                 }
                 var F_operation = JSON.stringify(f_operation);
                 //alert(Pig);
@@ -141,8 +140,8 @@
             rules: {
                 pigId: {
                     required: true,
-                    maxlength: 64,
-                    minlength: 64
+                    maxlength: 13,
+                    minlength: 13
                 },
                 Content: {
                     required: true,

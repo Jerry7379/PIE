@@ -25,6 +25,10 @@ public class PigService implements IPigService {
         return pigDao.getUnspentCountCurrentRegistration();
     }
 
+    /**
+     * 获得场中所有数据
+     * @return
+     */
     @Override
     public AllData getAllData() {
         AllData allData = new AllData();
@@ -34,6 +38,10 @@ public class PigService implements IPigService {
         return allData;
     }
 
+    /**
+     * 获得当前一周数据
+     * @return
+     */
     @Override
     public CurrentWeekData getCurrentWeekData() {
         LocalDate start = LocalDate.now().with(ChronoField.DAY_OF_WEEK, 1).minusDays(1);

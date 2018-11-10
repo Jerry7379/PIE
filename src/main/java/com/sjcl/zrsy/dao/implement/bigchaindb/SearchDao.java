@@ -23,7 +23,7 @@ public class SearchDao implements com.sjcl.zrsy.dao.ISearchDao {
 
     @Override
     public SearchId select(String id) {
-        if (BigchaindbUtil.assetIsExist(id, String.class)) {
+        if (BigchaindbUtil.assetIsExist(BigchaindbUtil.getAssetId(id), String.class)) {
             SearchId searchId = getSearchId(id);
             searchId.setOperations(searchOperation(id));
             return searchId;
@@ -35,7 +35,7 @@ public class SearchDao implements com.sjcl.zrsy.dao.ISearchDao {
 
     private SearchId getSearchId(String id) {
         try {
-            TraceabilityIdcard traceabilityIdcard = BigchaindbUtil.getWholeMetaData(id, TraceabilityIdcard.class);
+            TraceabilityIdcard traceabilityIdcard = BigchaindbUtil.getWholeMetaData(BigchaindbUtil.getAssetId(id), TraceabilityIdcard.class);
             traceabilityIdcard.setId(id);
             if (traceabilityIdcard == null) {
                 return null;

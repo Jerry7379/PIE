@@ -27,7 +27,7 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     @Override
     public boolean insertFarmOperation(Operation operation) {
         try {
-            BigchaindbUtil.transferToSelf(operationMetaData(operation), operation.getId());
+            BigchaindbUtil.transferToSelf(operationMetaData(operation), BigchaindbUtil.getAssetId(operation.getId()));
         } catch (Exception e) {
             return false;
         }
@@ -43,7 +43,7 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     @Override
     public boolean insertMarketOperation(Operation operation) {
         try {
-            BigchaindbUtil.transferToSelf(operationMetaData(operation), operation.getId());
+            BigchaindbUtil.transferToSelf(operationMetaData(operation), BigchaindbUtil.getAssetId(operation.getId()));
         } catch (Exception e) {
             return false;
         }
@@ -59,7 +59,7 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     @Override
     public boolean insertSlaughteroperartion(Operation operation) {
         try {
-            BigchaindbUtil.transferToSelf(operationMetaData(operation), operation.getId());
+            BigchaindbUtil.transferToSelf(operationMetaData(operation), BigchaindbUtil.getAssetId(operation.getId()));
         } catch (Exception e) {
             return false;
         }
@@ -69,7 +69,7 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     @Override
     public boolean insertLogisticsOperation(LogisticsOperation logisticsOperation) {
         try {
-            BigchaindbUtil.transferToSelf(operationMetaData(logisticsOperation), logisticsOperation.getId());
+            BigchaindbUtil.transferToSelf(operationMetaData(logisticsOperation), BigchaindbUtil.getAssetId(logisticsOperation.getId()));
         } catch (Exception e) {
             return false;
         }
@@ -86,7 +86,7 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
     public List<Operation> findallOperationByPigid(String pigId) {
         try {
             List<Operation> operations = new ArrayList<>();
-            Transactions transactions = TransactionsApi.getTransactionsByAssetId(pigId, Operations.TRANSFER);
+            Transactions transactions = TransactionsApi.getTransactionsByAssetId(BigchaindbUtil.getAssetId(pigId), Operations.TRANSFER);
 
             for (Transaction transaction : transactions.getTransactions()) {
                 LinkedTreeMap metaDataMap = (LinkedTreeMap) transaction.getMetaData();

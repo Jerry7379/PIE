@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Repository
@@ -31,7 +32,10 @@ public class PigDao implements IPigDao {
     @Autowired
     private ITraceabilityIdcardDao traceabilityIdcardDao;
 
-
+    /**
+     * 获得当前养殖场未交易的猪的个数
+     * @return
+     */
     @Override
     public int getUnspentCountCurrentRegistration() {
         try {
@@ -74,6 +78,12 @@ public class PigDao implements IPigDao {
         }
     }
 
+    /**
+     * 获得start到end这段时间所有未出栏的猪的个数
+     * @param start 开始时间
+     * @param end 结束时间
+     * @return
+     */
     @Override
     public int getBirthCountCurrentRegistration(LocalDate start, LocalDate end) {
 
@@ -82,7 +92,7 @@ public class PigDao implements IPigDao {
 
             Set<String> pigIds = getAllPigIds();
             for (String pigId : pigIds) {
-                TraceabilityIdcard idcard = BigchaindbUtil.getWholeMetaData(pigId, TraceabilityIdcard.class);
+                TraceabilityIdcard idcard = BigchaindbUtil.getWholeMetaData(BigchaindbUtil.getAssetId(pigId), TraceabilityIdcard.class);
                 LocalDate birthDay = getBirthDay(idcard);
                 if (birthDay.isAfter(start) && birthDay.isBefore(end)) {
                     count++;
@@ -96,7 +106,11 @@ public class PigDao implements IPigDao {
 
     }
 
-
+    /**
+     * 获得猪的出生日期
+     * @param idcard
+     * @return
+     */
     private LocalDate getBirthDay(TraceabilityIdcard idcard) {
         return  idcard.getBirthday().toLocalDate();
     }
@@ -113,8 +127,8 @@ public class PigDao implements IPigDao {
                 List<Operation> operations = operationDao.findallOperationByPigid(pigId);
 
                 for (Operation operation : operations) {
-                    LocalDate operationTime = LocalDate.parse(operation.getTime());
-                    if ((operationTime.isAfter(start) && operationTime.isAfter(end))
+                    LocalDate operationTime = LocalDate.parse(operation.getTime().substring(0,10));
+                    if ((operationTime.isAfter(start) && operationTime.isBefore(end))
                             && "出栏体重".equals(operation.getOperation())) {
                         double weight = Double.parseDouble(operation.getContent());
                         totalWeight += weight;
@@ -131,6 +145,12 @@ public class PigDao implements IPigDao {
         }
     }
 
+    /**
+     * 本周出栏
+     * @param start
+     * @param end
+     * @return
+     */
     @Override
     public int getSpentCountCurrentRegistration(LocalDate start, LocalDate end) {
         try {
@@ -142,8 +162,9 @@ public class PigDao implements IPigDao {
                 List<Operation> operations = operationDao.findallOperationByPigid(pigId);
 
                 for (Operation operation : operations) {
-                    LocalDate operationTime = LocalDate.parse(operation.getTime());
-                    if ((operationTime.isAfter(start) && operationTime.isAfter(end))
+
+                    LocalDate operationTime = LocalDate.parse(operation.getTime().substring(0,10));
+                    if ((operationTime.isAfter(start) && operationTime.isBefore(end))
                             && "出栏体重".equals(operation.getOperation())) {
                         count += 1;
                         break;
@@ -239,10 +260,15 @@ public class PigDao implements IPigDao {
         for (Output output : outputs.getOutput()) {
             String transactionId = output.getTransactionId();
             Transaction transaction = TransactionsApi.getTransactionById(transactionId);
-            Object asset = BigchaindbUtil.bigchaindbDataToBean((LinkedTreeMap) transaction.getAsset().getData());
-            if (asset instanceof String && TraceabillityIdcardDao.ASSET_OBJECT.equals(asset)) {
-                ids.add(transaction.getAsset().getId());
+            if(transaction.getAsset().getData()!=null){
+                Object asset = BigchaindbUtil.bigchaindbDataToBean((LinkedTreeMap) transaction.getAsset().getData());
+                if (asset instanceof HashMap && TraceabillityIdcardDao.ASSET_OBJECT.equals(((HashMap) asset).get("type").toString())) {
+                    ids.add(((HashMap) asset).get("pigid").toString());
+                }
+            }else{
+                ;
             }
+
         }
         return ids;
     }

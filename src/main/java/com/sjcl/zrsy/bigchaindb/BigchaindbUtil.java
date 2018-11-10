@@ -185,7 +185,7 @@ public class BigchaindbUtil {
      * @throws InstantiationException
      * @throws InvocationTargetException
      */
-    public static Object bigchaindbDataToBean(LinkedTreeMap bigchaindbData) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
+    public static Object bigchaindbDataToBean(LinkedTreeMap bigchaindbData) throws ClassNotFoundException {
         String type = (String) bigchaindbData.get("type");
         Object data = bigchaindbData.get("data");
         if (data instanceof com.google.gson.internal.LinkedTreeMap) {
@@ -223,7 +223,7 @@ public class BigchaindbUtil {
     public static <T> boolean assetIsExist(String assetId, Class<T> type) {
 
         try {
-            T asset = getAsset(getAssetId(assetId), type);
+            T asset = getAsset(assetId, type);
             return asset != null;
         } catch (Exception e) {
             return false;
@@ -459,13 +459,17 @@ public class BigchaindbUtil {
      * @param pigId
      * @return
      */
-    public static String getAssetId(String pigId){
+    public static String getAssetId(String pigId) {
         try {
-            return AssetsApi.getAssets(pigId).getAssets().get(0).getId();
+            if(AssetsApi.getAssets(pigId).getAssets().size()!=0) {
+                return AssetsApi.getAssets(pigId).getAssets().get(0).getId();
+            }else{
+                return null;
+            }
         } catch (IOException e) {
-            e.printStackTrace();
             return null;
         }
+
 
     }
 }
