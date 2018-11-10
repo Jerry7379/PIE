@@ -32,6 +32,13 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
+        //设置跨域访问
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT, GET");
+        resp.setHeader("Access-Control-Max-Age", "3600");
+        resp.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+
+
         String path = req.getServletPath();
 
 
