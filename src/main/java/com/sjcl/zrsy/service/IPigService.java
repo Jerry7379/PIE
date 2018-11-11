@@ -46,4 +46,9 @@ public interface IPigService {
      */
     Map getAgedistributed();
 
+
+    List<AgeandWeight> getAgeandWeight();
+
+
+
 }

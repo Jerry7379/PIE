@@ -11,6 +11,7 @@ import com.sjcl.zrsy.bigchaindb.KeyPairHolder;
 import com.sjcl.zrsy.dao.IOperationDao;
 import com.sjcl.zrsy.dao.IPigDao;
 import com.sjcl.zrsy.dao.ITraceabilityIdcardDao;
+import com.sjcl.zrsy.domain.dto.AgeandWeight;
 import com.sjcl.zrsy.domain.dto.Ratio;
 import com.sjcl.zrsy.domain.po.Operation;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
@@ -120,7 +121,7 @@ public class PigDao implements IPigDao {
      * @param idcard
      * @return
      */
-    private LocalDate getBirthDay(TraceabilityIdcard idcard) {
+    public static LocalDate getBirthDay(TraceabilityIdcard idcard) {
         return  idcard.getBirthday().toLocalDate();
     }
 
@@ -282,6 +283,32 @@ public class PigDao implements IPigDao {
         } catch (Exception e) {
             return Collections.emptyList();
         }
+    }
+
+    @Override
+    public List<AgeandWeight> getAgeandWeight(){
+        List<AgeandWeight> ageandWeights = new ArrayList<>();
+        try {
+
+            Set<String> pigIds = getSpentPigIds();
+
+            for (String pigId : pigIds) {
+                TraceabilityIdcard idcard = BigchaindbUtil.getWholeMetaData(BigchaindbUtil.getAssetId(pigId), TraceabilityIdcard.class);
+                AgeandWeight ageandWeight = new AgeandWeight();
+                ageandWeight.setGender(idcard.getGender());
+                List<Operation> operations = operationDao.findallOperationByPigid(pigId);
+                for (Operation operation : operations) {
+                    if (operation.getOperation().equals("出栏体重")) {
+                        ageandWeight.setWeight(Double.valueOf(operation.getContent()));
+                        ageandWeight.setTime((int) ((LocalDate.parse(operation.getTime().substring(0,10)).toEpochDay()-getBirthDay(idcard).toEpochDay())));
+                    }
+                }
+                ageandWeights.add(ageandWeight);
+            }
+        }catch (Exception e){
+            return null;
+        }
+        return ageandWeights;
     }
 
     /**

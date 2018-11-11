@@ -90,6 +90,10 @@ public class PigService implements IPigService {
         return map;
     }
 
+    public List<AgeandWeight> getAgeandWeight(){
+        return pigDao.getAgeandWeight();
+    }
+
     public static void main(String[] args) {
         LocalDate s=LocalDate.now();
         System.out.println(s);

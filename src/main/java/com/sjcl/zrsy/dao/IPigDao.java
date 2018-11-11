@@ -1,5 +1,6 @@
 package com.sjcl.zrsy.dao;
 
+import com.sjcl.zrsy.domain.dto.AgeandWeight;
 import com.sjcl.zrsy.domain.dto.Ratio;
 
 import java.time.LocalDate;
@@ -59,4 +60,6 @@ public interface IPigDao {
      * @return
      */
     int getAgedistributed(int day);
+
+    List<AgeandWeight> getAgeandWeight();
 }

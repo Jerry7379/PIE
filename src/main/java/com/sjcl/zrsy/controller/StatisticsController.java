@@ -40,4 +40,13 @@ public class StatisticsController {
         return RestfulResult.ok(pigService.getAgedistributed());
     }
 
+    /**
+     * 获得年龄与出栏体重的分布
+     * @return
+     */
+    @GetMapping("/dayage")
+    public RestfulResult dayage(){
+        return RestfulResult.ok(pigService.getAgeandWeight());
+    }
+
 }
