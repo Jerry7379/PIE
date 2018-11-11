@@ -5,8 +5,8 @@ import java.util.List;
 public class VarietyRatio {
     private List<Ratio> breedSpot;
     private List<Ratio> breedGlobal;
-    private Ratio genderSpot;
-    private Ratio genderGlobal;
+    private List<Ratio> genderSpot;
+    private List<Ratio> genderGlobal;
 
     public List<Ratio> getBreedSpot() {
         return breedSpot;
@@ -24,19 +24,19 @@ public class VarietyRatio {
         this.breedGlobal = breedGlobal;
     }
 
-    public Ratio getGenderSpot() {
+    public List<Ratio> getGenderSpot() {
         return genderSpot;
     }
 
-    public void setGenderSpot(Ratio genderSpot) {
+    public void setGenderSpot(List<Ratio> genderSpot) {
         this.genderSpot = genderSpot;
     }
 
-    public Ratio getGenderGlobal() {
+    public List<Ratio> getGenderGlobal() {
         return genderGlobal;
     }
 
-    public void setGenderGlobal(Ratio genderGlobal) {
+    public void setGenderGlobal(List<Ratio> genderGlobal) {
         this.genderGlobal = genderGlobal;
     }
 }

@@ -4,7 +4,6 @@ import com.sjcl.zrsy.domain.dto.RestfulResult;
 import com.sjcl.zrsy.service.IPigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("/pigs")
@@ -27,19 +26,18 @@ public class StatisticsController {
         return RestfulResult.ok(pigService.getCurrentData());
     }
 
-
+    /**
+     *
+     * @return
+     */
     @GetMapping("/varietyRatio")
-    public RestfulResult varietyRatio(@RequestParam(name = "scope") String scope) {
-        return RestfulResult.ok(pigService.getVarietyRatio(scope));
+    public RestfulResult varietyRatio() {
+        return RestfulResult.ok(pigService.getVarirtyRation());
     }
 
-    @GetMapping("/genderRatio")
-    public RestfulResult genderRatio(@RequestParam(name = "scope") String scope) {
-        return RestfulResult.ok(pigService.getGenderRatio(scope));
+    @GetMapping("/days")
+    public RestfulResult days(){
+        return RestfulResult.ok(pigService.getAgedistributed());
     }
 
-    @GetMapping("/outBarRatio")
-    public RestfulResult outBarRatio(@RequestParam(name = "scope") String scope) {
-        return RestfulResult.ok(pigService.getOutBarRatio(scope));
-    }
 }

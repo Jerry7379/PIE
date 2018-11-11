@@ -4,6 +4,7 @@ import com.sjcl.zrsy.domain.dto.Ratio;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 /**
  * pig dao
@@ -11,7 +12,13 @@ import java.util.List;
 public interface IPigDao {
     public static final String RADIO_VARIETY = "variety";
     public static final String RADIO_GENDER = "gender";
-    public static final String RADIO_OUTBAR = "outBar";
+
+    public static final int AGE_60=60;
+    public static final int AGE_120=120;
+    public static final int AGE_180=180;
+    public static final int AGE_240=240;
+
+
     /**
      * get current registration unspent pig count
      * @return
@@ -32,5 +39,24 @@ public interface IPigDao {
 
     int getSpentCountCurrentRegistration(LocalDate start, LocalDate end);
 
-    List<Ratio> getRatio(String category, String scope);
+    /**
+     * 全局查询category的数量
+     * @param category
+     * @return
+     */
+    List<Ratio> getRatio(String category);
+
+    /**
+     * 场中查找category的数量
+     * @param category
+     * @return
+     */
+    List<Ratio> getUnspentRatio(String category);
+
+    /**
+     * 返回某一个年龄段的个数
+     * @param day
+     * @return
+     */
+    int getAgedistributed(int day);
 }

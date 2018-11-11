@@ -1,11 +1,9 @@
 package com.sjcl.zrsy.service;
 
-import com.sjcl.zrsy.domain.dto.AllData;
-import com.sjcl.zrsy.domain.dto.Current;
-import com.sjcl.zrsy.domain.dto.CurrentWeekData;
-import com.sjcl.zrsy.domain.dto.Ratio;
+import com.sjcl.zrsy.domain.dto.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * pig service
@@ -36,9 +34,16 @@ public interface IPigService {
      */
     Current getCurrentData();
 
-    List<Ratio> getVarietyRatio(String scope);
+    /**
+     * 返回养殖场的场中数据和全局的数据
+     * @return
+     */
+    VarietyRatio getVarirtyRation();
 
-    List<Ratio> getGenderRatio(String scope);
+    /**
+     * 返回年龄分布
+     * @return
+     */
+    Map getAgedistributed();
 
-    List<Ratio> getOutBarRatio(String scope);
 }

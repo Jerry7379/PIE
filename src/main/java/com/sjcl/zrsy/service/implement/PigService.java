@@ -2,17 +2,16 @@ package com.sjcl.zrsy.service.implement;
 
 import com.sjcl.zrsy.dao.IPigDao;
 import com.sjcl.zrsy.dao.implement.bigchaindb.PigDao;
-import com.sjcl.zrsy.domain.dto.AllData;
-import com.sjcl.zrsy.domain.dto.Current;
-import com.sjcl.zrsy.domain.dto.CurrentWeekData;
-import com.sjcl.zrsy.domain.dto.Ratio;
+import com.sjcl.zrsy.domain.dto.*;
 import com.sjcl.zrsy.service.IPigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PigService implements IPigService {
@@ -61,18 +60,38 @@ public class PigService implements IPigService {
         current.setCurrentWeekData(getCurrentWeekData());
         return current;
     }
+
+    /**
+     * 返回雌雄数量，各品种的数量
+     * @return
+     */
     @Override
-    public List<Ratio> getVarietyRatio(String scope) {
-        return pigDao.getRatio(PigDao.RADIO_VARIETY, scope);
+    public VarietyRatio getVarirtyRation() {
+        VarietyRatio varietyRatio=new VarietyRatio();
+        varietyRatio.setBreedGlobal(pigDao.getRatio(IPigDao.RADIO_VARIETY));
+        varietyRatio.setBreedSpot(pigDao.getUnspentRatio(IPigDao.RADIO_VARIETY));
+        varietyRatio.setGenderGlobal(pigDao.getRatio(IPigDao.RADIO_GENDER));
+        varietyRatio.setGenderSpot(pigDao.getUnspentRatio(IPigDao.RADIO_GENDER));
+        return varietyRatio;
     }
 
+    /**
+     * 返回年龄分布
+     * @return
+     */
     @Override
-    public List<Ratio> getGenderRatio(String scope) {
-        return pigDao.getRatio(PigDao.RADIO_GENDER, scope);
+    public Map getAgedistributed() {
+        Map<String,Integer> map=new HashMap<>();
+        map.put("num60",pigDao.getAgedistributed(IPigDao.AGE_60));
+        map.put("num120",pigDao.getAgedistributed(IPigDao.AGE_120));
+        map.put("num180",pigDao.getAgedistributed(IPigDao.AGE_180));
+        map.put("num240",pigDao.getAgedistributed(IPigDao.AGE_240));
+
+        return map;
     }
 
-    @Override
-    public List<Ratio> getOutBarRatio(String scope) {
-        return pigDao.getRatio(PigDao.RADIO_OUTBAR, scope);
+    public static void main(String[] args) {
+        LocalDate s=LocalDate.now();
+        System.out.println(s);
     }
 }
