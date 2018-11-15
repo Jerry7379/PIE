@@ -17,8 +17,8 @@ import java.util.Base64;
 
 @Service
 public class KeyPairService {
-    public static final String PRIKEY_FILE = "info/farm/keystore_prikey.ks";
-    public static final String PUBKEY_FILE = "info/farm/keystore_pubkey.ks";
+    public static final String PRIKEY_FILE = "keystore_prikey.ks";
+    public static final String PUBKEY_FILE = "keystore_pubkey.ks";
 
 
     public KeyPairService() {
@@ -35,15 +35,15 @@ public class KeyPairService {
      * @param password
      * @return
      */
-    public boolean save(KeyPair keyPair, String password) {
+    public boolean save(KeyPair keyPair, String password,String type) {
 
         try {
-            try(FileOutputStream priKeyOut = new FileOutputStream(PRIKEY_FILE)) {
+            try(FileOutputStream priKeyOut = new FileOutputStream(getKeypairPath(type,PRIKEY_FILE))) {
                 byte[] priKeyCode =  CipherUtil.encrypt(keyPair.getPrivate().getEncoded(), password);
                 priKeyOut.write(priKeyCode);
             }
 
-            try (FileOutputStream pubKeyOut = new FileOutputStream(PUBKEY_FILE)){
+            try (FileOutputStream pubKeyOut = new FileOutputStream(getKeypairPath(type,PUBKEY_FILE))){
                 byte[] pubKeyCode = encoded(keyPair.getPublic());
                 pubKeyOut.write(pubKeyCode);
             }
@@ -58,8 +58,8 @@ public class KeyPairService {
      * 查看公私钥是否存在
      * @return
      */
-    public boolean isExist() {
-        return new File(PUBKEY_FILE).exists() && new File(PRIKEY_FILE).exists();
+    public boolean isExist(String type) {
+        return new File(getKeypairPath(type,PUBKEY_FILE)).exists() && new File(getKeypairPath(type,PRIKEY_FILE)).exists();
     }
 
     private static byte[] encoded(Key key) {
@@ -71,15 +71,15 @@ public class KeyPairService {
      * @param password
      * @return
      */
-    public KeyPair get(String password) {
+    public KeyPair get(String password,String type) {
 
         try {
             Security.addProvider(new EdDSASecurityProvider());
 
-            byte[] priEncoded = getPriEncoded(password);
+            byte[] priEncoded = getPriEncoded(password,type);
             PrivateKey privateKey = deserializePriKey(priEncoded);
 
-            byte[] pubEncoded = getPubEncoded();
+            byte[] pubEncoded = getPubEncoded(getKeypairPath(type,PUBKEY_FILE));
             PublicKey publicKey = deserializePubKey(pubEncoded);
 
             return new KeyPair(publicKey, privateKey);
@@ -90,19 +90,19 @@ public class KeyPairService {
     }
 
     // protected for unit test
-    protected byte[] getPriEncoded(String password) throws GeneralSecurityException, IOException {
-        byte[] priEncryptEncoded = getEncryptPriEncoded();
+    protected byte[] getPriEncoded(String password,String type) throws GeneralSecurityException, IOException {
+        byte[] priEncryptEncoded = getEncryptPriEncoded(getKeypairPath(type,PRIKEY_FILE));
         return CipherUtil.decrypt(priEncryptEncoded, password);///
     }
 
     // protected for unit test
-    protected byte[] getEncryptPriEncoded() throws IOException {
-        return readBytes(PRIKEY_FILE);
+    protected byte[] getEncryptPriEncoded(String filePath) throws IOException {
+        return readBytes(filePath);
     }
 
     // protected for unit test
-    protected byte[] getPubEncoded() throws IOException {
-        return readBytes(PUBKEY_FILE);
+    protected byte[] getPubEncoded(String filePath) throws IOException {
+        return readBytes(filePath);
     }
 
     private static byte[] readBytes(String filename) throws IOException {
@@ -121,5 +121,17 @@ public class KeyPairService {
     private static PublicKey deserializePubKey(byte[] pubEncoded) throws InvalidKeySpecException {
         X509EncodedKeySpec encoded = new X509EncodedKeySpec(pubEncoded);
         return new EdDSAPublicKey(encoded);
+    }
+
+    private String getKeypairPath(String type,String filename){
+        if(type.equals("养殖场")){
+            return "info/farm/"+filename;
+        }else if(type.equals("屠宰场")){
+            return "info/slaughter/"+filename;
+        }else if(type.equals("物流")){
+            return "info/logistics/"+filename;
+        }else{
+            return "info/market/"+filename;
+        }
     }
 }

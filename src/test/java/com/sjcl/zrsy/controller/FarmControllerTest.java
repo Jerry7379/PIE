@@ -51,7 +51,7 @@ public class FarmControllerTest {
 
        TraceabillityIdcardDao idcardDao = null;
        KeyPairService keyPairService=new KeyPairService();
-       KeyPairHolder.setKeyPair(keyPairService.get("123456"));
+       //KeyPairHolder.setKeyPair(keyPairService.get("123456"));
        for(int i=0;i<1000;i++){
            TraceabilityIdcard idcard=new TraceabilityIdcard();
 

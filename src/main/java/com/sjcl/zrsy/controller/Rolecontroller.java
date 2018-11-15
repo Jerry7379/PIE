@@ -36,7 +36,7 @@ public class Rolecontroller {
 
         Registration user = roleService.login(registration.getRegistrationId());
 
-        if (user != null || keyPairService.isExist()) {
+        if (user != null || keyPairService.isExist(registration.getType())) {
             return resourceBundle.getString("AccountAreadyExist");
         }
 
@@ -55,7 +55,7 @@ public class Rolecontroller {
             return resourceBundle.getString("AccountNotExist");
         } else {
             String password = roleLogin.getPassword();
-            KeyPair keyPair = keyPairService.get(password);
+            KeyPair keyPair = keyPairService.get(password,user.getType());
             if (keyPair != null) {
                 KeyPairHolder.login(keyPair, user);
                 session.setAttribute("type", user.getType());
