@@ -21,6 +21,7 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -257,19 +258,19 @@ public class BigchaindbUtil {
 
     /**
      * transfer asset to publicKeyHexTo.
-     * @param assetId asset Id
-     * @param publicKeyHexTo transferTo
-     * @return transferTransactionId
+     * @param assetId
+     * @param publicKey
+     * @return
      * @throws Exception
      */
-    public static String transferTo(String assetId, String publicKeyHexTo) throws Exception {
+    public static String transferTo(String assetId, PublicKey publicKey) throws Exception {
 
         Transaction transferTransaction = BigchainDbTransactionBuilder
                 .init()
                 .operation(Operations.TRANSFER)
                 .addAssets(assetId, String.class)
                 .addInput(null, transferToSelfFulFill(assetId), KeyPairHolder.getPublic())
-                .addOutput("1", (EdDSAPublicKey) Account.publicKeyFromHex(publicKeyHexTo))
+                .addOutput("1", (EdDSAPublicKey)publicKey)
                 .buildAndSign(
                         KeyPairHolder.getPublic(),
                         KeyPairHolder.getPrivate())

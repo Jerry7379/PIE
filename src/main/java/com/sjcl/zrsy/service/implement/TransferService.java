@@ -4,6 +4,7 @@ import com.bigchaindb.api.AssetsApi;
 import com.bigchaindb.api.TransactionsApi;
 import com.sjcl.zrsy.bigchaindb.KeyPairHolder;
 import com.sjcl.zrsy.dao.ITransferDao;
+import com.sjcl.zrsy.domain.dto.TransferOperation;
 import com.sjcl.zrsy.domain.po.Registration;
 import com.sjcl.zrsy.service.IRoleService;
 import com.sjcl.zrsy.service.ITransferService;
@@ -20,7 +21,7 @@ public class TransferService implements ITransferService {
     private ITransferDao transferDao;
 
     @Override
-    public void transfer(String pigId, String publicKeyHex) throws Exception {
-        transferDao.transfer(pigId, publicKeyHex);
+    public void transfer(TransferOperation transferOperation) throws Exception {
+        transferDao.transfer(transferOperation);
     }
 }

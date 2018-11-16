@@ -25,7 +25,7 @@ public class BigchaindbRoleServiceImpl extends RoleServiceImpl {
         //registration.setPublicKey((EdDSAPublicKey) keyPair.getPublic());//TODO:公钥放不进去，链上显示为null，一旦在此处获取，报错，未找到原因
         boolean ret = super.registration(registration);
         if (ret) {
-            ret = keyPairService.save(KeyPairHolder.getKeyPair(), password,registration.getType());
+            ret = keyPairService.save(KeyPairHolder.getKeyPair(), password,registration.getType(),registration.getRegistrationId());
         }
         return ret;
     }

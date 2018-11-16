@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class CommonController {
     @Autowired
     ITransferService transferService;
@@ -16,8 +17,8 @@ public class CommonController {
     @PostMapping("/transfer")
     public RestfulResult farmoperation(@RequestBody TransferOperation operation) {
         try {
-            transferService.transfer(operation.getPigId(), operation.getPublicKeyInHex());
-            return RestfulResult.ok();
+            transferService.transfer(operation);
+            return RestfulResult.ok("OK");
         } catch (Exception e) {
             return RestfulResult.errorMsg(e.getMessage());
         }

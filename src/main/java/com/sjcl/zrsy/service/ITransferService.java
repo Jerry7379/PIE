@@ -1,5 +1,7 @@
 package com.sjcl.zrsy.service;
 
+import com.sjcl.zrsy.domain.dto.TransferOperation;
+
 /**
  * transfer servcie.
  *
@@ -8,10 +10,9 @@ package com.sjcl.zrsy.service;
 public interface ITransferService {
 
     /**
-     * transfer pig to publicKeyInHex
-     * @param pigId pigId
-     * @param publicKeyInHex publicKeyInHex
+     *
+     * @param transferOperation
      * @throws Exception
      */
-    void transfer(String pigId, String publicKeyInHex) throws Exception;
+    void transfer(TransferOperation transferOperation) throws Exception;
 }

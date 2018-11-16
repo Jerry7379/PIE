@@ -35,15 +35,15 @@ public class KeyPairService {
      * @param password
      * @return
      */
-    public boolean save(KeyPair keyPair, String password,String type) {
+    public boolean save(KeyPair keyPair, String password,String type,String id) {
 
         try {
-            try(FileOutputStream priKeyOut = new FileOutputStream(getKeypairPath(type,PRIKEY_FILE))) {
+            try(FileOutputStream priKeyOut = new FileOutputStream(getKeypairPath(id,type,PRIKEY_FILE))) {
                 byte[] priKeyCode =  CipherUtil.encrypt(keyPair.getPrivate().getEncoded(), password);
                 priKeyOut.write(priKeyCode);
             }
 
-            try (FileOutputStream pubKeyOut = new FileOutputStream(getKeypairPath(type,PUBKEY_FILE))){
+            try (FileOutputStream pubKeyOut = new FileOutputStream(getKeypairPath(id,type,PUBKEY_FILE))){
                 byte[] pubKeyCode = encoded(keyPair.getPublic());
                 pubKeyOut.write(pubKeyCode);
             }
@@ -58,8 +58,8 @@ public class KeyPairService {
      * 查看公私钥是否存在
      * @return
      */
-    public boolean isExist(String type) {
-        return new File(getKeypairPath(type,PUBKEY_FILE)).exists() && new File(getKeypairPath(type,PRIKEY_FILE)).exists();
+    public boolean isExist(String type,String id ) {
+        return new File(getKeypairPath(id,type,PUBKEY_FILE)).exists() && new File(getKeypairPath(id,type,PRIKEY_FILE)).exists();
     }
 
     private static byte[] encoded(Key key) {
@@ -71,37 +71,65 @@ public class KeyPairService {
      * @param password
      * @return
      */
-    public KeyPair get(String password,String type) {
+    public KeyPair get(String password,String type,String id ) {
 
         try {
             Security.addProvider(new EdDSASecurityProvider());
-
-            byte[] priEncoded = getPriEncoded(password,type);
-            PrivateKey privateKey = deserializePriKey(priEncoded);
-
-            byte[] pubEncoded = getPubEncoded(getKeypairPath(type,PUBKEY_FILE));
-            PublicKey publicKey = deserializePubKey(pubEncoded);
-
-            return new KeyPair(publicKey, privateKey);
-        } catch (GeneralSecurityException | IOException e) {
+            return new KeyPair(getPublicKey(id,type), getPrivateKey(password,type,id));
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
+    /**
+     * 从相应文件读取公钥
+     * @param type
+     * @return
+     * @throws IOException
+     * @throws InvalidKeySpecException
+     */
+    public static PublicKey getPublicKey(String type,String id)  {
+        byte[] pubEncoded = new byte[0];
+        try {
+            pubEncoded = getPubEncoded(getKeypairPath(id,type, PUBKEY_FILE));
+            return deserializePubKey(pubEncoded);
+        }catch (Exception e){
+            return null;
+        }
+
+    }
+
+    /**
+     * 从相应文件读取私钥
+     * @param type
+     * @param password
+     * @return
+     * @throws IOException
+     * @throws GeneralSecurityException
+     */
+    public static PrivateKey getPrivateKey(String type,String password,String id)  {
+        try {
+            byte[] priEncoded = getPriEncoded(id ,password, type);
+            return deserializePriKey(priEncoded);
+        }catch (Exception e){
+            return null;
+        }
+
+    }
     // protected for unit test
-    protected byte[] getPriEncoded(String password,String type) throws GeneralSecurityException, IOException {
-        byte[] priEncryptEncoded = getEncryptPriEncoded(getKeypairPath(type,PRIKEY_FILE));
+    protected static byte[] getPriEncoded(String password, String type,String id) throws GeneralSecurityException, IOException {
+        byte[] priEncryptEncoded = getEncryptPriEncoded(getKeypairPath(id,type,PRIKEY_FILE));
         return CipherUtil.decrypt(priEncryptEncoded, password);///
     }
 
     // protected for unit test
-    protected byte[] getEncryptPriEncoded(String filePath) throws IOException {
+    protected static byte[] getEncryptPriEncoded(String filePath) throws IOException {
         return readBytes(filePath);
     }
 
     // protected for unit test
-    protected byte[] getPubEncoded(String filePath) throws IOException {
+    protected static byte[] getPubEncoded(String filePath) throws IOException {
         return readBytes(filePath);
     }
 
@@ -113,7 +141,7 @@ public class KeyPairService {
         }
     }
 
-    private PrivateKey deserializePriKey(byte[] priEncoded) throws InvalidKeySpecException {
+    private static PrivateKey deserializePriKey(byte[] priEncoded) throws InvalidKeySpecException {
         PKCS8EncodedKeySpec encoded = new PKCS8EncodedKeySpec(priEncoded);
         return new EdDSAPrivateKey(encoded);
     }
@@ -123,15 +151,15 @@ public class KeyPairService {
         return new EdDSAPublicKey(encoded);
     }
 
-    private String getKeypairPath(String type,String filename){
+    private static String getKeypairPath(String id,String type,String filename){
         if(type.equals("养殖场")){
-            return "info/farm/"+filename;
+            return "info/farm/"+id+"/"+filename;
         }else if(type.equals("屠宰场")){
-            return "info/slaughter/"+filename;
+            return "info/slaughter/"+id+"/"+filename;
         }else if(type.equals("物流")){
-            return "info/logistics/"+filename;
+            return "info/logistics/"+id+"/"+filename;
         }else{
-            return "info/market/"+filename;
+            return "info/market/"+id+"/"+filename;
         }
     }
 }

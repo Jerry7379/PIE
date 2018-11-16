@@ -6,23 +6,33 @@ public class TransferOperation {
     @NotNull
     private String pigId;
     @NotNull
-    private String publicKeyInHex;
+    private String roleId;
+
+    private String type;
 
     public TransferOperation() {}
-
-    public void setPigId(String pigId) {
-        this.pigId = pigId;
-    }
 
     public String getPigId() {
         return pigId;
     }
 
-    public String getPublicKeyInHex() {
-        return publicKeyInHex;
+    public void setPigId(String pigId) {
+        this.pigId = pigId;
     }
 
-    public void setPublicKeyInHex(String publicKeyInHex) {
-        this.publicKeyInHex = publicKeyInHex;
+    public String getRoleid() {
+        return roleId;
+    }
+
+    public void setRoleid(String roleid) {
+        this.roleId = roleid;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

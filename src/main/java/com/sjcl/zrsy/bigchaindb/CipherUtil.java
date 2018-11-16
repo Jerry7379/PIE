@@ -32,7 +32,7 @@ class CipherUtil {
     }
 
     /**
-     * 通过密码生成密钥
+     * 通过密码生成加密密钥
      * @param password
      * @return
      * @throws NoSuchAlgorithmException

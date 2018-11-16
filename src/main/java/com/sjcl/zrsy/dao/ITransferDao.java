@@ -1,14 +1,15 @@
 package com.sjcl.zrsy.dao;
 
+import com.sjcl.zrsy.domain.dto.TransferOperation;
+
 /**
  * transfer data access object
  */
 public interface ITransferDao {
     /**
-     * transfer pig to publickeyInHex
-     * @param pigId pigId
-     * @param publicKeyInHex publicKeyInHex
+     *
+     * @param transferOperation
      * @throws Exception
      */
-    void transfer(String pigId, String publicKeyInHex) throws Exception;
+    void transfer(TransferOperation transferOperation) throws Exception;
 }

@@ -48,11 +48,11 @@
 
                 <form class="m-t" role="form" id="form">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="请输入64位小猪标号" required="" id="id"
+                        <input type="text" class="form-control" placeholder="请输入13位小猪标号" required="" id="id"
                                name="pigId">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="屠宰场" required="" id="publicKeyInHex"
+                        <input type="text" class="form-control" placeholder="屠宰场标号" required="" id="publicKeyInHex"
                                name="publicKeyInHex">
                     </div>
                     <button type="button" class="btn btn-primary block full-width m-b" id="btnfo">提交</button>
@@ -84,7 +84,8 @@
             $("#btnfo").click(function () {
                 var transfer_operation = {
                     pigId: $("#id").val(),
-                    publicKeyInHex: $("#publicKeyInHex").val();
+                    roleId: $("#publicKeyInHex").val(),
+                    type:"屠宰场"
                 }
                 var transferOperationJson = JSON.stringify(transfer_operation);
                 //alert(Pig);
@@ -110,8 +111,8 @@
             rules: {
                 pigId: {
                     required: true,
-                    maxlength: 64,
-                    minlength: 64
+                    maxlength: 13,
+                    minlength: 13
                 },
                 publicKeyInHex: {
                     required: true,
