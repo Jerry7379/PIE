@@ -263,12 +263,13 @@ public class BigchaindbUtil {
      * @return
      * @throws Exception
      */
-    public static String transferTo(String assetId, PublicKey publicKey) throws Exception {
+    public static String transferTo(String assetId, PublicKey publicKey,BigchaindbData bigchaindbData) throws Exception {
 
         Transaction transferTransaction = BigchainDbTransactionBuilder
                 .init()
                 .operation(Operations.TRANSFER)
                 .addAssets(assetId, String.class)
+                .addMetaData(bigchaindbData)
                 .addInput(null, transferToSelfFulFill(assetId), KeyPairHolder.getPublic())
                 .addOutput("1", (EdDSAPublicKey)publicKey)
                 .buildAndSign(

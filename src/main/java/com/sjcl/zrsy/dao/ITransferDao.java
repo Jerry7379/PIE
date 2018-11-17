@@ -12,4 +12,6 @@ public interface ITransferDao {
      * @throws Exception
      */
     boolean transfer(TransferOperation transferOperation) throws Exception;
+
+    boolean farmcheckout(String pigid);
 }

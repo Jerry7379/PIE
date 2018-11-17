@@ -17,7 +17,7 @@ public class CommonController {
     @PostMapping("/transfer")
     public RestfulResult farmoperation(@RequestBody TransferOperation operation) {
         try {
-            if(transferService.transfer(operation)){
+            if(transferService.transfer(operation)){ //TODO 检查方法还没有做
                 return RestfulResult.ok("OK");
             }else {
                 return RestfulResult.errorMsg("faile");
