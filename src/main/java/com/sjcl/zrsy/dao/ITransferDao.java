@@ -11,5 +11,5 @@ public interface ITransferDao {
      * @param transferOperation
      * @throws Exception
      */
-    void transfer(TransferOperation transferOperation) throws Exception;
+    boolean transfer(TransferOperation transferOperation) throws Exception;
 }

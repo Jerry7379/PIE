@@ -1,11 +1,12 @@
 package com.sjcl.zrsy.domain.dto;
 
-import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TransferOperation {
-    @NotNull
+
     private String pigId;
-    @NotNull
+    @JsonProperty(value="roleId")
     private String roleId;
 
     private String type;

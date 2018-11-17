@@ -21,7 +21,7 @@ public class TransferService implements ITransferService {
     private ITransferDao transferDao;
 
     @Override
-    public void transfer(TransferOperation transferOperation) throws Exception {
-        transferDao.transfer(transferOperation);
+    public boolean transfer(TransferOperation transferOperation) throws Exception {
+        return transferDao.transfer(transferOperation);
     }
 }

@@ -17,8 +17,11 @@ public class CommonController {
     @PostMapping("/transfer")
     public RestfulResult farmoperation(@RequestBody TransferOperation operation) {
         try {
-            transferService.transfer(operation);
-            return RestfulResult.ok("OK");
+            if(transferService.transfer(operation)){
+                return RestfulResult.ok("OK");
+            }else {
+                return RestfulResult.errorMsg("faile");
+            }
         } catch (Exception e) {
             return RestfulResult.errorMsg(e.getMessage());
         }
