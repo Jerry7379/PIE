@@ -30,12 +30,14 @@ public class KeyPairService {
     }
 
     /**
-     *通过密钥对和密码转换为文件的形式
+     * 通过密钥对和密码转换为文件的形式
      * @param keyPair
      * @param password
+     * @param type
+     * @param id
      * @return
      */
-    public boolean save(KeyPair keyPair, String password,String type,String id) {
+    public boolean save(KeyPair keyPair,String password,String type,String id) {
 
         try {
             try(FileOutputStream priKeyOut = new FileOutputStream(getKeypairPath(id,type,PRIKEY_FILE))) {
@@ -75,7 +77,7 @@ public class KeyPairService {
 
         try {
             Security.addProvider(new EdDSASecurityProvider());
-            return new KeyPair(getPublicKey(id,type), getPrivateKey(password,type,id));
+            return new KeyPair(getPublicKey(type,id), getPrivateKey(type,password,id));
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -110,7 +112,7 @@ public class KeyPairService {
      */
     public static PrivateKey getPrivateKey(String type,String password,String id)  {
         try {
-            byte[] priEncoded = getPriEncoded(id ,password, type);
+            byte[] priEncoded = getPriEncoded(password, type,id);
             return deserializePriKey(priEncoded);
         }catch (Exception e){
             return null;
@@ -153,12 +155,16 @@ public class KeyPairService {
 
     private static String getKeypairPath(String id,String type,String filename){
         if(type.equals("养殖场")){
+            new File("info/farm/"+id).mkdir();
             return "info/farm/"+id+"/"+filename;
         }else if(type.equals("屠宰场")){
+            new File("info/slaughter/"+id).mkdir();
             return "info/slaughter/"+id+"/"+filename;
         }else if(type.equals("物流")){
+            new File("info/logistics/"+id).mkdir();
             return "info/logistics/"+id+"/"+filename;
         }else{
+            new File("info/market/"+id).mkdir();
             return "info/market/"+id+"/"+filename;
         }
     }

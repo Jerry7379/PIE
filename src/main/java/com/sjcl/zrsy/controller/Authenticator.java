@@ -8,6 +8,11 @@ public class Authenticator {
 
     private List<AuthenticateWay> ways = new ArrayList<>();
 
+    /**
+     *
+     * @param request
+     * @return
+     */
     public boolean authenticate(HttpServletRequest request) {
         for (AuthenticateWay way : ways) {
             boolean ret = way.authenticate(request);
@@ -20,6 +25,11 @@ public class Authenticator {
         return false;
     }
 
+    /**
+     *
+     * @param way
+     * @return
+     */
     public boolean addWay(AuthenticateWay way) {
         return ways.add(way);
     }

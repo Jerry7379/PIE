@@ -27,6 +27,11 @@ public class SignatureAuthenticateWay implements Authenticator.AuthenticateWay {
         }
     }
 
+    /**
+     *
+     * @param request
+     * @return
+     */
     @Override
     public boolean authenticate(HttpServletRequest request) {
         if (!KeyPairHolder.isLogined()) {
@@ -38,6 +43,7 @@ public class SignatureAuthenticateWay implements Authenticator.AuthenticateWay {
         try {
             signature.initVerify(publicKey);
             signature.update(data);
+            //验签
             return signature.verify(sign);
         } catch (Exception e) {
             return false;
@@ -46,6 +52,11 @@ public class SignatureAuthenticateWay implements Authenticator.AuthenticateWay {
 
     }
 
+    /**
+     * 从request中获得公钥
+     * @param request
+     * @return
+     */
     private PublicKey getPublicKey(HttpServletRequest request) {
         String pubKeyStr = request.getHeader(HEADER_AUTH_PUBKEY);
         if (pubKeyStr == null) {
@@ -58,6 +69,11 @@ public class SignatureAuthenticateWay implements Authenticator.AuthenticateWay {
         }
     }
 
+    /**
+     * 通过request获得签名
+     * @param request
+     * @return
+     */
     private byte[] getSign(HttpServletRequest request) {
         String base64Sign = request.getHeader(HEADER_AUTH_SIGNATURE);
         if (base64Sign == null) {
@@ -66,11 +82,21 @@ public class SignatureAuthenticateWay implements Authenticator.AuthenticateWay {
         return Base64.getDecoder().decode(base64Sign);
     }
 
+    /**
+     * 通过request获得request
+     * @param request
+     * @return
+     */
     private byte[] getData(HttpServletRequest request) {
         byte[] requestBody = readRequestBody(request);
         return requestBody;
     }
 
+    /**
+     *
+     * @param request
+     * @return
+     */
     private static byte[] readRequestBody(HttpServletRequest request) {
         InputStream br = null;
 
