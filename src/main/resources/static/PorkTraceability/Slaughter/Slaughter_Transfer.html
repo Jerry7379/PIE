@@ -48,7 +48,7 @@
 
                 <form class="m-t" role="form" id="form">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="请输入64位小猪标号" required="" id="id"
+                        <input type="text" class="form-control" placeholder="请输入13位小猪标号" required="" id="id"
                                name="pigId">
                     </div>
                     <div class="form-group">
@@ -84,7 +84,8 @@
             $("#btnfo").click(function () {
                 var transfer_operation = {
                     pigId: $("#id").val(),
-                    publicKeyInHex: $("#publicKeyInHex").val();
+                    roleId: $("#publicKeyInHex").val(),
+                    type:"物流"
                 }
                 var transferOperationJson = JSON.stringify(transfer_operation);
                 //alert(Pig);
@@ -110,12 +111,12 @@
             rules: {
                 pigId: {
                     required: true,
-                    maxlength: 64,
-                    minlength: 64
+                    maxlength: 13,
+                    minlength: 13
                 },
                 publicKeyInHex: {
                     required: true,
-                    maxlength: 50
+                    maxlength: 6
                 }
             }
         })

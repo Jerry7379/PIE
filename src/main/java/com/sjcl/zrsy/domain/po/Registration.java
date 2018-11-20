@@ -71,21 +71,22 @@ public class Registration {    //注册模块
         //        //照片生成
         String path="";
         if(this.type.equals("养殖场")){
-            path="info/farm/"+this.registrationId+"/"+this.registrationId+".jpg";
+            path="info/farm/"+this.registrationId;
         }
         if(this.type.equals("屠宰场")){
-            path="info/slaughter/"+this.registrationId+"/"+this.registrationId+".jpg";
+            path="info/slaughter/"+this.registrationId;
         }
         if(this.type.equals("物流")){
-            path="info/logistics/"+this.registrationId+"/"+this.registrationId+".jpg";
+            path="info/logistics/"+this.registrationId;
         }
         if(this.type.equals("超市")){
-            path="info/market/"+this.registrationId+"/"+this.registrationId+".jpg";
+            path="info/market/"+this.registrationId;
         }
-        File file=new File(path);
-//        if(!file.exists()){
-//            file.mkdir();
-//        }
+        File file=new File(path,this.getRegistrationId()+".jpg");
+        if(!file.exists()){
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+        }
         String str64= picture;
         BASE64Decoder decoder = new BASE64Decoder();
         try {
@@ -216,4 +217,5 @@ public class Registration {    //注册模块
 
         return StringUtils.equals(NEXT_RELATIONSHIP.get(getType()), candidateType);
     }
+
 }

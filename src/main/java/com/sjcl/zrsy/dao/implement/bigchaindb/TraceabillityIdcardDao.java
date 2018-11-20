@@ -96,7 +96,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
         if (exsits(traceabilityIdcard.getId())) {
             try {
                 BigchaindbData metaData = new BigchaindbData(traceabilityIdcard);
-                BigchaindbUtil.transferToSelf(metaData, traceabilityIdcard.getId());
+                BigchaindbUtil.transferToSelf(metaData, BigchaindbUtil.getAssetId(traceabilityIdcard.getId()));
                 return true;
             } catch (Exception e) {
                 return false;

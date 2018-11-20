@@ -132,8 +132,8 @@
     $(function(){
         $(document).ready(function(){
             $("#Btn1").click(function(){
-                var transportTime=new Date();
-                var t=transportTime.toLocaleString();
+                var transportTime = new Date();
+                var t = transportTime.toISOString();
                 var pigMwork = {
                     id: $("#pigId").val(),
                     operation: $("#selectW").val(),
