@@ -33,35 +33,34 @@
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"constant": true,
 		"inputs": [
 			{
-				"name": "_to",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "LogisticsMap",
+		"outputs": [
+			{
+				"name": "roleAddress",
 				"type": "address"
 			},
 			{
-				"name": "_tokenId",
+				"name": "roleId",
 				"type": "uint256"
-			}
-		],
-		"name": "approve",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
+			},
 			{
-				"name": "_tokenId",
-				"type": "uint256"
+				"name": "location",
+				"type": "string"
+			},
+			{
+				"name": "role",
+				"type": "uint8"
 			}
 		],
-		"name": "isSale",
-		"outputs": [],
-		"payable": true,
-		"stateMutability": "payable",
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -93,53 +92,30 @@
 		"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [],
-		"name": "PIG_BASIC_COUNT",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"constant": false,
 		"inputs": [
 			{
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"name": "_tokenId",
+				"name": "_breed",
 				"type": "uint256"
+			},
+			{
+				"name": "_weight",
+				"type": "uint256"
+			},
+			{
+				"name": "_gender",
+				"type": "int8"
 			}
 		],
-		"name": "transferFrom",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "slaughterhouseAdddress",
+		"name": "createPig",
 		"outputs": [
 			{
 				"name": "",
-				"type": "address"
+				"type": "uint256"
 			}
 		],
 		"payable": false,
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -154,42 +130,27 @@
 	{
 		"constant": true,
 		"inputs": [],
-		"name": "marketAdddress",
+		"name": "user",
 		"outputs": [
 			{
-				"name": "",
+				"name": "roleAddress",
 				"type": "address"
+			},
+			{
+				"name": "roleId",
+				"type": "uint256"
+			},
+			{
+				"name": "location",
+				"type": "string"
+			},
+			{
+				"name": "role",
+				"type": "uint8"
 			}
 		],
 		"payable": false,
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_weight",
-				"type": "uint256"
-			},
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			},
-			{
-				"name": "_breed",
-				"type": "uint256"
-			}
-		],
-		"name": "createPigSale",
-		"outputs": [
-			{
-				"name": "_pigID",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -204,67 +165,6 @@
 		],
 		"payable": false,
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_seller",
-				"type": "address"
-			},
-			{
-				"name": "_buyer",
-				"type": "address"
-			},
-			{
-				"name": "_pigID",
-				"type": "uint256"
-			},
-			{
-				"name": "_price",
-				"type": "uint256"
-			}
-		],
-		"name": "createSell",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "withdrawBalance",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_seller",
-				"type": "address"
-			},
-			{
-				"name": "_buyer",
-				"type": "address"
-			},
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			},
-			{
-				"name": "_price",
-				"type": "uint256"
-			}
-		],
-		"name": "createSale",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -287,20 +187,6 @@
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_newMarket",
-				"type": "address"
-			}
-		],
-		"name": "setMarket",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"constant": true,
 		"inputs": [
 			{
@@ -312,20 +198,6 @@
 		"outputs": [
 			{
 				"name": "count",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "pigCreatedCount",
-		"outputs": [
-			{
-				"name": "",
 				"type": "uint256"
 			}
 		],
@@ -358,20 +230,10 @@
 			{
 				"name": "weight",
 				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "NFT",
-		"outputs": [
+			},
 			{
-				"name": "",
-				"type": "address"
+				"name": "gender",
+				"type": "int8"
 			}
 		],
 		"payable": false,
@@ -407,15 +269,6 @@
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [],
-		"name": "withdrawSaleBalances",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"constant": true,
 		"inputs": [],
 		"name": "owner",
@@ -444,15 +297,71 @@
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"constant": true,
 		"inputs": [
 			{
-				"name": "_newSlaughterhouse",
+				"name": "",
 				"type": "address"
 			}
 		],
-		"name": "setSlaughterhouse",
-		"outputs": [],
+		"name": "SlaughterhouseMap",
+		"outputs": [
+			{
+				"name": "roleAddress",
+				"type": "address"
+			},
+			{
+				"name": "roleId",
+				"type": "uint256"
+			},
+			{
+				"name": "location",
+				"type": "string"
+			},
+			{
+				"name": "role",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "ID",
+				"type": "uint256"
+			},
+			{
+				"name": "location",
+				"type": "string"
+			},
+			{
+				"name": "role",
+				"type": "uint8"
+			}
+		],
+		"name": "newUser",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			},
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "uint8"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -473,6 +382,37 @@
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "FarmMap",
+		"outputs": [
+			{
+				"name": "roleAddress",
+				"type": "address"
+			},
+			{
+				"name": "roleId",
+				"type": "uint256"
+			},
+			{
+				"name": "location",
+				"type": "string"
+			},
+			{
+				"name": "role",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -510,20 +450,6 @@
 	},
 	{
 		"constant": true,
-		"inputs": [],
-		"name": "transaction",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
 		"inputs": [
 			{
 				"name": "",
@@ -542,77 +468,30 @@
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_newFarm",
-				"type": "address"
-			}
-		],
-		"name": "setFarm",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "getSale",
-		"outputs": [
-			{
-				"name": "seller",
-				"type": "address"
-			},
-			{
-				"name": "buyer",
-				"type": "address"
-			},
-			{
-				"name": "price",
-				"type": "uint256"
-			},
-			{
-				"name": "time",
-				"type": "uint64"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_newLogistics",
-				"type": "address"
-			}
-		],
-		"name": "setLogistics",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"constant": true,
 		"inputs": [
 			{
 				"name": "",
-				"type": "uint256"
+				"type": "address"
 			}
 		],
-		"name": "pigIndexToApproved",
+		"name": "MarkeMap",
 		"outputs": [
 			{
-				"name": "",
+				"name": "roleAddress",
 				"type": "address"
+			},
+			{
+				"name": "roleId",
+				"type": "uint256"
+			},
+			{
+				"name": "location",
+				"type": "string"
+			},
+			{
+				"name": "role",
+				"type": "uint8"
 			}
 		],
 		"payable": false,
@@ -634,96 +513,6 @@
 		"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [],
-		"name": "logisticsAdddress",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "farmAddress",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "tokenId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"name": "price",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"name": "buyer",
-				"type": "address"
-			}
-		],
-		"name": "SaleCreated",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "tokenId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"name": "price",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"name": "buyer",
-				"type": "address"
-			}
-		],
-		"name": "SaleSuccessful",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "SaleCancelled",
-		"type": "event"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -743,28 +532,6 @@
 			}
 		],
 		"name": "Transfer",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "approved",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "Approval",
 		"type": "event"
 	},
 	{
@@ -794,6 +561,11 @@
 				"indexed": false,
 				"name": "weight",
 				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "gender",
+				"type": "int8"
 			}
 		],
 		"name": "Birth",
