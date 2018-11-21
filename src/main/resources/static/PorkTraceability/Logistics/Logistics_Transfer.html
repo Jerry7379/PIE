@@ -84,7 +84,8 @@
             $("#btnfo").click(function () {
                 var transfer_operation = {
                     pigId: $("#id").val(),
-                    publicKeyInHex: $("#publicKeyInHex").val();
+                    roleId: $("#publicKeyInHex").val(),
+                    type:"超市"
                 }
                 var transferOperationJson = JSON.stringify(transfer_operation);
                 //alert(Pig);
@@ -110,8 +111,8 @@
             rules: {
                 pigId: {
                     required: true,
-                    maxlength: 64,
-                    minlength: 64
+                    maxlength: 13,
+                    minlength: 13
                 },
                 publicKeyInHex: {
                     required: true,

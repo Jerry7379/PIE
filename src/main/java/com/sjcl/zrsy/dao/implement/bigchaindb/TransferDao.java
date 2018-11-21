@@ -20,7 +20,14 @@ public class TransferDao implements ITransferDao {
     @Override
     public boolean transfer(@RequestBody TransferOperation transferOperation) throws Exception {
         TraceabilityIdcard idcard=BigchaindbUtil.getWholeMetaData(BigchaindbUtil.getAssetId(transferOperation.getPigId()),TraceabilityIdcard.class);
-        idcard.setSlaughterhouseId(transferOperation.getRoleid());
+        if(transferOperation.getType().equals("屠宰场")){
+            idcard.setSlaughterhouseId(transferOperation.getRoleid());
+        }else if(transferOperation.getType().equals("物流")){
+            idcard.setLogisticsId(transferOperation.getRoleid());
+        }else if(transferOperation.getType().equals("超市")){
+            idcard.setSupermarketId(transferOperation.getRoleid());
+        }else{}
+
         String ret=BigchaindbUtil.transferTo(BigchaindbUtil.getAssetId(transferOperation.getPigId()), KeyPairService.getPublicKey(transferOperation.getType(),transferOperation.getRoleid()), new BigchaindbData<>(idcard));
         if(ret!=null){
             return true;

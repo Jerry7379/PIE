@@ -10,6 +10,7 @@ import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -23,7 +24,7 @@ public class SearchDao implements com.sjcl.zrsy.dao.ISearchDao {
 
     @Override
     public SearchId select(String id) {
-        if (BigchaindbUtil.assetIsExist(BigchaindbUtil.getAssetId(id), String.class)) {
+        if (BigchaindbUtil.assetIsExist(BigchaindbUtil.getAssetId(id), HashMap.class)) {
             SearchId searchId = getSearchId(id);
             searchId.setOperations(searchOperation(id));
             return searchId;
