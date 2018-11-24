@@ -6,6 +6,9 @@ import com.sjcl.zrsy.domain.dto.BigchaindbData;
 import com.sjcl.zrsy.domain.po.TraceabilityIdcard;
 import org.springframework.stereotype.Repository;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -93,16 +96,38 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
     }
 
     private boolean updateTraceabilityIdcard(TraceabilityIdcard traceabilityIdcard) {
-        if (exsits(traceabilityIdcard.getId())) {
-            try {
-                BigchaindbData metaData = new BigchaindbData(traceabilityIdcard);
+        try {
+            TraceabilityIdcard idcard = BigchaindbUtil.getWholeMetaData(BigchaindbUtil.getAssetId(traceabilityIdcard.getId()), traceabilityIdcard.getClass());
+
+            BeanInfo beanInfo = Introspector.getBeanInfo(idcard.getClass());
+            PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
+
+            for (PropertyDescriptor pd : pds) {
+                if (pd.getWriteMethod() == null || pd.getWriteMethod() == null) {
+                    continue;
+                }
+                Object retVal = pd.getReadMethod().invoke(traceabilityIdcard);
+
+                if (retVal != null) {
+                    if(retVal.getClass().equals(int.class)&&((int)retVal!=0)){
+                        ;
+                    }else {
+                        pd.getWriteMethod().invoke(idcard, retVal);
+                    }
+                }
+            }
+            if (exsits(traceabilityIdcard.getId())) {
+
+                BigchaindbData metaData = new BigchaindbData(idcard);
                 BigchaindbUtil.transferToSelf(metaData, BigchaindbUtil.getAssetId(traceabilityIdcard.getId()));
                 return true;
-            } catch (Exception e) {
+
+            } else {
                 return false;
             }
-        } else {
+        }catch (Exception e){
             return false;
         }
+
     }
 }
