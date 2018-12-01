@@ -3,6 +3,7 @@ package com.sjcl.zrsy.burrow;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import java.io.*;
+import java.lang.reflect.Method;
 import java.math.BigInteger;
 
 public class BurrowClient {
@@ -60,7 +61,7 @@ public class BurrowClient {
         JSONObject request = new JSONObject();
         request.put("jsonrpc", "2.0");
         request.put("id", "0");
-        request.put("method", "burrow.call");
+        request.put("method", "burrow.transactAndHold");
 
         JSONObject params = new JSONObject();
         JSONObject inputAccount = new JSONObject();
@@ -70,6 +71,8 @@ public class BurrowClient {
         params.put("data", data);
         params.put("gasLimit", gasLimit);
         params.put("fee", fee);
+
+        request.put("params",params);
 
 
 
@@ -88,5 +91,8 @@ public class BurrowClient {
         } else {
             return null;
         }
+
     }
+
+
 }
