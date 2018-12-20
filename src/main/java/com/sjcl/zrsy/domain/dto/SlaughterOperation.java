@@ -93,7 +93,12 @@ public class SlaughterOperation {
         Operation operation = new Operation();
         operation.setId(this.id);
         operation.setOperation(this.operation);
-        operation.setContent(this.content + "+" + this.isAcid);
+        if(this.isAcid!=null){
+            operation.setContent(this.content + "+" + this.isAcid);
+        }
+        else{
+            operation.setContent(this.content);
+        }
         operation.setRemark(this.remark);
         operation.setTime(this.time);
         return operation;

@@ -139,10 +139,9 @@
                     operation: $("#selectW").val(),
                     content: $("#message").val(),
                     remark: $("#remark").val(),
-                    transportTime: t
+                    time: t
                 };
                 var PigMwork=JSON.stringify(pigMwork);
-                alert(PigMwork);
                 $.post({
                     url: "/slaughteroperation",
                     headers: {
@@ -174,10 +173,9 @@
                     operation: $("#selectW").val(),
                     content: $("#pspId").val()+";"+$("input[name='optionsRadios']:checked").val(),
                     remark: $("#remark").val(),
-                    transportTime: t
+                    time: t
                 };
                 var PigAddacid=JSON.stringify(pigAddacid);
-                alert(PigAddacid);
                 $.post({
                     url: "/slaughteroperation",
                     headers: {

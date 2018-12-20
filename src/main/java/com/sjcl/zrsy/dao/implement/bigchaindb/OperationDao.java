@@ -34,6 +34,9 @@ public class OperationDao implements IOperationDao, ILogisticsOperationDao {
         return true;
     }
 
+
+
+
     /**
      * 超市增加操作
      *

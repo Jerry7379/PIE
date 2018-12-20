@@ -18,12 +18,15 @@ public class CommonController {
     public RestfulResult farmoperation(@RequestBody TransferOperation operation) {
         try {
             if(transferService.transfer(operation)){ //TODO 检查方法还没有做
-                return RestfulResult.ok("OK");
+                return RestfulResult.ok("交易成功");
             }else {
-                return RestfulResult.errorMsg("faile");
+                return RestfulResult.errorMsg("交易失败");
             }
         } catch (Exception e) {
             return RestfulResult.errorMsg(e.getMessage());
         }
     }
+
+
+    //TODO;{{result.isacid}};{{result.ischeck}}
 }

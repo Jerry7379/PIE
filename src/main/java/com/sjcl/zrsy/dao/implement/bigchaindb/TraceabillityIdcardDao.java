@@ -95,7 +95,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
         return updateTraceabilityIdcard(acid);
     }
 
-    private boolean updateTraceabilityIdcard(TraceabilityIdcard traceabilityIdcard) {
+    private boolean  updateTraceabilityIdcard(TraceabilityIdcard traceabilityIdcard) {
         try {
             TraceabilityIdcard idcard = BigchaindbUtil.getWholeMetaData(BigchaindbUtil.getAssetId(traceabilityIdcard.getId()), traceabilityIdcard.getClass());
 
@@ -109,7 +109,7 @@ public class TraceabillityIdcardDao implements ITraceabilityIdcardDao {
                 Object retVal = pd.getReadMethod().invoke(traceabilityIdcard);
 
                 if (retVal != null) {
-                    if(retVal.getClass().equals(int.class)&&((int)retVal!=0)){
+                    if(retVal.getClass().equals(int.class)&&((int)retVal==0)){
                         ;
                     }else {
                         pd.getWriteMethod().invoke(idcard, retVal);

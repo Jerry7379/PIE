@@ -408,7 +408,7 @@ public class BigchaindbUtil {
                 }
                 Object retVal = pd.getReadMethod().invoke(data);
                 if (retVal != null) {
-                    if(retVal.getClass().equals(int.class)&&((int)retVal!=0)){
+                    if(retVal.getClass().equals(int.class)&&((int)retVal==0)){
                         ;
                     }else {
                         pd.getWriteMethod().invoke(bean, retVal);

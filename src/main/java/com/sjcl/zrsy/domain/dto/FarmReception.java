@@ -25,7 +25,7 @@ public class FarmReception {
     private String gender;//性别
 
     @Digits(integer = 99, fraction = 99, message = "出生体重输入错误")
-    private Double weight;//出生体重
+    private int weight;//出生体重
 
     public FarmReception() {
     }
@@ -82,11 +82,11 @@ public class FarmReception {
         this.gender = gender;
     }
 
-    public Double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(Double weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 }

@@ -97,10 +97,10 @@
                     operation: $("#selectW").val(),
                     content: $("#message").val(),
                     remark: $("#remark").val(),
-                    transportTime: t
+                    time: t
                 };
                 var PigMwork=JSON.stringify(pigMwork);
-                alert(PigMwork);
+
                 $.post({
                     url: "/marketoperation",
                     headers: {

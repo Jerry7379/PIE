@@ -53,7 +53,7 @@ public class TraceabilityIdcard {
     private String driverId;
 
     // 出生体重
-    private double birthweight;
+    private int birthweight;
 
 
     public TraceabilityIdcard() {
@@ -188,11 +188,11 @@ public class TraceabilityIdcard {
         this.driverId = driverId;
     }
 
-    public double getBirthweight() {
+    public int getBirthweight() {
         return birthweight;
     }
 
-    public void setBirthweight(double birthweight) {
+    public void setBirthweight(int birthweight) {
         this.birthweight = birthweight;
     }
 }
